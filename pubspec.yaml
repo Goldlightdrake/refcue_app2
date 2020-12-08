@@ -1,0 +1,60 @@
+name: flutter_firebase_login
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  authentication_repository:
+    path: packages/authentication_repository
+  animated_theme_switcher: ^1.0.9
+  bloc: ^6.1.0
+  equatable: ^1.2.3
+  flare_flutter: ^2.0.6
+  flutter_bloc: ^6.1.0
+  flutter_screenutil: ^3.2.0
+  flutter_svg: null
+  font_awesome_flutter: ^8.4.0
+  formz: ^0.3.0
+  google_fonts: ^1.1.0
+  line_awesome_flutter: ^1.0.1
+  meta: ^1.1.8
+  pedantic: ^1.9.0
+  flutter_auth_buttons: ^0.10.0
+  cloud_firestore: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  bloc_test: ^7.1.0
+  mockito: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/flare/
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: fonts/Montserrat-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/Montserrat-MediumItalic.ttf
+          style: italic
+        - asset: fonts/Montserrat-Medium.ttf
+        - asset: fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Medium.ttf
+        - asset: fonts/Roboto-MediumItalic.ttf
+          style: italic

@@ -1,0 +1,115 @@
+String takeDate() {
+  var currrentDate = DateTime.now();
+  String day = currrentDate.day.toString();
+  String month = '';
+  switch (currrentDate.month) {
+    case 1:
+      {
+        month = 'Stycznia';
+      }
+      break;
+    case 2:
+      {
+        month = 'Lutego';
+      }
+      break;
+    case 3:
+      {
+        month = 'Marca';
+      }
+      break;
+    case 4:
+      {
+        month = 'Kwietnia';
+      }
+      break;
+    case 5:
+      {
+        month = 'Maja';
+      }
+      break;
+    case 6:
+      {
+        month = 'Czerwca';
+      }
+      break;
+    case 7:
+      {
+        month = 'Lipca';
+      }
+      break;
+    case 8:
+      {
+        month = 'Sierpnia';
+      }
+      break;
+    case 9:
+      {
+        month = 'Września';
+      }
+      break;
+    case 10:
+      {
+        month = 'Października';
+      }
+      break;
+    case 11:
+      {
+        month = 'Listopada';
+      }
+      break;
+    case 12:
+      {
+        month = 'Grudnia';
+      }
+      break;
+  }
+
+  String result = day + ' ' + month;
+  return result;
+}
+
+int colorOfAnswer(answer) {
+  switch (answer) {
+    case 0:
+      {
+        return 0xfff56da3;
+      }
+      break;
+    case 1:
+      {
+        return 0xffe8e46b;
+      }
+      break;
+    case 2:
+      {
+        return 0xff32a852;
+      }
+      break;
+  }
+}
+
+List numberInRange(int amount) {
+  var randomList = new List<int>.generate(amount, (int index) => index);
+  randomList.shuffle();
+  return randomList;
+}
+
+String firstFewWords(String bigSentence) {
+  int startIndex = 0, indexOfSpace;
+
+  for (int i = 0; i < 6; i++) {
+    indexOfSpace = bigSentence.indexOf(' ', startIndex);
+    if (indexOfSpace == -1) {
+      return bigSentence;
+    }
+    startIndex = indexOfSpace + 1;
+  }
+
+  return bigSentence.substring(0, indexOfSpace) + '...';
+}
+
+String changingViewOfAnswer(String awfullAnswer) {
+  List<String> answer = awfullAnswer.replaceAll(' ', '').split(',');
+  return answer.join('');
+}
