@@ -12,12 +12,12 @@ class TestRepository {
 
   TestProvider _testProvider;
 
-  List<Question> listOfQuestions() {
+  Future listOfQuestions() async {
     List<int> range = numberInRange(amountOfQuestions);
     List<Question> listOfQuestions;
     for (int i = 1; i <= amountOfQuestions; i++) {
       listOfQuestions.add(Question.fromMap(
-          _testProvider.questionMapFromFirebase(range[1].toString())));
+          await _testProvider.getQuestionFromFirebase(range[i].toString())));
     }
     return listOfQuestions;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
+import 'package:flutter_firebase_login/ui/screens/account/view/menu/profile_data_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
@@ -10,6 +11,17 @@ class ProfileListItem extends StatelessWidget {
   final String text;
   final bool hasNavigation;
   final bool logOut;
+  final String where;
+
+  Route<dynamic> navigationNames(String where) {
+    switch (where) {
+      case 'profileDataView':
+        return ProfileDataView.route();
+
+        break;
+      default:
+    }
+  }
 
   const ProfileListItem({
     Key key,
@@ -17,16 +29,19 @@ class ProfileListItem extends StatelessWidget {
     this.icon,
     this.text,
     this.hasNavigation = true,
+    this.where,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: logOut
+      onTap: !hasNavigation
           ? () => context
               .read<AuthenticationBloc>()
               .add(AuthenticationLogoutRequested())
-          : () => print('Navigator'),
+          : () => Navigator.of(context).push<void>(
+                navigationNames(where),
+              ),
       child: Container(
         height: kSpacingUnit.w * 5.5,
         margin: EdgeInsets.symmetric(
