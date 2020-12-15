@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
@@ -23,7 +24,9 @@ class SignUpForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              logoPath,
+              ThemeProvider.of(context).brightness == Brightness.dark
+                  ? logoDarkPath
+                  : logoPath,
               height: 84,
             ),
             const SizedBox(height: 24.0),
