@@ -10,7 +10,7 @@ class TestRepository {
     @required this.amountOfQuestions,
   });
 
-  TestProvider _testProvider;
+  TestProvider _testProvider = TestProvider();
 
   Future listOfQuestions() async {
     List<int> range = numberInRange(amountOfQuestions);

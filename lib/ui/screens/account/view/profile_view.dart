@@ -145,6 +145,7 @@ class ProfileScreen extends StatelessWidget {
                       ProfileListItem(
                         icon: LineAwesomeIcons.history,
                         text: 'Statystyki',
+                        where: 'profileStatsView',
                       ),
                       ProfileListItem(
                         icon: LineAwesomeIcons.question_circle,

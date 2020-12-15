@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
 import 'package:flutter_firebase_login/ui/screens/account/view/menu/profile_data_view.dart';
+import 'package:flutter_firebase_login/ui/screens/account/view/menu/profile_stats_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
@@ -17,7 +18,8 @@ class ProfileListItem extends StatelessWidget {
     switch (where) {
       case 'profileDataView':
         return ProfileDataView.route();
-
+      case 'profileStatsView':
+        return ProfileStatsView.route();
         break;
       default:
     }
