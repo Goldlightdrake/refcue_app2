@@ -139,9 +139,9 @@ class ProfileScreen extends StatelessWidget {
                   child: ListView(
                     children: <Widget>[
                       ProfileListItem(
-                        icon: LineAwesomeIcons.user_shield,
-                        text: 'Dane konta',
-                      ),
+                          icon: LineAwesomeIcons.user_shield,
+                          text: 'Dane konta',
+                          where: 'profileDataView'),
                       ProfileListItem(
                         icon: LineAwesomeIcons.history,
                         text: 'Statystyki',

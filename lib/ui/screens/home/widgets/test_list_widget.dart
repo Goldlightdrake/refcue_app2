@@ -12,12 +12,14 @@ class ExamCard extends StatelessWidget {
   final int quantity;
   final int time;
 
+  Future onTapMethod() async => print(
+      await TestRepository(amountOfQuestions: quantity).listOfQuestions());
+
   ExamCard({this.time, this.quantity, this.color1, this.color2, this.examPath});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => print(TestProvider().questionMapFromFirebase('3')),
-        // onTap: () => print(TestRepository(amountOfQuestions: quantity).listOfQuestions()),
+        onTap: () => onTapMethod(),
         child: AspectRatio(
           aspectRatio: 4 / 2,
           child: Container(
