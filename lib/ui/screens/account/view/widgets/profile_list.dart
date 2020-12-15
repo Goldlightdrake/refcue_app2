@@ -22,6 +22,7 @@ class ProfileListItem extends StatelessWidget {
         return ProfileStatsView.route();
         break;
       default:
+        return null;
     }
   }
 

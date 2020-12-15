@@ -2,7 +2,6 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import '../login.dart';
 import 'package:flutter_firebase_login/firebase_login/sign_up/sign_up.dart';

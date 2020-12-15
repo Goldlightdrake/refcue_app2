@@ -16,8 +16,8 @@ class TestRepository {
     List<int> range = numberInRange(amountOfQuestions);
     List<Question> listOfQuestions = [];
     for (int i = 1; i <= amountOfQuestions; i++) {
-      listOfQuestions.add(Question.fromMap(
-          await _testProvider.getQuestionFromFirebase(range[i].toString())));
+      listOfQuestions.add(Question.fromMap(await _testProvider
+          .getQuestionFromFirebase(range[i - 1].toString())));
     }
     return listOfQuestions;
   }

@@ -69,6 +69,7 @@ String takeDate() {
   return result;
 }
 
+// ignore: missing_return
 int colorOfAnswer(answer) {
   switch (answer) {
     case 0:
@@ -90,7 +91,7 @@ int colorOfAnswer(answer) {
 }
 
 List numberInRange(int amount) {
-  var randomList = new List<int>.generate(amount, (int index) => index);
+  var randomList = new List<int>.generate(amount, (int index) => index + 1);
   randomList.shuffle();
   return randomList;
 }

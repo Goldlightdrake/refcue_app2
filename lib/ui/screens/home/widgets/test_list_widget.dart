@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/data/data_provider/test_provider.dart';
 import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_svg/svg.dart';
