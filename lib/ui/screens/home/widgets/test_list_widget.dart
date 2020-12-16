@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/exam.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ExamCard extends StatelessWidget {
@@ -10,14 +10,12 @@ class ExamCard extends StatelessWidget {
   final int quantity;
   final int time;
 
-  Future onTapMethod() async => print(
-      await TestRepository(amountOfQuestions: quantity).listOfQuestions());
-
   ExamCard({this.time, this.quantity, this.color1, this.color2, this.examPath});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => onTapMethod(),
+        onTap: () => Navigator.of(context)
+            .push<void>(ExamScreen.route(amountQuestions: quantity)),
         child: AspectRatio(
           aspectRatio: 4 / 2,
           child: Container(
