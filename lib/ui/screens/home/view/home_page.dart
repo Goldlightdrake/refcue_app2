@@ -6,6 +6,8 @@ import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_firebase_login/ui/screens/account/account.dart';
 import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {
@@ -14,6 +16,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        designSize: Size(414, 896), allowFontScaling: true);
+
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
       body: SingleChildScrollView(
@@ -55,15 +60,27 @@ class HomePage extends StatelessWidget {
                         fontWeight: FontWeight.w300,
                       ),
                     ),
-                    Text(
-                      user.name == '' || user.name == null
-                          ? 'Witaj, Panie BezImienny'
-                          : 'Witaj, ' + user.name,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          user.name == '' || user.name == null
+                              ? 'Witaj, Panie Bezimienny'
+                              : 'Witaj, ' + user.name,
+                          style: TextStyle(
+                            fontSize: kSpacingUnit.w * 2,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: kSpacingUnit.w * 1),
+                        RotationTransition(
+                          turns: AlwaysStoppedAnimation(10 / 360),
+                          child: SvgPicture.asset(
+                            helloIconPath,
+                            width: kSpacingUnit.w * 2.5,
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 )),
@@ -72,7 +89,7 @@ class HomePage extends StatelessWidget {
               height: 210.0,
               width: double.infinity,
               child: ListView(
-                padding: EdgeInsets.only(bottom: 20.0, left: 20.0),
+                padding: EdgeInsets.only(bottom: 20.0, left: 8.0),
                 scrollDirection: Axis.horizontal,
                 children: [
                   ExamCard(

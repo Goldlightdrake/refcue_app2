@@ -17,7 +17,7 @@ class ExamCard extends StatelessWidget {
         onTap: () => Navigator.of(context)
             .push<void>(ExamScreen.route(amountQuestions: quantity)),
         child: AspectRatio(
-          aspectRatio: 4 / 2,
+          aspectRatio: 2 / 1,
           child: Container(
               margin: EdgeInsets.only(right: 10.0),
               decoration: BoxDecoration(

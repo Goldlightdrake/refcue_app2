@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         initTheme: kDarkTheme,
         child: Builder(builder: (context) {
           return MaterialApp(
-            title: 'Splash Screen',
+            title: 'RefCue',
             home: InitScreenPage(
                 authenticationRepository: AuthenticationRepository()),
             debugShowCheckedModeBanner: false,

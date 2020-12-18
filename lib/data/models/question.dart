@@ -8,7 +8,7 @@ class Question extends Equatable {
   final String article;
   final String questionText;
   final String substantiation;
-  final String type;
+  final int type;
   Question({
     @required this.answer,
     @required this.article,
@@ -20,6 +20,9 @@ class Question extends Equatable {
   @override
   List<Object> get props =>
       [answer, article, questionText, substantiation, type];
+
+  String toString() =>
+      'Question ## type: {$type}, article: {$article}, questionText: {$questionText}, answer: {$answer}, substantiation: {$substantiation}';
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,7 +42,7 @@ class Question extends Equatable {
       article: map['article'] ?? '',
       questionText: map['questionText'] ?? '',
       substantiation: map['substantiation'] ?? '',
-      type: map['type'],
+      type: map['type'] ?? 0,
     );
   }
 
@@ -47,7 +50,4 @@ class Question extends Equatable {
 
   factory Question.fromJson(String source) =>
       Question.fromMap(json.decode(source));
-
-  String toString() =>
-      'Question ## type: {$type}, article: {$article}, questionText: {$questionText}, answer: {$answer}, substantiation: {$substantiation}';
 }

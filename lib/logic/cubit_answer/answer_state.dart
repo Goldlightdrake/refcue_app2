@@ -1,0 +1,17 @@
+part of 'answer_cubit.dart';
+
+abstract class AnswerState extends Equatable {
+  const AnswerState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class AnswerInitial extends AnswerState {}
+
+class AnswerPicked extends AnswerState {
+  final int index;
+  AnswerPicked({
+    this.index,
+  });
+}

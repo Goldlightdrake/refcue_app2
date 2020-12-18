@@ -2,16 +2,29 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
 import 'package:flutter_firebase_login/data/models/question.dart';
 import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
 
 part 'exam_event.dart';
 part 'exam_state.dart';
 
 class ExamBloc extends Bloc<ExamEvent, ExamState> {
   final TestRepository testRepository;
-  ExamBloc({@required this.testRepository}) : super(ExamLoading());
+  final ExamScoreCubit scoreCubit;
+  final ExamQuestionIndexCubit indexCubit;
+  final AnswerCubit answerCubit;
+  final int maxIndex;
+  ExamBloc({
+    this.testRepository,
+    this.scoreCubit,
+    this.indexCubit,
+    this.answerCubit,
+    this.maxIndex,
+  }) : super(ExamLoading());
 
   @override
   Stream<ExamState> mapEventToState(
@@ -27,6 +40,12 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
       } catch (_) {
         yield ExamError();
       }
+    }
+    if (event is ExamFinishedEvent) {
+      yield ExamFinished(
+          userAnswers: answerCubit.userAnswersList,
+          userScore: scoreCubit.state,
+          examMaxScore: maxIndex);
     }
   }
 

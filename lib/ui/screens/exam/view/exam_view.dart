@@ -1,53 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
-import 'package:flutter_firebase_login/logic/bloc/exam_bloc.dart';
 
-class ExamScreen extends StatefulWidget {
-  static Route route({int amountQuestions}) {
-    return MaterialPageRoute<void>(
-        builder: (_) => ExamScreen(
-              amount: amountQuestions,
-            ));
-  }
+import 'package:flutter_firebase_login/data/models/question.dart';
+import 'package:flutter_firebase_login/logic/cubit_question_layout/building_question_layout_cubit.dart';
+import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/widgets/question_layout.dart';
 
-  final int amount;
-  TestRepository _testRepository;
-  ExamScreen({Key key, this.amount}) : super(key: key);
-
-  @override
-  _ExamScreenState createState() => _ExamScreenState();
-}
-
-class _ExamScreenState extends State<ExamScreen> {
-  @override
-  void initState() {
-    super.initState();
-    widget._testRepository = TestRepository(amountOfQuestions: widget.amount);
-  }
+class ExamViewScreen extends StatelessWidget {
+  final List<Question> listOfQuestions;
+  const ExamViewScreen({
+    Key key,
+    this.listOfQuestions,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          ExamBloc(testRepository: widget._testRepository)..add(ExamFetched()),
-      child: BlocBuilder<ExamBloc, ExamState>(
-        builder: (context, state) {
-          if (state is ExamLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BuildingQuestionLayoutCubit()
+            ..buildQuestionLayout(listOfQuestions[0]),
+        )
+      ],
+      child: BlocListener<ExamQuestionIndexCubit, int>(
+        listenWhen: (previousState, state) {
+          if (state != previousState) {
+            return true;
           }
-          if (state is ExamReady) {
-            return Center(
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) =>
-                    Text(state.questionList[index].article),
-                itemCount: state.questionList.length,
-              ),
-            );
-          }
+          return false;
         },
+        listener: (context, state) {
+          context
+              .read<BuildingQuestionLayoutCubit>()
+              .buildQuestionLayout(listOfQuestions[state]);
+        },
+        child: BlocBuilder<BuildingQuestionLayoutCubit,
+            BuildingQuestionLayoutState>(
+          builder: (context, state) {
+            if (state is QuestionLayoutBuilt) {
+              return QuestionLayout(
+                question: state.question,
+              );
+            }
+            if (state is QuestionLayoutError) {
+              return Center(
+                child: Icon(Icons.error),
+              );
+            }
+            return Center(
+                child:
+                    CircularProgressIndicator()); // TODO fajne ładowanie pytania(cos jak w spotify/netflix)
+          },
+        ),
       ),
     );
   }

@@ -16,6 +16,7 @@ const fitnessPath = 'assets/images/fitness.svg';
 const healthyPath = 'assets/images/healthy.svg';
 const loadingAnimation = 'assets/flare/loading_screen.flr';
 const basicAvatarImage = 'assets/images/basic_avatar.png';
+const helloIconPath = 'assets/icons/hello_icon.svg';
 
 final textStyleClassic = TextStyle(
     color: Colors.black,
