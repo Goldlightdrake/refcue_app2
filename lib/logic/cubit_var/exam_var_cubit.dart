@@ -5,10 +5,16 @@ class ExamScoreCubit extends Cubit<double> {
 
   void checkAnswer(String userAnswer, String questionAnswer, int type) {
     if (type == 0) {
-      List listQuestionAnswer = questionAnswer.split(',');
-      List listUserAnswer = userAnswer.split(',');
-      if (listUserAnswer[0] == listQuestionAnswer[0]) {
-        //TODO zrobić punktacje
+      if (userAnswer[0] == questionAnswer[0]) {
+        if (userAnswer[2] == questionAnswer[2]) {
+          if (userAnswer[1] == questionAnswer[1]) {
+            emit(state + 1);
+          } else if (int.parse(userAnswer[1]) + 1 ==
+                  int.parse(questionAnswer[1]) ||
+              int.parse(userAnswer[1]) - 1 == int.parse(questionAnswer[1])) {
+            emit(state + 0.5);
+          }
+        }
       }
     } else if (type == 1) {
     } else {

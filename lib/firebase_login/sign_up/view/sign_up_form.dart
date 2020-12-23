@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/firebase_login/cubit/show_password_dart_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter_firebase_login/firebase_login/sign_up/sign_up.dart';
@@ -68,21 +69,37 @@ class _EmailInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<SignUpCubit>().passwordChanged(password),
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'hasło',
-            helperText: '',
-            errorText: state.password.invalid ? 'Niepoprawne hasło' : null,
-          ),
-        );
-      },
+    return BlocProvider(
+      create: (context) => ShowPasswordCubit(),
+      child: BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) => previous.password != current.password,
+        builder: (context, state) {
+          return BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
+            builder: (context, showPassState) {
+              return TextField(
+                key: const Key('signUpForm_passwordInput_textField'),
+                onChanged: (password) =>
+                    context.read<SignUpCubit>().passwordChanged(password),
+                obscureText: showPassState == ShowPassword() ? false : true,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () => showPassState == ShowPassword()
+                        ? context.read<ShowPasswordCubit>().hidePassword()
+                        : context.read<ShowPasswordCubit>().showPassword(),
+                    child: Icon(showPassState == ShowPassword()
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                  ),
+                  labelText: 'hasło',
+                  helperText: '',
+                  errorText:
+                      state.password.invalid ? 'Niepoprawne hasło' : null,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -90,26 +107,41 @@ class _PasswordInput extends StatelessWidget {
 class _ConfirmPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpCubit, SignUpState>(
-      buildWhen: (previous, current) =>
-          previous.password != current.password ||
-          previous.confirmedPassword != current.confirmedPassword,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('signUpForm_confirmedPasswordInput_textField'),
-          onChanged: (confirmPassword) => context
-              .read<SignUpCubit>()
-              .confirmedPasswordChanged(confirmPassword),
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'powtórz hasło',
-            helperText: '',
-            errorText: state.confirmedPassword.invalid
-                ? 'Hasła do siebie nie pasują!'
-                : null,
-          ),
-        );
-      },
+    return BlocProvider(
+      create: (context) => ShowPasswordCubit(),
+      child: BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) =>
+            previous.password != current.password ||
+            previous.confirmedPassword != current.confirmedPassword,
+        builder: (context, state) {
+          return BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
+            builder: (context, showPassState) {
+              return TextField(
+                key: const Key('signUpForm_confirmedPasswordInput_textField'),
+                onChanged: (confirmPassword) => context
+                    .read<SignUpCubit>()
+                    .confirmedPasswordChanged(confirmPassword),
+                obscureText: showPassState == ShowPassword() ? false : true,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () => showPassState == ShowPassword()
+                        ? context.read<ShowPasswordCubit>().hidePassword()
+                        : context.read<ShowPasswordCubit>().showPassword(),
+                    child: Icon(showPassState == ShowPassword()
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                  ),
+                  labelText: 'powtórz hasło',
+                  helperText: '',
+                  errorText: state.confirmedPassword.invalid
+                      ? 'Hasła do siebie nie pasują!'
+                      : null,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -10,8 +10,9 @@ abstract class AnswerState extends Equatable {
 class AnswerInitial extends AnswerState {}
 
 class AnswerPicked extends AnswerState {
-  final int index;
+  final String answer;
   AnswerPicked({
-    this.index,
+    this.answer,
   });
+  String toString() => '{AnswerPicked: $answer}';
 }

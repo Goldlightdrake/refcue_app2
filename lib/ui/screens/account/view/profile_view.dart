@@ -1,5 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
@@ -92,16 +93,20 @@ class ProfileScreen extends StatelessWidget {
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
           firstChild: GestureDetector(
-            onTap: () =>
-                ThemeSwitcher.of(context).changeTheme(theme: kLightTheme),
+            onTap: () {
+              ThemeSwitcher.of(context).changeTheme(theme: kLightTheme);
+              UserSharedPreference.setThemeDataPrefs(false);
+            },
             child: Icon(
               LineAwesomeIcons.sun,
               size: ScreenUtil().setSp(kSpacingUnit.w * 3),
             ),
           ),
           secondChild: GestureDetector(
-            onTap: () =>
-                ThemeSwitcher.of(context).changeTheme(theme: kDarkTheme),
+            onTap: () {
+              ThemeSwitcher.of(context).changeTheme(theme: kDarkTheme);
+              UserSharedPreference.setThemeDataPrefs(true);
+            },
             child: Icon(
               LineAwesomeIcons.moon,
               size: ScreenUtil().setSp(kSpacingUnit.w * 3),

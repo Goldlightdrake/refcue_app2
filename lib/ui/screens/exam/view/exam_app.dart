@@ -20,6 +20,7 @@ class ExamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> userAnswersList = [for (var i = 0; i < amount; i++) '-'];
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -29,8 +30,10 @@ class ExamScreen extends StatelessWidget {
           create: (context) => ExamScoreCubit(),
         ),
         BlocProvider(
-          create: (context) =>
-              AnswerCubit(scoreCubit: context.read<ExamScoreCubit>()),
+          create: (context) => AnswerCubit(
+            userAnswersList: userAnswersList,
+            scoreCubit: context.read<ExamScoreCubit>(),
+          ),
         )
       ],
       child: BlocProvider(
@@ -52,7 +55,10 @@ class ExamScreen extends StatelessWidget {
               if (state is ExamError) {
                 return Center(
                     child: Column(
-                  children: [Icon(Icons.cloud_off), Text('Brak internetu :c')],
+                  children: [
+                    Icon(Icons.error),
+                    Text('Coś poszło nie tak :/ Spróbuj zrestarować aplikacje')
+                  ],
                 ));
               }
               if (state is ExamReady) {
@@ -62,7 +68,14 @@ class ExamScreen extends StatelessWidget {
               }
               if (state is ExamFinished) {
                 return Center(
-                  child: Text('exam finished'),
+                  child: Column(
+                    children: [
+                      Text(context.watch<ExamScoreCubit>().state.toString()),
+                      Text(
+                        context.watch<AnswerCubit>().userAnswersList.toString(),
+                      ),
+                    ],
+                  ),
                 );
               }
               return Center(

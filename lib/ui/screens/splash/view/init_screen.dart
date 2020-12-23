@@ -34,14 +34,19 @@ class _InitScreenPageState extends State<InitScreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Image(
-            image: AssetImage(
-          ThemeProvider.of(context).brightness == Brightness.dark
-              ? logoDarkPath
-              : logoPath,
-        )),
-        width: Responsive.width(50, context));
+    print(ThemeProvider.of(context).brightness);
+    return Scaffold(
+        backgroundColor: ThemeProvider.of(context).primaryColor,
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Image(
+                image: AssetImage(
+              ThemeProvider.of(context).brightness == Brightness.dark
+                  ? logoDarkPath
+                  : logoPath,
+            )),
+          ),
+        ));
   }
 }

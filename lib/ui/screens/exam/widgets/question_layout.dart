@@ -1,6 +1,8 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:flutter_firebase_login/logic/cubit_answer_type_0/card_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
@@ -93,38 +95,74 @@ class QuestionLayout extends StatelessWidget {
       // color: Colors.white,
       margin: EdgeInsets.symmetric(
           horizontal: ScreenUtil().setSp(kSpacingUnit.w * 4)),
-      height: kSpacingUnit.w * 40,
+      height: kSpacingUnit.w * 25,
       child: SingleChildScrollView(
         child: Text(
           question.questionText,
-          style: TextStyle(fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.8)),
+          style: TextStyle(
+              fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600),
         ),
       ),
     );
 
     //Building widget
-    return Scaffold(
-        body: Column(
-      children: [
-        Stack(
-          children: [
-            backgroundForHeader,
-            header,
-          ],
-          alignment: Alignment.center,
-        ),
-        SizedBox(height: kSpacingUnit.w * 8),
-        questionText,
-        SizedBox(height: kSpacingUnit.w * 2),
-        RaisedButton(
-          onPressed: () =>
-              context.read<ExamQuestionIndexCubit>().goToNextQuestion(),
-        ),
-        AnswerLayout(
-          typeOfAnswer: question.type,
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => YellowCardCubit()),
+        BlocProvider(create: (context) => RedCardCubit()),
       ],
-    ));
+      child: Scaffold(
+          body: Column(
+        children: [
+          Stack(
+            children: [
+              backgroundForHeader,
+              header,
+            ],
+            alignment: Alignment.center,
+          ),
+          SizedBox(height: kSpacingUnit.w * 8),
+          questionText,
+          SizedBox(height: kSpacingUnit.w * 2),
+          Container(
+            height: kSpacingUnit.w * 22,
+            child: AnswerLayout(
+              key: UniqueKey(),
+              typeOfAnswer: question.type,
+            ),
+          ),
+          Builder(
+            builder: (context) => RaisedButton(
+                onPressed: () {
+                  if (question.type == 0) {
+                    var yellowCards =
+                        context.read<YellowCardCubit>().state.toString();
+                    var redCards =
+                        context.read<RedCardCubit>().state.toString();
+                    context.read<AnswerCubit>().takeAnswersCardsType(
+                        question.answer,
+                        question.type,
+                        context.read<ExamQuestionIndexCubit>().state,
+                        yellowCards,
+                        redCards);
+                    context.read<YellowCardCubit>().clearCards();
+                    context.read<RedCardCubit>().clearCards();
+                  } else {
+                    context.read<AnswerCubit>().takeAnswer(
+                        question.answer,
+                        question.type,
+                        context.read<ExamQuestionIndexCubit>().state);
+                  }
+
+                  context.read<ExamQuestionIndexCubit>().goToNextQuestion();
+                },
+                child: Icon(Icons.arrow_forward)),
+          )
+        ],
+      )),
+    );
   }
 }
 
@@ -145,7 +183,7 @@ class RPSCustomPainter extends CustomPainter {
     path_0.moveTo(0, 0);
     path_0.quadraticBezierTo(
         size.width * 0.01, size.height * 0.99, size.width * 0.13, size.height);
-    path_0.cubicTo(size.width * 0.19, size.height * 0.99, size.width * 0.87,
+    path_0.cubicTo(size.width * 0.13, size.height * 1.00, size.width * 0.87,
         size.height * 1.01, size.width * 0.88, size.height);
     path_0.quadraticBezierTo(
         size.width * 0.99, size.height * 1.00, size.width, 0);
@@ -153,6 +191,8 @@ class RPSCustomPainter extends CustomPainter {
     path_0.close();
 
     canvas.drawPath(path_0, paint_0);
+    canvas.drawShadow(
+        path_0.shift(Offset(0, 5)), Theme.of(context).shadowColor, 2.0, true);
   }
 
   @override

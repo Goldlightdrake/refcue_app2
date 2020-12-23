@@ -8,19 +8,33 @@ part 'answer_state.dart';
 
 class AnswerCubit extends Cubit<AnswerState> {
   final ExamScoreCubit scoreCubit;
-  AnswerCubit({
-    @required this.scoreCubit,
-  }) : super(AnswerInitial());
+  final List<String> userAnswersList;
+  AnswerCubit({@required this.scoreCubit, this.userAnswersList})
+      : super(AnswerInitial());
 
-  List<String> userAnswersList = [];
-
-  void pickAnswer(int index) {
-    emit(AnswerPicked(index: index));
+  void pickAnswer(String answer) {
+    emit(AnswerInitial());
+    emit(AnswerPicked(answer: answer));
   }
 
-  void takeAnswer(String answer, String questionAnswer, int type) {
-    userAnswersList.add(answer);
-    scoreCubit.checkAnswer(answer, questionAnswer, type);
+  //TODO przyznawanie pkt na koniec testu
+  void takeAnswer(String questionAnswer, int type, int questionIndex) {
+    if (state is AnswerPicked) {
+      userAnswersList[questionIndex] = (state as AnswerPicked).answer;
+      scoreCubit.checkAnswer(
+          (state as AnswerPicked).answer, questionAnswer, type);
+    }
+    emit(AnswerInitial());
+  }
+
+  void takeAnswersCardsType(String questionAnswer, int type, int questionIndex,
+      String yellowCards, String redCards) {
+    if (state is AnswerPicked) {
+      String userAnswer =
+          (state as AnswerPicked).answer + yellowCards + redCards;
+      userAnswersList[questionIndex] = userAnswer;
+      scoreCubit.checkAnswer(userAnswer, questionAnswer, type);
+    }
     emit(AnswerInitial());
   }
 }

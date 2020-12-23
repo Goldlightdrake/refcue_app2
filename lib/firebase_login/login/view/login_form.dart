@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_login/firebase_login/cubit/show_password_dart_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:formz/formz.dart';
 import '../login.dart';
@@ -82,23 +83,38 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FocusNode myFocusNode = new FocusNode();
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginCubit>().passwordChanged(password),
-          obscureText: true,
-          decoration: InputDecoration(
-            labelStyle: TextStyle(
-                color: myFocusNode.hasFocus ? kAccentColor : Colors.grey),
-            labelText: 'hasło',
-            helperText: '',
-            errorText: state.password.invalid ? 'Podano złe hasło' : null,
-          ),
-        );
-      },
+    return BlocProvider(
+      create: (context) => ShowPasswordCubit(),
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) => previous.password != current.password,
+        builder: (context, state) {
+          return BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
+            builder: (context, showPassState) {
+              return TextField(
+                key: const Key('loginForm_passwordInput_textField'),
+                onChanged: (password) =>
+                    context.read<LoginCubit>().passwordChanged(password),
+                obscureText: showPassState == ShowPassword() ? false : true,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () => showPassState == ShowPassword()
+                        ? context.read<ShowPasswordCubit>().hidePassword()
+                        : context.read<ShowPasswordCubit>().showPassword(),
+                    child: Icon(showPassState == ShowPassword()
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                  ),
+                  labelStyle: TextStyle(
+                      color: myFocusNode.hasFocus ? kAccentColor : Colors.grey),
+                  labelText: 'hasło',
+                  helperText: '',
+                  errorText: state.password.invalid ? 'Podano złe hasło' : null,
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

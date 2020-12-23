@@ -25,9 +25,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              height: 150.0,
-              padding: EdgeInsets.only(
-                  top: 20.0, right: 40.0, left: 40.0, bottom: 10.0),
+              height: kSpacingUnit.w * 15,
+              padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 4),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -35,10 +34,10 @@ class HomePage extends StatelessWidget {
                       ThemeProvider.of(context).brightness == Brightness.dark
                           ? logoDarkPath
                           : logoPath,
-                      width: 100),
+                      width: kSpacingUnit.w * 12),
                   IconButton(
                     icon: Icon(Icons.account_circle_outlined),
-                    iconSize: 50.0,
+                    iconSize: kSpacingUnit.w * 6,
                     onPressed: () =>
                         Navigator.of(context).push<void>(ProfileScreen.route()),
                   ),
@@ -46,7 +45,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 2),
                 alignment: Alignment.centerLeft,
                 height: 80,
                 child: Column(
@@ -55,7 +54,7 @@ class HomePage extends StatelessWidget {
                     Text(
                       takeDate(),
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: kSpacingUnit.w * 2,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w300,
                       ),
@@ -67,7 +66,7 @@ class HomePage extends StatelessWidget {
                               ? 'Witaj, Panie Bezimienny'
                               : 'Witaj, ' + user.name,
                           style: TextStyle(
-                            fontSize: kSpacingUnit.w * 2,
+                            fontSize: kSpacingUnit.w * 2.2,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                           ),
@@ -84,9 +83,9 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 )),
-            SizedBox(height: 10.0),
+            SizedBox(height: kSpacingUnit.w * 1.5),
             Container(
-              height: 210.0,
+              height: kSpacingUnit.w * 22,
               width: double.infinity,
               child: ListView(
                 padding: EdgeInsets.only(bottom: 20.0, left: 8.0),

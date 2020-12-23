@@ -15,13 +15,9 @@ class ExamViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => BuildingQuestionLayoutCubit()
-            ..buildQuestionLayout(listOfQuestions[0]),
-        )
-      ],
+    return BlocProvider(
+      create: (context) => BuildingQuestionLayoutCubit()
+        ..buildQuestionLayout(listOfQuestions[0]),
       child: BlocListener<ExamQuestionIndexCubit, int>(
         listenWhen: (previousState, state) {
           if (state != previousState) {

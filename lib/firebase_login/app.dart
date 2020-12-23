@@ -43,38 +43,36 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-        initTheme: kDarkTheme,
-        child: Builder(builder: (context) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeProvider.of(context),
-            navigatorKey: _navigatorKey,
-            builder: (context, child) {
-              return BlocListener<AuthenticationBloc, AuthenticationState>(
-                listener: (context, state) {
-                  switch (state.status) {
-                    case AuthenticationStatus.authenticated:
-                      _navigator.pushAndRemoveUntil<void>(
-                        HomePage.route(),
-                        (route) => false,
-                      );
-                      break;
-                    case AuthenticationStatus.unauthenticated:
-                      _navigator.pushAndRemoveUntil<void>(
-                        LoginPage.route(),
-                        (route) => false,
-                      );
-                      break;
-                    default:
-                      break;
-                  }
-                },
-                child: child,
-              );
+    return Builder(builder: (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeProvider.of(context),
+        navigatorKey: _navigatorKey,
+        builder: (context, child) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              switch (state.status) {
+                case AuthenticationStatus.authenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    HomePage.route(),
+                    (route) => false,
+                  );
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    LoginPage.route(),
+                    (route) => false,
+                  );
+                  break;
+                default:
+                  break;
+              }
             },
-            onGenerateRoute: (_) => SplashPage.route(),
+            child: child,
           );
-        }));
+        },
+        onGenerateRoute: (_) => SplashPage.route(),
+      );
+    });
   }
 }

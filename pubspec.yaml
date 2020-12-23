@@ -13,7 +13,7 @@ dependencies:
     path: packages/authentication_repository
   animated_theme_switcher: ^1.0.9
   bloc: ^6.1.0
-  equatable: ^1.2.3
+  equatable: ^1.2.5
   flare_flutter: ^2.0.6
   flutter_bloc: ^6.1.0
   flutter_screenutil: ^3.2.0
@@ -26,6 +26,7 @@ dependencies:
   pedantic: ^1.9.0
   flutter_auth_buttons: ^0.10.0
   cloud_firestore: ^0.14.4
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

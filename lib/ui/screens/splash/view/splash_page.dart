@@ -9,14 +9,15 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.yellow[400],
-      body: Center(
-        child: FlareActor(
-          loadingAnimation,
-          animation: 'loading',
-        ),
-      ),
-    );
+    return Scaffold();
+    // return Scaffold(
+    //   backgroundColor: Colors.yellow[400],
+    //   body: Center(
+    //     child: FlareActor(
+    //       loadingAnimation,
+    //       animation: 'loading',
+    //     ),
+    //   ),
+    // );
   }
 }

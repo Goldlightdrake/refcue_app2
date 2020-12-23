@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
 
 part 'building_question_layout_state.dart';
 
