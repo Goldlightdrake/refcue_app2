@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/firebase_login/cubit/show_password_dart_cubit.dart';
+import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter_firebase_login/firebase_login/sign_up/sign_up.dart';
@@ -70,23 +70,27 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShowPasswordCubit(),
+      create: (context) => VisibilityPasswordCubit(),
       child: BlocBuilder<SignUpCubit, SignUpState>(
         buildWhen: (previous, current) => previous.password != current.password,
         builder: (context, state) {
-          return BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
-            builder: (context, showPassState) {
+          return Builder(
+            builder: (context) {
+              final passwordVisibilty =
+                  context.watch<VisibilityPasswordCubit>().state.showPassword;
               return TextField(
                 key: const Key('signUpForm_passwordInput_textField'),
                 onChanged: (password) =>
                     context.read<SignUpCubit>().passwordChanged(password),
-                obscureText: showPassState == ShowPassword() ? false : true,
+                obscureText: !passwordVisibilty,
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
-                    onTap: () => showPassState == ShowPassword()
-                        ? context.read<ShowPasswordCubit>().hidePassword()
-                        : context.read<ShowPasswordCubit>().showPassword(),
-                    child: Icon(showPassState == ShowPassword()
+                    onTap: () => passwordVisibilty
+                        ? context.read<VisibilityPasswordCubit>().hidePassword()
+                        : context
+                            .read<VisibilityPasswordCubit>()
+                            .showPassword(),
+                    child: Icon(passwordVisibilty
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),
@@ -108,26 +112,30 @@ class _ConfirmPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShowPasswordCubit(),
+      create: (context) => VisibilityPasswordCubit(),
       child: BlocBuilder<SignUpCubit, SignUpState>(
         buildWhen: (previous, current) =>
             previous.password != current.password ||
             previous.confirmedPassword != current.confirmedPassword,
         builder: (context, state) {
-          return BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
-            builder: (context, showPassState) {
+          return Builder(
+            builder: (context) {
+              final passwordVisibilty =
+                  context.watch<VisibilityPasswordCubit>().state.showPassword;
               return TextField(
                 key: const Key('signUpForm_confirmedPasswordInput_textField'),
                 onChanged: (confirmPassword) => context
                     .read<SignUpCubit>()
                     .confirmedPasswordChanged(confirmPassword),
-                obscureText: showPassState == ShowPassword() ? false : true,
+                obscureText: !passwordVisibilty,
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
-                    onTap: () => showPassState == ShowPassword()
-                        ? context.read<ShowPasswordCubit>().hidePassword()
-                        : context.read<ShowPasswordCubit>().showPassword(),
-                    child: Icon(showPassState == ShowPassword()
+                    onTap: () => passwordVisibilty
+                        ? context.read<VisibilityPasswordCubit>().hidePassword()
+                        : context
+                            .read<VisibilityPasswordCubit>()
+                            .showPassword(),
+                    child: Icon(passwordVisibilty
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),

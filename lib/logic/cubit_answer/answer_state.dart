@@ -15,4 +15,15 @@ class AnswerPicked extends AnswerState {
     this.answer,
   });
   String toString() => '{AnswerPicked: $answer}';
+
+  AnswerPicked copyWith({
+    String answer,
+  }) {
+    return AnswerPicked(
+      answer: answer ?? this.answer,
+    );
+  }
+
+  @override
+  List<Object> get props => [answer];
 }

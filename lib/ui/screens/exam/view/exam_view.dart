@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
+import 'package:flutter_firebase_login/logic/bloc.dart';
 import 'package:flutter_firebase_login/logic/cubit_question_layout/building_question_layout_cubit.dart';
 import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
 import 'package:flutter_firebase_login/ui/screens/exam/widgets/question_layout.dart';
@@ -20,7 +21,8 @@ class ExamViewScreen extends StatelessWidget {
         ..buildQuestionLayout(listOfQuestions[0]),
       child: BlocListener<ExamQuestionIndexCubit, int>(
         listenWhen: (previousState, state) {
-          if (state != previousState) {
+          if (state != previousState &&
+              state != context.read<ExamBloc>().maxIndex) {
             return true;
           }
           return false;
@@ -39,9 +41,13 @@ class ExamViewScreen extends StatelessWidget {
               );
             }
             if (state is QuestionLayoutError) {
-              return Center(
-                child: Icon(Icons.error),
-              );
+              return Row(children: [
+                Text(
+                  "Coś poszło nie tak! Spróbuj zresetować aplikacje",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Icon(Icons.error, size: 32),
+              ], mainAxisAlignment: MainAxisAlignment.center);
             }
             return Center(
                 child:

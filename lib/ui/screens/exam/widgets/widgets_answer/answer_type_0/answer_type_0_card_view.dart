@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/logic/bloc.dart';
 import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
 import 'package:flutter_firebase_login/logic/cubit_answer_type_0/answer_type_0_cubit.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer_type_0/card_cubit.dart';
+import 'package:flutter_firebase_login/logic/cubit_answer_type_0/cubit/cards_cubit_cubit.dart';
 import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,8 +31,9 @@ class AnswerType0CardsView extends StatelessWidget {
                   children: [
                     FlatButton(
                       onPressed: () =>
-                          context.read<YellowCardCubit>().addYellowCard(),
-                      child: Icon(Icons.add),
+                          context.read<CardsCubit>().addYellowCard(),
+                      child: Icon(Icons.add,
+                          color: Theme.of(context).iconTheme.color),
                       minWidth: kSpacingUnit.w * 10,
                     ),
                     Container(
@@ -50,16 +51,22 @@ class AnswerType0CardsView extends StatelessWidget {
                           )
                         ],
                       ),
-                      child: Text(
-                        context.watch<YellowCardCubit>().state.toString(),
-                        style: TextStyle(
-                            color: Colors.black, fontSize: kSpacingUnit.w * 3),
-                      ),
+                      child: Builder(builder: (context) {
+                        return Text(
+                          context
+                              .watch<CardsCubit>()
+                              .state
+                              .yellowCards
+                              .toString(),
+                          style: TextStyle(fontSize: kSpacingUnit.w * 3),
+                        );
+                      }),
                     ),
                     FlatButton(
                       onPressed: () =>
-                          context.read<YellowCardCubit>().removeYellowCard(),
-                      child: Icon(Icons.remove),
+                          context.read<CardsCubit>().removeYellowCard(),
+                      child: Icon(Icons.remove,
+                          color: Theme.of(context).iconTheme.color),
                       minWidth: kSpacingUnit.w * 10,
                     ),
                   ],
@@ -67,35 +74,38 @@ class AnswerType0CardsView extends StatelessWidget {
                 Column(
                   children: [
                     FlatButton(
-                      onPressed: () =>
-                          context.read<RedCardCubit>().addRedCard(),
-                      child: Icon(Icons.add),
+                      onPressed: () => context.read<CardsCubit>().addRedCard(),
+                      child: Icon(Icons.add,
+                          color: Theme.of(context).iconTheme.color),
                       minWidth: kSpacingUnit.w * 10,
                     ),
                     Container(
-                        width: kSpacingUnit.w * 6,
-                        height: kSpacingUnit.w * 10,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.red,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).shadowColor,
-                              offset: Offset(0, 5),
-                              blurRadius: 3.0,
-                            )
-                          ],
-                        ),
-                        child: Text(
-                            context.watch<RedCardCubit>().state.toString(),
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: kSpacingUnit.w * 3))),
+                      width: kSpacingUnit.w * 6,
+                      height: kSpacingUnit.w * 10,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.red,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).shadowColor,
+                            offset: Offset(0, 5),
+                            blurRadius: 3.0,
+                          )
+                        ],
+                      ),
+                      child: Builder(builder: (context) {
+                        return Text(
+                          context.watch<CardsCubit>().state.redCards.toString(),
+                          style: TextStyle(fontSize: kSpacingUnit.w * 3),
+                        );
+                      }),
+                    ),
                     FlatButton(
                       onPressed: () =>
-                          context.read<RedCardCubit>().removeRedCard(),
-                      child: Icon(Icons.remove),
+                          context.read<CardsCubit>().removeRedCard(),
+                      child: Icon(Icons.remove,
+                          color: Theme.of(context).iconTheme.color),
                       minWidth: kSpacingUnit.w * 10,
                     ),
                   ],

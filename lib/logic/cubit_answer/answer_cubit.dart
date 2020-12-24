@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import 'package:flutter_firebase_login/data/models/question.dart';
+
 import '../cubit_var/exam_var_cubit.dart';
 
 part 'answer_state.dart';
@@ -13,7 +15,6 @@ class AnswerCubit extends Cubit<AnswerState> {
       : super(AnswerInitial());
 
   void pickAnswer(String answer) {
-    emit(AnswerInitial());
     emit(AnswerPicked(answer: answer));
   }
 
@@ -21,8 +22,8 @@ class AnswerCubit extends Cubit<AnswerState> {
   void takeAnswer(String questionAnswer, int type, int questionIndex) {
     if (state is AnswerPicked) {
       userAnswersList[questionIndex] = (state as AnswerPicked).answer;
-      scoreCubit.checkAnswer(
-          (state as AnswerPicked).answer, questionAnswer, type);
+      // scoreCubit.checkAnswer(
+      //     (state as AnswerPicked).answer, questionAnswer, type);
     }
     emit(AnswerInitial());
   }
@@ -33,8 +34,15 @@ class AnswerCubit extends Cubit<AnswerState> {
       String userAnswer =
           (state as AnswerPicked).answer + yellowCards + redCards;
       userAnswersList[questionIndex] = userAnswer;
-      scoreCubit.checkAnswer(userAnswer, questionAnswer, type);
+      // scoreCubit.checkAnswer(userAnswer, questionAnswer, type);
     }
     emit(AnswerInitial());
+  }
+
+  void checkUserAnswers(List<Question> listOfQuestions) {
+    for (int i = 0; i < userAnswersList.length; i++) {
+      scoreCubit.checkAnswer(userAnswersList[i], listOfQuestions[i].answer,
+          listOfQuestions[i].type);
+    }
   }
 }

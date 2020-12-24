@@ -2,7 +2,8 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer_type_0/card_cubit.dart';
+
+import 'package:flutter_firebase_login/logic/cubit_answer_type_0/cubit/cards_cubit_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
@@ -73,7 +74,7 @@ class QuestionLayout extends StatelessWidget {
                           context.watch<ExamBloc>().maxIndex) *
                       (context.watch<ExamQuestionIndexCubit>().state + 1),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Theme.of(context).accentColor,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
@@ -107,12 +108,56 @@ class QuestionLayout extends StatelessWidget {
       ),
     );
 
+    void submitButtonAction(BuildContext context) {
+      if (question.type == 0) {
+        var yellowCards =
+            context.read<CardsCubit>().state.yellowCards.toString();
+        var redCards = context.read<CardsCubit>().state.redCards.toString();
+        context.read<AnswerCubit>().takeAnswersCardsType(
+            question.answer,
+            question.type,
+            context.read<ExamQuestionIndexCubit>().state,
+            yellowCards,
+            redCards);
+        context.read<CardsCubit>().clearCards();
+      } else {
+        context.read<AnswerCubit>().takeAnswer(question.answer, question.type,
+            context.read<ExamQuestionIndexCubit>().state);
+      }
+      if (context.read<ExamQuestionIndexCubit>().state ==
+          context.read<ExamBloc>().maxIndex - 1) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text("Chcesz zakończyć test?"),
+                  elevation: 24.0,
+                  actions: [
+                    FlatButton(
+                        child: Text("Tak"),
+                        onPressed: () {
+                          context.read<AnswerCubit>().checkUserAnswers(
+                              (context.read<ExamBloc>().state as ExamReady)
+                                  .questionList);
+                          context
+                              .read<ExamQuestionIndexCubit>()
+                              .goToNextQuestion();
+                          Navigator.of(context, rootNavigator: true).pop();
+                        }),
+                    FlatButton(
+                      child: Text("Nie"),
+                      onPressed: () =>
+                          Navigator.of(context, rootNavigator: true).pop(),
+                    )
+                  ],
+                ));
+      } else {
+        context.read<ExamQuestionIndexCubit>().goToNextQuestion();
+      }
+    }
+
     //Building widget
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => YellowCardCubit()),
-        BlocProvider(create: (context) => RedCardCubit()),
-      ],
+    return BlocProvider(
+      create: (context) => CardsCubit(),
       child: Scaffold(
           body: Column(
         children: [
@@ -126,39 +171,48 @@ class QuestionLayout extends StatelessWidget {
           SizedBox(height: kSpacingUnit.w * 8),
           questionText,
           SizedBox(height: kSpacingUnit.w * 2),
-          Container(
-            height: kSpacingUnit.w * 22,
-            child: AnswerLayout(
-              key: UniqueKey(),
-              typeOfAnswer: question.type,
+          BlocListener<BuildingQuestionLayoutCubit,
+              BuildingQuestionLayoutState>(
+            listener: (context, state) {
+              var userAnswer = context.read<AnswerCubit>().userAnswersList[
+                  context.read<ExamQuestionIndexCubit>().state];
+              if (userAnswer != "-") {
+                if (userAnswer[0] == "t") {
+                  userAnswer = "tak";
+                }
+                if (userAnswer[0] == "n") {
+                  userAnswer = "nie";
+                }
+                context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
+                if (userAnswer != "tak" || userAnswer != "nie") {
+                  if (userAnswer[1] != '0') {
+                    context
+                        .read<CardsCubit>()
+                        .setYellowCards(int.parse(userAnswer[1]));
+                  }
+                  if (userAnswer[2] != '0') {
+                    context
+                        .read<CardsCubit>()
+                        .setRedCards(int.parse(userAnswer[2]));
+                  }
+                }
+              }
+            },
+            child: Container(
+              height: kSpacingUnit.w * 22,
+              child: AnswerLayout(
+                key: UniqueKey(),
+                typeOfAnswer: question.type,
+              ),
             ),
           ),
           Builder(
             builder: (context) => RaisedButton(
+                color: Theme.of(context).accentColor,
                 onPressed: () {
-                  if (question.type == 0) {
-                    var yellowCards =
-                        context.read<YellowCardCubit>().state.toString();
-                    var redCards =
-                        context.read<RedCardCubit>().state.toString();
-                    context.read<AnswerCubit>().takeAnswersCardsType(
-                        question.answer,
-                        question.type,
-                        context.read<ExamQuestionIndexCubit>().state,
-                        yellowCards,
-                        redCards);
-                    context.read<YellowCardCubit>().clearCards();
-                    context.read<RedCardCubit>().clearCards();
-                  } else {
-                    context.read<AnswerCubit>().takeAnswer(
-                        question.answer,
-                        question.type,
-                        context.read<ExamQuestionIndexCubit>().state);
-                  }
-
-                  context.read<ExamQuestionIndexCubit>().goToNextQuestion();
+                  submitButtonAction(context);
                 },
-                child: Icon(Icons.arrow_forward)),
+                child: Icon(Icons.arrow_forward, color: Colors.white)),
           )
         ],
       )),
@@ -191,8 +245,8 @@ class RPSCustomPainter extends CustomPainter {
     path_0.close();
 
     canvas.drawPath(path_0, paint_0);
-    canvas.drawShadow(
-        path_0.shift(Offset(0, 5)), Theme.of(context).shadowColor, 2.0, true);
+    canvas.drawShadow(path_0.shift(Offset(0, 5)),
+        Theme.of(context).shadowColor.withAlpha(50), 1.0, true);
   }
 
   @override
