@@ -74,17 +74,17 @@ int colorOfAnswer(answer) {
   switch (answer) {
     case 0:
       {
-        return 0xfff56da3;
+        return 0xffff073a;
       }
       break;
     case 1:
       {
-        return 0xffe8e46b;
+        return 0xeeF2EA02;
       }
       break;
     case 2:
       {
-        return 0xff32a852;
+        return 0xee39FF14;
       }
       break;
   }
@@ -113,4 +113,11 @@ String firstFewWords(String bigSentence) {
 String changingViewOfAnswer(String awfullAnswer) {
   List<String> answer = awfullAnswer.replaceAll(' ', '').split(',');
   return answer.join('');
+}
+
+String greatViewOfScore(double score) {
+  if (score % 1 == 0) {
+    return score.round().toString();
+  }
+  return score.toString();
 }

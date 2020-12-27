@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flare_flutter/asset_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
@@ -8,13 +9,40 @@ import 'package:flutter_firebase_login/ui/screens/account/view/widgets/profile_l
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => ProfileScreen());
   }
 
   @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  Animation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1500));
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _animationController.forward();
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     ScreenUtil.init(context,
         designSize: Size(414, 896), allowFontScaling: true);
@@ -28,26 +56,34 @@ class ProfileScreen extends StatelessWidget {
             margin: EdgeInsets.only(top: kSpacingUnit.w * 3),
             child: Stack(
               children: <Widget>[
-                CircleAvatar(
-                  radius: kSpacingUnit.w * 5,
-                  backgroundImage: AssetImage(basicAvatarImage),
+                Hero(
+                  tag: 'avatar',
+                  child: CircleAvatar(
+                    radius: kSpacingUnit.w * 5,
+                    backgroundImage: user.photo == null
+                        ? AssetImage(avatarIconPath)
+                        : NetworkImage(user.photo),
+                  ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    height: kSpacingUnit.w * 2.5,
-                    width: kSpacingUnit.w * 2.5,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      heightFactor: kSpacingUnit.w * 1.5,
-                      widthFactor: kSpacingUnit.w * 1.5,
-                      child: Icon(
-                        LineAwesomeIcons.pen,
-                        color: kDarkPrimaryColor,
-                        size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
+                FadeTransition(
+                  opacity: _animation,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      height: kSpacingUnit.w * 2.5,
+                      width: kSpacingUnit.w * 2.5,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).accentColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        heightFactor: kSpacingUnit.w * 1.5,
+                        widthFactor: kSpacingUnit.w * 1.5,
+                        child: Icon(
+                          LineAwesomeIcons.pen,
+                          color: kDarkPrimaryColor,
+                          size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
+                        ),
                       ),
                     ),
                   ),

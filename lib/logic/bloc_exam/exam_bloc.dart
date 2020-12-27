@@ -45,7 +45,8 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
       yield ExamFinished(
           userAnswers: answerCubit.userAnswersList,
           userScore: scoreCubit.state,
-          examMaxScore: maxIndex);
+          examMaxScore: maxIndex,
+          questionsList: (state as ExamReady).questionList);
     }
   }
 

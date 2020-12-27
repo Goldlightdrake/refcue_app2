@@ -5,7 +5,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/firebase_login/app.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_firebase_login/shared/responsive.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InitScreenPage extends StatefulWidget {
   const InitScreenPage({
@@ -34,18 +34,21 @@ class _InitScreenPageState extends State<InitScreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(ThemeProvider.of(context).brightness);
+    ScreenUtil.init(context,
+        designSize: Size(414, 896), allowFontScaling: true);
+
     return Scaffold(
         backgroundColor: ThemeProvider.of(context).primaryColor,
         body: Center(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Image(
+                width: kSpacingUnit.w * 20,
                 image: AssetImage(
-              ThemeProvider.of(context).brightness == Brightness.dark
-                  ? logoDarkPath
-                  : logoPath,
-            )),
+                  ThemeProvider.of(context).brightness == Brightness.dark
+                      ? logoDarkPath
+                      : logoPath,
+                )),
           ),
         ));
   }

@@ -35,11 +35,21 @@ class HomePage extends StatelessWidget {
                           ? logoDarkPath
                           : logoPath,
                       width: kSpacingUnit.w * 12),
-                  IconButton(
-                    icon: Icon(Icons.account_circle_outlined),
-                    iconSize: kSpacingUnit.w * 6,
-                    onPressed: () =>
-                        Navigator.of(context).push<void>(ProfileScreen.route()),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 500),
+                            pageBuilder: (_, __, ___) => ProfileScreen())),
+                    child: Hero(
+                      tag: 'avatar',
+                      child: CircleAvatar(
+                        radius: kSpacingUnit.w * 3,
+                        backgroundImage: user.photo == null
+                            ? AssetImage(avatarIconPath)
+                            : NetworkImage(user.photo),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -83,7 +93,7 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 )),
-            SizedBox(height: kSpacingUnit.w * 1.5),
+            SizedBox(height: kSpacingUnit.w * 2),
             Container(
               height: kSpacingUnit.w * 22,
               width: double.infinity,
@@ -101,8 +111,8 @@ class HomePage extends StatelessWidget {
                       examPath: examYellowPath,
                       time: 10,
                       quantity: 10,
-                      color1: 0xffd2d46c,
-                      color2: 0xfffcff5c),
+                      color1: 0xFFEBDE34,
+                      color2: 0xFFEBDA00),
                   ExamCard(
                       examPath: examBluePath,
                       time: 30,
@@ -117,7 +127,7 @@ class HomePage extends StatelessWidget {
                 height: 40.0,
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 alignment: Alignment.topLeft,
-                child: Text('Wybrane dla Ciebie!',
+                child: Text('Wybrane dla Ciebie',
                     style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'Montserrat',

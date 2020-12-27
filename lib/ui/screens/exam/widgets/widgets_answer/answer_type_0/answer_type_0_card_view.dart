@@ -42,7 +42,7 @@ class AnswerType0CardsView extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.yellow,
+                        color: Color(0xeeEBDE34),
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).shadowColor,
@@ -58,7 +58,9 @@ class AnswerType0CardsView extends StatelessWidget {
                               .state
                               .yellowCards
                               .toString(),
-                          style: TextStyle(fontSize: kSpacingUnit.w * 3),
+                          style: TextStyle(
+                            fontSize: kSpacingUnit.w * 3,
+                          ),
                         );
                       }),
                     ),

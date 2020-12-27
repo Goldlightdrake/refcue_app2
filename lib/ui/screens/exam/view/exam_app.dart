@@ -4,6 +4,7 @@ import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
 import 'package:flutter_firebase_login/logic/bloc.dart';
 import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
 import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/view/exam_finished.dart';
 
 import 'exam_view.dart';
 
@@ -67,16 +68,7 @@ class ExamScreen extends StatelessWidget {
                 );
               }
               if (state is ExamFinished) {
-                return Center(
-                  child: Column(
-                    children: [
-                      Text(context.watch<ExamScoreCubit>().state.toString()),
-                      Text(
-                        context.watch<AnswerCubit>().userAnswersList.toString(),
-                      ),
-                    ],
-                  ),
-                );
+                return FinishedExamScreen();
               }
               return Center(
                 child: CircularProgressIndicator(),

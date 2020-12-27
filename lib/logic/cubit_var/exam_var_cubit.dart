@@ -1,27 +1,35 @@
 import 'package:bloc/bloc.dart';
 
+import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:meta/meta.dart';
+
 class ExamScoreCubit extends Cubit<double> {
   ExamScoreCubit() : super(0);
 
-  void checkAnswer(String userAnswer, String questionAnswer, int type) {
+  int checkAnswer(String userAnswer, String questionAnswer, int type) {
     if (type == 0) {
       if (userAnswer[0] == questionAnswer[0]) {
         if (userAnswer[2] == questionAnswer[2]) {
           if (userAnswer[1] == questionAnswer[1]) {
             emit(state + 1);
+            return 2;
           } else if (int.parse(userAnswer[1]) + 1 ==
                   int.parse(questionAnswer[1]) ||
               int.parse(userAnswer[1]) - 1 == int.parse(questionAnswer[1])) {
             emit(state + 0.5);
+            return 1;
           }
         }
       }
     } else if (type == 1) {
+      //TODO typ 1 ocena
     } else {
       if (userAnswer == questionAnswer) {
         emit(state + 1);
+        return 2;
       }
     }
+    return 0;
   }
 }
 
