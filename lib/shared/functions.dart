@@ -1,3 +1,5 @@
+import 'dart:math';
+
 String takeDate() {
   var currrentDate = DateTime.now();
   String day = currrentDate.day.toString();
@@ -91,7 +93,12 @@ int colorOfAnswer(answer) {
 }
 
 List numberInRange(int amount) {
-  var randomList = new List<int>.generate(amount, (int index) => index + 1);
+  Random random = Random();
+  var randomList = new List<int>.generate(
+      amount,
+      (int index) =>
+          random.nextInt(18) +
+          1); //TODO zrobic cos zeby automatycznie pobieralo ilosc doc
   randomList.shuffle();
   return randomList;
 }
