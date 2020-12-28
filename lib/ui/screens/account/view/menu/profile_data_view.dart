@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_screenutil/size_extension.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class ProfileDataView extends StatelessWidget {
   static Route route() {
@@ -17,8 +16,6 @@ class ProfileDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-
     ScreenUtil.init(context,
         designSize: Size(414, 896), allowFontScaling: true);
     var header = Row(

@@ -11,13 +11,8 @@ class AnswerType0App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          //TODO ss
-          BlocProvider(
-              create: (context) =>
-                  AnswerType0Cubit(context.read<AnswerCubit>())),
-        ],
+    return BlocProvider(
+        create: (context) => AnswerType0Cubit(context.read<AnswerCubit>()),
         child: BlocBuilder<AnswerType0Cubit, AnswerType0State>(
           builder: (context, state) {
             if (state is AnswerType0Cards) {

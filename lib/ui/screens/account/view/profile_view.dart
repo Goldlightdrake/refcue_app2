@@ -1,5 +1,4 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flare_flutter/asset_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';

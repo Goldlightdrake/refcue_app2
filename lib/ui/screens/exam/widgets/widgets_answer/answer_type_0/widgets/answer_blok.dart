@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
-import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:flutter_firebase_login/shared/const.dart';
 
 Widget answerElement(String answerText) {
   return Builder(builder: (context) {

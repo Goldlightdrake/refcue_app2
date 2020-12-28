@@ -70,8 +70,10 @@ class ExamScreen extends StatelessWidget {
               if (state is ExamFinished) {
                 return FinishedExamScreen();
               }
-              return Center(
-                child: CircularProgressIndicator(),
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             },
           ),

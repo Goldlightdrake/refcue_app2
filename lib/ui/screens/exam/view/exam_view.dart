@@ -49,9 +49,9 @@ class ExamViewScreen extends StatelessWidget {
                 Icon(Icons.error, size: 32),
               ], mainAxisAlignment: MainAxisAlignment.center);
             }
-            return Center(
-                child:
-                    CircularProgressIndicator()); // TODO fajne ładowanie pytania(cos jak w spotify/netflix)
+            return Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ); // TODO fajne ładowanie pytania(cos jak w spotify/netflix)
           },
         ),
       ),

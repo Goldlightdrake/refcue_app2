@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/logic/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
 import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
 import 'package:flutter_firebase_login/logic/cubit_answer_type_0/answer_type_0_cubit.dart';
-
-import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
-import 'package:flutter_firebase_login/ui/screens/exam/widgets/widgets_answer/answer_type_0/widgets/answer_blok.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/widgets/widgets_answer/answer_type_0/widgets/answer_blok.dart';
 
 class AnswerType0View extends StatelessWidget {
   const AnswerType0View({Key key}) : super(key: key);

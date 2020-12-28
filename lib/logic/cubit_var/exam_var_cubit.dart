@@ -1,8 +1,5 @@
 import 'package:bloc/bloc.dart';
 
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
-import 'package:meta/meta.dart';
-
 class ExamScoreCubit extends Cubit<double> {
   ExamScoreCubit() : super(0);
 

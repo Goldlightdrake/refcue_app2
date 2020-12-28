@@ -1,6 +1,4 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
 
 class SplashPage extends StatelessWidget {
   static Route route() {
