@@ -1,14 +1,11 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
 
-import 'package:flutter_firebase_login/logic/cubit_answer_type_0/cubit/cards_cubit_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/logic/bloc.dart';
-import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 
 import 'answer_layout.dart';
@@ -52,7 +49,20 @@ class QuestionLayout extends StatelessWidget {
                     ? logoDarkPath
                     : logoPath,
                 width: ScreenUtil().setSp(kSpacingUnit.w * 14)),
-            Icon(Icons.timer, size: ScreenUtil().setSp(kSpacingUnit.w * 4)),
+            BlocBuilder<TimerBloc, TimerState>(
+              builder: (context, state) {
+                final String minutesStr =
+                    ((state.duration / 60) % 60).floor().toString();
+
+                final String secondsStr =
+                    (state.duration % 60).floor().toString().padLeft(2, '0');
+                return Text(
+                  '$minutesStr:$secondsStr',
+                  style: kCaptionTextStyle,
+                );
+              },
+            ),
+            // Icon(Icons.timer, size: ScreenUtil().setSp(kSpacingUnit.w * 4)),
             SizedBox(width: kSpacingUnit.w * 1),
           ],
         ),

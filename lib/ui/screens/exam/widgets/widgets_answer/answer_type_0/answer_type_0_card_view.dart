@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer_type_0/answer_type_0_cubit.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer_type_0/cubit/cards_cubit_cubit.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';

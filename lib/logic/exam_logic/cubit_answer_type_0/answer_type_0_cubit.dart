@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/cubit_answer/answer_cubit.dart';
 
 part 'answer_type_0_state.dart';
 

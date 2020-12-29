@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
-import 'package:flutter_firebase_login/logic/bloc.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
-import 'package:flutter_firebase_login/logic/cubit_var/exam_var_cubit.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/bloc_timer/ticker.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
 import 'package:flutter_firebase_login/ui/screens/exam/view/exam_finished.dart';
 
 import 'exam_view.dart';
@@ -45,37 +44,47 @@ class ExamScreen extends StatelessWidget {
           answerCubit: context.read<AnswerCubit>(),
           maxIndex: amount,
         )..add(ExamFetched()),
-        child: BlocListener<ExamQuestionIndexCubit, int>(
-          listener: (context, state) {
-            if (state > amount - 1) {
-              context.read<ExamBloc>().add(ExamFinishedEvent());
-            }
-          },
-          child: BlocBuilder<ExamBloc, ExamState>(
-            builder: (context, state) {
-              if (state is ExamError) {
-                return Center(
-                    child: Column(
-                  children: [
-                    Icon(Icons.error),
-                    Text('Coś poszło nie tak :/ Spróbuj zrestarować aplikacje')
-                  ],
-                ));
+        child: BlocProvider(
+          create: (context) => TimerBloc(ticker: Ticker()),
+          child: BlocListener<ExamQuestionIndexCubit, int>(
+            listener: (context, state) {
+              if (state > amount - 1) {
+                context.read<ExamBloc>().add(ExamFinishedEvent());
               }
-              if (state is ExamReady) {
-                return ExamViewScreen(
-                  listOfQuestions: state.questionList,
-                );
-              }
-              if (state is ExamFinished) {
-                return FinishedExamScreen();
-              }
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
             },
+            child: BlocConsumer<ExamBloc, ExamState>(
+              listener: (context, state) {
+                if (state is ExamReady) {
+                  context.read<TimerBloc>().add(
+                      TimerStarted(duration: state.questionList.length * 60));
+                }
+              },
+              builder: (context, state) {
+                if (state is ExamError) {
+                  return Center(
+                      child: Column(
+                    children: [
+                      Icon(Icons.error),
+                      Text(
+                          'Coś poszło nie tak :/ Spróbuj zrestarować aplikacje')
+                    ],
+                  ));
+                }
+                if (state is ExamReady) {
+                  return ExamViewScreen(
+                    listOfQuestions: state.questionList,
+                  );
+                }
+                if (state is ExamFinished) {
+                  return FinishedExamScreen();
+                }
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

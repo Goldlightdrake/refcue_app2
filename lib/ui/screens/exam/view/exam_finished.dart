@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/logic/bloc.dart';
-import 'package:flutter_firebase_login/logic/cubit_answer/answer_cubit.dart';
+import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
+
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +35,10 @@ class FinishedExamScreen extends StatelessWidget {
               ],
             ),
             Row(
-              children: [Icon(Icons.timer), Text('3:20')],
+              children: [
+                Icon(Icons.timer),
+                Text(context.watch<TimerBloc>().state.duration.toString())
+              ],
             ),
             Column(
                 children: [Icon(Icons.share), Text('Udostępnij swój wynik!')])
@@ -52,19 +55,25 @@ class FinishedExamScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                     vertical: kSpacingUnit.w * 1,
                     horizontal: kSpacingUnit.w * 1.5),
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                     color: Theme.of(context).backgroundColor,
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text((index + 1).toString(),
-                        style: TextStyle(
-                            fontSize: kSpacingUnit.w * 3.5,
-                            fontWeight: FontWeight.bold)),
-                    Text(firstFewWords(questionsList[index].questionText)),
-                    SizedBox(width: 0)
+                    Container(
+                      width: kSpacingUnit.w * 5,
+                      child: Text((index + 1).toString(),
+                          style: TextStyle(
+                              fontSize: kSpacingUnit.w * 3.5,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Container(
+                        width: kSpacingUnit.w * 20,
+                        child: Text(
+                            firstFewWords(questionsList[index].questionText))),
+                    SizedBox(width: 20)
                   ],
                 )),
             Container(
