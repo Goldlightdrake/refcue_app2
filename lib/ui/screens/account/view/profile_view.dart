@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: CircleAvatar(
                     radius: kSpacingUnit.w * 5,
                     backgroundImage: user.photo == null
-                        ? AssetImage(avatarIconPath)
+                        ? AssetImage(basicAvatarImage)
                         : NetworkImage(user.photo),
                   ),
                 ),

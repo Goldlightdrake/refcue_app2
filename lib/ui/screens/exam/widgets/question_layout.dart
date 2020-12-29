@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/widgets/submit_button.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -56,9 +57,18 @@ class QuestionLayout extends StatelessWidget {
 
                 final String secondsStr =
                     (state.duration % 60).floor().toString().padLeft(2, '0');
+                Color colorOfTimer = Colors.white;
+                if (state.duration < 60) {
+                  colorOfTimer = kAccentColor;
+                } else if (state.duration < 10) {
+                  colorOfTimer = Colors.redAccent;
+                }
                 return Text(
                   '$minutesStr:$secondsStr',
-                  style: kCaptionTextStyle,
+                  style: TextStyle(
+                      color: colorOfTimer,
+                      fontFamily: 'Roboto',
+                      fontSize: kSpacingUnit.w * 2),
                 );
               },
             ),
@@ -118,83 +128,6 @@ class QuestionLayout extends StatelessWidget {
       ),
     );
 
-    void submitButtonAction(BuildContext context) {
-      if (context.read<ExamQuestionIndexCubit>().state ==
-          context.read<ExamBloc>().maxIndex - 1) {
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  backgroundColor: Theme.of(context).cardColor,
-                  title: Text("Chcesz zakończyć test?",
-                      style: kCaptionTextStyle.copyWith(
-                          fontSize: kSpacingUnit.w * 2,
-                          color: Theme.of(context).textTheme.bodyText1.color)),
-                  elevation: 24.0,
-                  actions: [
-                    FlatButton(
-                        textColor: Theme.of(context).textTheme.bodyText1.color,
-                        child: Text("Tak"),
-                        onPressed: () {
-                          if (question.type == 0) {
-                            var yellowCards = context
-                                .read<CardsCubit>()
-                                .state
-                                .yellowCards
-                                .toString();
-                            var redCards = context
-                                .read<CardsCubit>()
-                                .state
-                                .redCards
-                                .toString();
-                            context.read<AnswerCubit>().takeAnswersCardsType(
-                                question.answer,
-                                question.type,
-                                context.read<ExamQuestionIndexCubit>().state,
-                                yellowCards,
-                                redCards);
-                            context.read<CardsCubit>().clearCards();
-                          } else {
-                            context.read<AnswerCubit>().takeAnswer(
-                                question.answer,
-                                question.type,
-                                context.read<ExamQuestionIndexCubit>().state);
-                          }
-                          context.read<AnswerCubit>().checkUserAnswers(
-                              (context.read<ExamBloc>().state as ExamReady)
-                                  .questionList);
-                          context
-                              .read<ExamQuestionIndexCubit>()
-                              .goToNextQuestion();
-                          Navigator.of(context, rootNavigator: true).pop();
-                        }),
-                    FlatButton(
-                      textColor: Theme.of(context).textTheme.bodyText1.color,
-                      child: Text("Nie"),
-                      onPressed: () =>
-                          Navigator.of(context, rootNavigator: true).pop(),
-                    )
-                  ],
-                ));
-      } else {
-        if (question.type == 0) {
-          var yellowCards =
-              context.read<CardsCubit>().state.yellowCards.toString();
-          var redCards = context.read<CardsCubit>().state.redCards.toString();
-          context.read<AnswerCubit>().takeAnswersCardsType(
-              question.answer,
-              question.type,
-              context.read<ExamQuestionIndexCubit>().state,
-              yellowCards,
-              redCards);
-          context.read<CardsCubit>().clearCards();
-        } else {
-          context.read<AnswerCubit>().takeAnswer(question.answer, question.type,
-              context.read<ExamQuestionIndexCubit>().state);
-        }
-        context.read<ExamQuestionIndexCubit>().goToNextQuestion();
-      }
-    }
-
     //Building widget
     return BlocProvider(
       create: (context) => CardsCubit(),
@@ -250,7 +183,7 @@ class QuestionLayout extends StatelessWidget {
             builder: (context) => RaisedButton(
                 color: Theme.of(context).accentColor,
                 onPressed: () {
-                  submitButtonAction(context);
+                  submitButtonAction(context, question);
                 },
                 child: Icon(Icons.arrow_forward, color: Colors.white)),
           )

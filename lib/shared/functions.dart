@@ -92,15 +92,13 @@ int colorOfAnswer(answer) {
   }
 }
 
-List numberInRange(int amount) {
-  Random random = Random();
+List numberInRange(int amount, int questionCount) {
   var randomList = new List<int>.generate(
-      amount,
+      questionCount,
       (int index) =>
-          random.nextInt(18) +
-          1); //TODO zrobic cos zeby automatycznie pobieralo ilosc doc
+          index + 1); //TODO zrobic cos zeby automatycznie pobieralo ilosc doc
   randomList.shuffle();
-  return randomList;
+  return randomList.sublist(0, amount);
 }
 
 String firstFewWords(String bigSentence) {

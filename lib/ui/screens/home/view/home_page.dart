@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                       child: CircleAvatar(
                         radius: kSpacingUnit.w * 3,
                         backgroundImage: user.photo == null
-                            ? AssetImage(avatarIconPath)
+                            ? AssetImage(basicAvatarImage)
                             : NetworkImage(user.photo),
                       ),
                     ),

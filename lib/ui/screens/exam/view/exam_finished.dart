@@ -18,10 +18,17 @@ class FinishedExamScreen extends StatelessWidget {
 
     final userAnswerList = examFinishedState.userAnswers;
     final questionsList = examFinishedState.questionsList;
+    final timerTime = context.watch<TimerBloc>().state.duration;
+
+    final String minutesStr = ((timerTime / 60) % 60).floor().toString();
+
+    final String secondsStr =
+        (timerTime % 60).floor().toString().padLeft(2, '0');
 
     var header = Padding(
         padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 2),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
@@ -29,19 +36,52 @@ class FinishedExamScreen extends StatelessWidget {
               children: [
                 Text(greatViewOfScore(examFinishedState.userScore),
                     style: TextStyle(
-                        fontSize: kSpacingUnit.w * 8, fontFamily: 'Roboto')),
+                        fontSize: kSpacingUnit.w * 7.5, fontFamily: 'Roboto')),
                 Text("/" + examFinishedState.examMaxScore.toString(),
                     style: TextStyle())
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon(Icons.timer),
-                Text(context.watch<TimerBloc>().state.duration.toString())
+                Row(
+                  children: [
+                    Icon(Icons.timer),
+                    Text(
+                      '$minutesStr:$secondsStr',
+                      style: TextStyle(
+                          fontFamily: 'Roboto', fontSize: kSpacingUnit.w * 2),
+                    )
+                  ],
+                ),
+                SizedBox(width: kSpacingUnit.w * 1),
+                Container(
+                  alignment: Alignment.center,
+                  width: 60,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    onPressed: () => null,
+                    child: Icon(Icons.share),
+                  ),
+                ),
+                SizedBox(
+                  width: kSpacingUnit.w * 1,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: 60,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    onPressed: () => Navigator.of(context).pop<void>(),
+                    child: Icon(Icons.home),
+                  ),
+                ),
               ],
-            ),
-            Column(
-                children: [Icon(Icons.share), Text('Udostępnij swój wynik!')])
+            )
           ],
         ));
 
