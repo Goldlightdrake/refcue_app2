@@ -94,11 +94,8 @@ int colorOfAnswer(answer) {
 
 List numberInRange(int amount) {
   Random random = Random();
-  var randomList = new List<int>.generate(
-      amount,
-      (int index) =>
-          random.nextInt(18) +
-          1); //TODO zrobic cos zeby automatycznie pobieralo ilosc doc
+  var randomList =
+      new List<int>.generate(amount, (int index) => random.nextInt(18) + 1);
   randomList.shuffle();
   return randomList;
 }
