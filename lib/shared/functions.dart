@@ -97,7 +97,7 @@ List numberInRange(int amount) {
   var randomList =
       new List<int>.generate(amount, (int index) => random.nextInt(18) + 1);
   randomList.shuffle();
-  return randomList;
+  return randomList.sublist(0, amount);
 }
 
 String firstFewWords(String bigSentence) {

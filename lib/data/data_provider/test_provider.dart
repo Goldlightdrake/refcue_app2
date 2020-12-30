@@ -14,4 +14,13 @@ class TestProvider {
         .then((DocumentSnapshot snapshot) => mappedQuestion = snapshot.data());
     return mappedQuestion;
   }
+
+  Future<int> getAmountOfQuestions() async {
+    int amountOfQuestions;
+    await _firestore.collection('questions').doc('number').get().then(
+        (DocumentSnapshot snapshot) =>
+            amountOfQuestions = snapshot.data()['questionCount']);
+
+    return amountOfQuestions;
+  }
 }

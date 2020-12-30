@@ -13,7 +13,8 @@ class TestRepository {
   TestProvider _testProvider = TestProvider();
 
   Future listOfQuestions() async {
-    List<int> range = numberInRange(amountOfQuestions);
+    List<int> range = numberInRange(
+        amountOfQuestions, await _testProvider.getAmountOfQuestions());
     List<Question> listOfQuestions = [];
     for (int i = 1; i <= amountOfQuestions; i++) {
       listOfQuestions.add(Question.fromMap(await _testProvider
