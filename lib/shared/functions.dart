@@ -92,10 +92,9 @@ int colorOfAnswer(answer) {
   }
 }
 
-List numberInRange(int amount) {
-  Random random = Random();
+List numberInRange(int amount, int questionCount) {
   var randomList =
-      new List<int>.generate(amount, (int index) => random.nextInt(18) + 1);
+      new List<int>.generate(questionCount, (int index) => index + 1);
   randomList.shuffle();
   return randomList.sublist(0, amount);
 }
