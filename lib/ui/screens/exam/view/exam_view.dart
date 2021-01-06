@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/bloc_timer/ticker.dart';
 import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
 
 import 'package:flutter_firebase_login/ui/screens/exam/widgets/question_layout.dart';

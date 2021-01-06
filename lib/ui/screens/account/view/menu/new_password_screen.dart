@@ -1,11 +1,12 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
-import 'package:flutter_firebase_login/firebase_login/login/login.dart';
+import 'package:formz/formz.dart';
+import 'package:flutter_firebase_login/logic/account_logic/cubit/new_password_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class NewPasswordScreen extends StatelessWidget {
   static Route route() {
@@ -16,6 +17,7 @@ class NewPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth.User user = auth.FirebaseAuth.instance.currentUser;
     ScreenUtil.init(context,
         designSize: Size(414, 896), allowFontScaling: true);
     var header = Row(
@@ -31,16 +33,54 @@ class NewPasswordScreen extends StatelessWidget {
         ]);
 
     return BlocProvider(
-      create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
+      create: (context) => NewPasswordCubit(user),
       child: Scaffold(
-        body: Column(
-          children: [
-            SizedBox(height: kSpacingUnit.w * 5),
-            header,
-            SizedBox(height: kSpacingUnit.w * 9),
-            _OldPasswordInput(),
-            _NewPasswordInput(),
-          ],
+        body: BlocListener<NewPasswordCubit, NewPasswordState>(
+          listener: (context, state) async {
+            if (state.status.isSubmissionFailure) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                      content: Text(
+                    'Podano złe hasło konta',
+                    textAlign: TextAlign.center,
+                  )),
+                );
+            }
+            if (state.status.isSubmissionSuccess) {
+              Future.delayed(Duration(seconds: 1));
+              Navigator.of(context).pop<void>();
+            }
+          },
+          child: Column(
+            children: [
+              SizedBox(height: kSpacingUnit.w * 5),
+              header,
+              Text('Zmień hasło',
+                  style:
+                      kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2)),
+              SizedBox(height: kSpacingUnit.w * 13),
+              _OldPasswordInput(),
+              _NewPasswordInput(),
+              BlocBuilder<NewPasswordCubit, NewPasswordState>(
+                  builder: (context, state) {
+                if (state.status.isSubmissionInProgress) {
+                  return CircularProgressIndicator();
+                }
+                if (state.status.isSubmissionSuccess) {
+                  return Icon(Icons.check, color: Colors.green);
+                }
+                return FlatButton(
+                    color: kAccentColor,
+                    onPressed: () {
+                      context.read<NewPasswordCubit>().changePassword();
+                    },
+                    child: Text('Potwierdź',
+                        style: TextStyle(color: Colors.black)));
+              }),
+            ],
+          ),
         ),
       ),
     );
@@ -52,9 +92,9 @@ class _OldPasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => VisibilityPasswordCubit(),
-        child: BlocBuilder<LoginCubit, LoginState>(
+        child: BlocBuilder<NewPasswordCubit, NewPasswordState>(
           buildWhen: (previous, current) =>
-              previous.password != current.password,
+              previous.oldPassword != current.oldPassword,
           builder: (context, state) {
             return Builder(builder: (context) {
               final passwordVisibilty =
@@ -63,7 +103,9 @@ class _OldPasswordInput extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   key: const Key('OldPasswordInput_passwordInput_textField'),
-                  onChanged: null,
+                  onChanged: (oldPassword) => context
+                      .read<NewPasswordCubit>()
+                      .oldPasswordChanged(oldPassword),
                   obscureText: !passwordVisibilty,
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
@@ -81,8 +123,9 @@ class _OldPasswordInput extends StatelessWidget {
                     labelStyle: TextStyle(color: Colors.grey),
                     labelText: 'Stare hasło',
                     helperText: '',
-                    errorText:
-                        state.password.invalid ? 'Podano złe hasło' : null,
+                    errorText: state.oldPassword.invalid
+                        ? 'Podano zły format hasła'
+                        : null,
                   ),
                 ),
               );
@@ -97,9 +140,9 @@ class _NewPasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => VisibilityPasswordCubit(),
-        child: BlocBuilder<LoginCubit, LoginState>(
+        child: BlocBuilder<NewPasswordCubit, NewPasswordState>(
           buildWhen: (previous, current) =>
-              previous.password != current.password,
+              previous.newPassword != current.newPassword,
           builder: (context, state) {
             return Builder(builder: (context) {
               final passwordVisibilty =
@@ -108,7 +151,9 @@ class _NewPasswordInput extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   key: const Key('newPasswordInput_passwordInput_textField'),
-                  onChanged: null,
+                  onChanged: (newPassword) => context
+                      .read<NewPasswordCubit>()
+                      .newPasswordChanged(newPassword),
                   obscureText: !passwordVisibilty,
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
@@ -126,8 +171,9 @@ class _NewPasswordInput extends StatelessWidget {
                     labelStyle: TextStyle(color: Colors.grey),
                     labelText: 'Nowe hasło',
                     helperText: '',
-                    errorText:
-                        state.password.invalid ? 'Podano złe hasło' : null,
+                    errorText: state.newPassword.invalid
+                        ? 'Podano zły format hasła'
+                        : null,
                   ),
                 ),
               );

@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/ui/screens/exam/widgets/question_answer_legend.dart';
 import 'package:flutter_firebase_login/ui/screens/exam/widgets/submit_button.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,7 +73,6 @@ class QuestionLayout extends StatelessWidget {
                 );
               },
             ),
-            // Icon(Icons.timer, size: ScreenUtil().setSp(kSpacingUnit.w * 4)),
             SizedBox(width: kSpacingUnit.w * 1),
           ],
         ),
@@ -80,6 +80,13 @@ class QuestionLayout extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              width: kSpacingUnit.w * 6,
+              child: FlatButton(
+                onPressed: () => questionAnswerLegend(context),
+                child: Icon(Icons.info_sharp),
+              ),
+            ),
             Container(
               width: kSpacingUnit.w * 20,
               height: kSpacingUnit.w * 3,
@@ -113,7 +120,6 @@ class QuestionLayout extends StatelessWidget {
 
     var questionText = Container(
       alignment: Alignment.topCenter,
-      // color: Colors.white,
       margin: EdgeInsets.symmetric(
           horizontal: ScreenUtil().setSp(kSpacingUnit.w * 4)),
       height: kSpacingUnit.w * 25,
@@ -141,9 +147,9 @@ class QuestionLayout extends StatelessWidget {
             ],
             alignment: Alignment.center,
           ),
-          SizedBox(height: kSpacingUnit.w * 8),
+          SizedBox(height: kSpacingUnit.w * 9),
           questionText,
-          SizedBox(height: kSpacingUnit.w * 2),
+          SizedBox(height: kSpacingUnit.w * 1),
           BlocListener<BuildingQuestionLayoutCubit,
               BuildingQuestionLayoutState>(
             listener: (context, state) {

@@ -17,7 +17,21 @@ const healthyPath = 'assets/images/healthy.svg';
 const loadingAnimation = 'assets/flare/loading_screen.flr';
 const basicAvatarImage = 'assets/images/basic_avatar.png';
 const helloIconPath = 'assets/icons/hello_icon.svg';
+const handShakeAnimation = 'assets/flare/hand_shake.flr';
 
+//Article's icons
+const article1IconPath = 'assets/icons/article_icons/article1.svg';
+const article2IconPath = 'assets/icons/article_icons/article2.svg';
+const article3IconPath = 'assets/icons/article_icons/article3.svg';
+const article4IconPath = 'assets/icons/article_icons/article4.svg';
+const article5IconPath = 'assets/icons/article_icons/article5.svg';
+const article6IconPath = 'assets/icons/article_icons/article6.svg';
+const article7IconPath = 'assets/icons/article_icons/article7.svg';
+const article8IconPath = 'assets/icons/article_icons/article8.svg';
+const article9IconPath = 'assets/icons/article_icons/article9.svg';
+const article10IconPath = 'assets/icons/article_icons/article10.svg';
+const article11IconPath = 'assets/icons/article_icons/article11.svg';
+const article12IconPath = 'assets/icons/article_icons/article12.svg';
 final textStyleClassic = TextStyle(
     color: Colors.black,
     fontSize: 40.0,

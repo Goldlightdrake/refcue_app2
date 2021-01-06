@@ -40,6 +40,7 @@ flutter:
     - assets/flare/
     - assets/images/
     - assets/icons/
+    - assets/icons/article_icons/
 
   fonts:
     - family: Montserrat

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_firebase_login/shared/const.dart';
 
 class ForUCard extends StatelessWidget {
   final String image;
@@ -11,10 +13,9 @@ class ForUCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: 100.0,
-        height: 170.0,
+        height: kSpacingUnit.w * 18,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(15.0),
             color: color,
             boxShadow: [
               BoxShadow(
@@ -23,10 +24,10 @@ class ForUCard extends StatelessWidget {
                   offset: Offset(5, 10)),
             ]),
         child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 5.0),
             child: SvgPicture.asset(
               image,
-              width: 300,
+              width: kSpacingUnit.w * 11,
             )),
       ),
     );

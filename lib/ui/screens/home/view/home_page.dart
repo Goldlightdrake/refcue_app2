@@ -1,13 +1,16 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_firebase_login/ui/screens/account/account.dart';
+import 'package:flutter_firebase_login/ui/screens/home/widgets/article_widget.dart';
 import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {
@@ -41,15 +44,24 @@ class HomePage extends StatelessWidget {
                         PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 500),
                             pageBuilder: (_, __, ___) => ProfileScreen())),
-                    child: Hero(
-                      tag: 'avatar',
-                      child: CircleAvatar(
-                        radius: kSpacingUnit.w * 3,
-                        backgroundImage: user.photo == null
-                            ? AssetImage(basicAvatarImage)
-                            : NetworkImage(user.photo),
+                    child: Stack(alignment: Alignment.center, children: [
+                      // Container(
+                      //   width: 60,
+                      //   height: 60,
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.circular(65)),
+                      // ),
+                      Hero(
+                        tag: 'avatar',
+                        child: CircleAvatar(
+                          radius: kSpacingUnit.w * 3,
+                          backgroundImage: user.photo == null
+                              ? AssetImage(basicAvatarImage)
+                              : NetworkImage(user.photo),
+                        ),
                       ),
-                    ),
+                    ]),
                   ),
                 ],
               ),
@@ -82,13 +94,23 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: kSpacingUnit.w * 1),
-                        RotationTransition(
-                          turns: AlwaysStoppedAnimation(10 / 360),
-                          child: SvgPicture.asset(
-                            helloIconPath,
-                            width: kSpacingUnit.w * 2.5,
+                        Container(
+                          alignment: Alignment.center,
+                          height: 30,
+                          width: 30,
+                          child: FlareActor(
+                            handShakeAnimation,
+                            animation: 'shake',
+                            alignment: Alignment.topLeft,
                           ),
                         ),
+                        // RotationTransition(
+                        //   turns: AlwaysStoppedAnimation(10 / 360),
+                        //   child: SvgPicture.asset(
+                        //     helloIconPath,
+                        //     width: kSpacingUnit.w * 2.5,
+                        //   ),
+                        // ),
                       ],
                     )
                   ],
@@ -122,22 +144,22 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: kSpacingUnit.w * 4),
             Container(
-                height: 40.0,
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 alignment: Alignment.topLeft,
-                child: Text('Wybrane dla Ciebie',
+                child: Text('Zobacz więcej funkcji',
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: kSpacingUnit.w * 2,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600))),
+            SizedBox(
+              height: kSpacingUnit.w * 4,
+            ),
             Container(
-              height: 180.0,
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              margin: EdgeInsets.symmetric(horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ForUCard(image: pilatesPath, color: Color(0xfffff98c)),
                   ForUCard(image: fitnessPath, color: Color(0xffcaffa6)),
@@ -146,8 +168,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 50.0,
-            )
+              height: kSpacingUnit.w * 4,
+            ),
           ],
         ),
       ),

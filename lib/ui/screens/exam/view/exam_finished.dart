@@ -145,6 +145,9 @@ class FinishedExamScreen extends StatelessWidget {
             height: kSpacingUnit.w * 5,
           ),
           header,
+          SizedBox(
+            height: kSpacingUnit.w * 3,
+          ),
           answerList
         ],
       ),

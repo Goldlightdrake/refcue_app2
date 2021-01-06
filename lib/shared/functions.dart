@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'const.dart';
 
 String takeDate() {
   var currrentDate = DateTime.now();
@@ -123,4 +123,48 @@ String greatViewOfScore(double score) {
     return score.round().toString();
   }
   return score.toString();
+}
+
+String getIconForArticle(int index) {
+  switch (index) {
+    case 1:
+      return article1IconPath;
+      break;
+    case 2:
+      return article2IconPath;
+      break;
+    case 3:
+      return article3IconPath;
+      break;
+    case 4:
+      return article4IconPath;
+      break;
+    case 5:
+      return article5IconPath;
+      break;
+    case 6:
+      return article6IconPath;
+      break;
+    case 7:
+      return article7IconPath;
+      break;
+    case 8:
+      return article8IconPath;
+      break;
+    case 9:
+      return article9IconPath;
+      break;
+    case 10:
+      return article10IconPath;
+      break;
+    case 11:
+      return article11IconPath;
+      break;
+    case 12:
+      return article12IconPath;
+      break;
+
+    default:
+      return article1IconPath;
+  }
 }

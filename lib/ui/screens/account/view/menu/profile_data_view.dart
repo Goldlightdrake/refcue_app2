@@ -37,39 +37,17 @@ class ProfileDataView extends StatelessWidget {
         children: [
           SizedBox(height: kSpacingUnit.w * 5),
           header,
-          SizedBox(height: kSpacingUnit.w * 9),
+          Text(
+            'Dane konta',
+            style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2),
+          ),
+          SizedBox(height: kSpacingUnit.w * 13),
           _NameInput(),
           _EmailInput(),
+          _EditDataButton(),
           _NewpasswordButton(),
         ],
       )),
-    );
-  }
-}
-
-class _EmailInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.email != current.email,
-      builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            initialValue: user.email,
-            key: const Key('loginForm_emailInput_textField'),
-            onChanged: null,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.grey),
-              labelText: 'E-mail',
-              helperText: '',
-              errorText: state.email.invalid ? 'Błędny format email' : null,
-            ),
-          ),
-        );
-      },
     );
   }
 }
@@ -87,7 +65,9 @@ class _NameInput extends StatelessWidget {
             initialValue: user.name,
             key: const Key('nameForm_nameInput_textField'),
             onChanged: null,
+            enabled: false,
             keyboardType: TextInputType.name,
+            style: TextStyle(color: Colors.grey),
             decoration: InputDecoration(
               labelStyle: TextStyle(color: Colors.grey),
               labelText: 'Imię i nazwisko',
@@ -96,6 +76,49 @@ class _NameInput extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _EmailInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
+    return BlocBuilder<LoginCubit, LoginState>(
+      buildWhen: (previous, current) => previous.email != current.email,
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            initialValue: user.email,
+            key: const Key('loginForm_emailInput_textField'),
+            onChanged: null,
+            enabled: false,
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(color: Colors.grey),
+            decoration: InputDecoration(
+              labelStyle: TextStyle(color: Colors.grey),
+              labelText: 'E-mail',
+              helperText: '',
+              errorText: state.email.invalid ? 'Błędny format email' : null,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _EditDataButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      key: const Key('edit_data_button'),
+      child: Text(
+        'Edytuj dane',
+      ),
+      onPressed: () =>
+          Navigator.of(context).push<void>(NewPasswordScreen.route()),
     );
   }
 }
