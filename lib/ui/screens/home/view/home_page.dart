@@ -2,15 +2,13 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_firebase_login/ui/screens/account/account.dart';
-import 'package:flutter_firebase_login/ui/screens/home/widgets/article_widget.dart';
 import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {

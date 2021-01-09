@@ -126,6 +126,7 @@ class QuestionLayout extends StatelessWidget {
       child: SingleChildScrollView(
         child: Text(
           question.questionText,
+          textAlign: TextAlign.justify,
           style: TextStyle(
               fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),
               fontFamily: 'Montserrat',

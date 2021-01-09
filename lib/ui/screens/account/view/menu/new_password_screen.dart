@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
-import 'package:formz/formz.dart';
-import 'package:flutter_firebase_login/logic/account_logic/cubit/new_password_cubit.dart';
+import 'package:flutter_firebase_login/logic/account_logic/new_password/new_password_cubit.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:formz/formz.dart';
 
 class NewPasswordScreen extends StatelessWidget {
   static Route route() {
@@ -43,13 +43,13 @@ class NewPasswordScreen extends StatelessWidget {
                 ..showSnackBar(
                   const SnackBar(
                       content: Text(
-                    'Podano złe hasło konta',
+                    'Podano złe hasło do konta',
                     textAlign: TextAlign.center,
                   )),
                 );
             }
             if (state.status.isSubmissionSuccess) {
-              Future.delayed(Duration(seconds: 1));
+              await Future.delayed(Duration(seconds: 1));
               Navigator.of(context).pop<void>();
             }
           },
@@ -60,7 +60,7 @@ class NewPasswordScreen extends StatelessWidget {
               Text('Zmień hasło',
                   style:
                       kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2)),
-              SizedBox(height: kSpacingUnit.w * 13),
+              SizedBox(height: kSpacingUnit.w * 7),
               _OldPasswordInput(),
               _NewPasswordInput(),
               BlocBuilder<NewPasswordCubit, NewPasswordState>(

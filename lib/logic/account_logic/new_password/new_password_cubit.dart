@@ -33,6 +33,7 @@ class NewPasswordCubit extends Cubit<NewPasswordState> {
 
   Future<void> changePassword() async {
     if (!state.status.isValidated) return;
+    if (state.oldPassword.value == state.newPassword.value) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       var credential = auth.EmailAuthProvider.credential(

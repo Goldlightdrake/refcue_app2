@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
 import 'package:flutter_firebase_login/firebase_login/login/login.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:flutter_firebase_login/ui/screens/account/view/menu/edit_profile_data.dart';
 import 'package:flutter_firebase_login/ui/screens/account/view/menu/new_password_screen.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class ProfileDataView extends StatelessWidget {
             'Dane konta',
             style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2),
           ),
-          SizedBox(height: kSpacingUnit.w * 13),
+          SizedBox(height: kSpacingUnit.w * 7),
           _NameInput(),
           _EmailInput(),
           _EditDataButton(),
@@ -118,7 +119,7 @@ class _EditDataButton extends StatelessWidget {
         'Edytuj dane',
       ),
       onPressed: () =>
-          Navigator.of(context).push<void>(NewPasswordScreen.route()),
+          Navigator.of(context).push<void>(EditProfileScreen.route()),
     );
   }
 }
