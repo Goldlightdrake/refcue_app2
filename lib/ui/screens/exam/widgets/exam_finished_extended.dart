@@ -117,11 +117,7 @@ class ExamFinishedExtended extends StatelessWidget {
                 color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
-                  BoxShadow(
-                      spreadRadius: 1.0,
-                      blurRadius: 4.0,
-                      offset: Offset(2, 3),
-                      color: Theme.of(context).shadowColor)
+                  BoxShadow(blurRadius: 6.0, color: Color(0xee39FF14))
                 ]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,10 +164,9 @@ class ExamFinishedExtended extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
                   BoxShadow(
-                      spreadRadius: 1.0,
-                      blurRadius: 4.0,
-                      offset: Offset(2, 3),
-                      color: Theme.of(context).shadowColor)
+                      blurRadius: 6.0,
+                      offset: Offset(0, 0),
+                      color: colorOfAnswer)
                 ]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,7 +234,7 @@ class ExamFinishedExtended extends StatelessWidget {
           ),
           SizedBox(height: kSpacingUnit.w * 1.8),
           Container(
-            height: kSpacingUnit.w * 12,
+            height: kSpacingUnit.w * 14,
             child: SingleChildScrollView(
               child: Text(
                 question.questionText,
@@ -258,7 +253,7 @@ class ExamFinishedExtended extends StatelessWidget {
         children: [
           SizedBox(height: kSpacingUnit.w * 5),
           header,
-          SizedBox(height: kSpacingUnit.w * 7),
+          SizedBox(height: kSpacingUnit.w * 5),
           questionText,
           SizedBox(height: kSpacingUnit.w * 4),
           answer,
