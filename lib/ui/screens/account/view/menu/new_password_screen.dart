@@ -116,9 +116,12 @@ class _OldPasswordInput extends StatelessWidget {
                           : context
                               .read<VisibilityPasswordCubit>()
                               .showPassword(),
-                      child: Icon(passwordVisibilty
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                      child: Icon(
+                        passwordVisibilty
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                     labelStyle: TextStyle(color: Colors.grey),
                     labelText: 'Stare hasło',
@@ -164,9 +167,12 @@ class _NewPasswordInput extends StatelessWidget {
                           : context
                               .read<VisibilityPasswordCubit>()
                               .showPassword(),
-                      child: Icon(passwordVisibilty
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                      child: Icon(
+                        passwordVisibilty
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                     labelStyle: TextStyle(color: Colors.grey),
                     labelText: 'Nowe hasło',

@@ -6,7 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/ui/screens/account/view/widgets/profile_list.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+
+import 'widgets/changing_profile_img.dart';
 
 class ProfileScreen extends StatefulWidget {
   static Route route() {
@@ -68,20 +72,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                   opacity: _animation,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Container(
-                      height: kSpacingUnit.w * 2.5,
-                      width: kSpacingUnit.w * 2.5,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        heightFactor: kSpacingUnit.w * 1.5,
-                        widthFactor: kSpacingUnit.w * 1.5,
-                        child: Icon(
-                          LineAwesomeIcons.pen,
-                          color: kDarkPrimaryColor,
-                          size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
+                    child: GestureDetector(
+                      onTap: () async {
+                        Navigator.of(context)
+                            .push<void>(ChangingProfileImage.route());
+                      },
+                      child: Container(
+                        height: kSpacingUnit.w * 2.5,
+                        width: kSpacingUnit.w * 2.5,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).accentColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          heightFactor: kSpacingUnit.w * 1.5,
+                          widthFactor: kSpacingUnit.w * 1.5,
+                          child: Icon(
+                            LineAwesomeIcons.pen,
+                            color: kDarkPrimaryColor,
+                            size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
+                          ),
                         ),
                       ),
                     ),

@@ -42,24 +42,15 @@ class HomePage extends StatelessWidget {
                         PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 500),
                             pageBuilder: (_, __, ___) => ProfileScreen())),
-                    child: Stack(alignment: Alignment.center, children: [
-                      // Container(
-                      //   width: 60,
-                      //   height: 60,
-                      //   decoration: BoxDecoration(
-                      //       color: Colors.white,
-                      //       borderRadius: BorderRadius.circular(65)),
-                      // ),
-                      Hero(
-                        tag: 'avatar',
-                        child: CircleAvatar(
-                          radius: kSpacingUnit.w * 3,
-                          backgroundImage: user.photo == null
-                              ? AssetImage(basicAvatarImage)
-                              : NetworkImage(user.photo),
-                        ),
+                    child: Hero(
+                      tag: 'avatar',
+                      child: CircleAvatar(
+                        radius: kSpacingUnit.w * 3,
+                        backgroundImage: user.photo == null
+                            ? AssetImage(basicAvatarImage)
+                            : NetworkImage(user.photo),
                       ),
-                    ]),
+                    ),
                   ),
                 ],
               ),

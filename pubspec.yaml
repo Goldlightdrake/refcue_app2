@@ -13,19 +13,22 @@ dependencies:
     path: packages/authentication_repository
   animated_theme_switcher: ^1.0.9
   bloc: ^6.1.0
+  cloud_firestore: ^0.14.4
   equatable: ^1.2.5
+  firebase_storage: ^5.2.0
   flare_flutter: ^2.0.6
+  flutter_auth_buttons: ^0.10.0
   flutter_bloc: ^6.1.0
   flutter_screenutil: ^3.2.0
   flutter_svg: null
   font_awesome_flutter: ^8.4.0
   formz: ^0.3.0
   google_fonts: ^1.1.0
+  image_picker: ^0.6.7+21
   line_awesome_flutter: ^1.0.1
   meta: ^1.1.8
   pedantic: ^1.9.0
-  flutter_auth_buttons: ^0.10.0
-  cloud_firestore: ^0.14.4
+  permission_handler: ^5.0.1+1
   shared_preferences: ^0.5.12+4
 
 dev_dependencies:

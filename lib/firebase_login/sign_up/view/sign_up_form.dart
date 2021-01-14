@@ -56,7 +56,7 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: 'E-mail',
             helperText: '',
             errorText: state.email.invalid ? 'Niepoprawny email' : null,
           ),
@@ -90,11 +90,14 @@ class _PasswordInput extends StatelessWidget {
                         : context
                             .read<VisibilityPasswordCubit>()
                             .showPassword(),
-                    child: Icon(passwordVisibilty
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+                    child: Icon(
+                      passwordVisibilty
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
-                  labelText: 'hasło',
+                  labelText: 'Hasło',
                   helperText: '',
                   errorText:
                       state.password.invalid ? 'Niepoprawne hasło' : null,
@@ -135,11 +138,14 @@ class _ConfirmPasswordInput extends StatelessWidget {
                         : context
                             .read<VisibilityPasswordCubit>()
                             .showPassword(),
-                    child: Icon(passwordVisibilty
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+                    child: Icon(
+                      passwordVisibilty
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
-                  labelText: 'powtórz hasło',
+                  labelText: 'Powtórz Hasło',
                   helperText: '',
                   errorText: state.confirmedPassword.invalid
                       ? 'Hasła do siebie nie pasują!'

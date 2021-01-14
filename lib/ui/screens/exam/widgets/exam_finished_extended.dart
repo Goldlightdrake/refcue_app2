@@ -106,13 +106,13 @@ class ExamFinishedExtended extends StatelessWidget {
 
     var answer = Container(
       margin: EdgeInsets.symmetric(
-        horizontal: ScreenUtil().setSp(kSpacingUnit.w * 2),
+        horizontal: kSpacingUnit.w * 1.5,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(kSpacingUnit.w * 1),
             decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(5),
@@ -158,7 +158,7 @@ class ExamFinishedExtended extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(kSpacingUnit.w * 1),
             decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor,
                 borderRadius: BorderRadius.circular(5),

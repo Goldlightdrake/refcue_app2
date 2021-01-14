@@ -69,7 +69,7 @@ class _EmailInput extends StatelessWidget {
           decoration: InputDecoration(
             labelStyle: TextStyle(
                 color: myFocusNode.hasFocus ? kAccentColor : Colors.grey),
-            labelText: 'e-mail',
+            labelText: 'E-mail',
             helperText: '',
             errorText: state.email.invalid ? 'Błędny format email' : null,
           ),
@@ -104,13 +104,16 @@ class _PasswordInput extends StatelessWidget {
                         : context
                             .read<VisibilityPasswordCubit>()
                             .showPassword(),
-                    child: Icon(passwordVisibilty
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+                    child: Icon(
+                      passwordVisibilty
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
                   ),
                   labelStyle: TextStyle(
                       color: myFocusNode.hasFocus ? kAccentColor : Colors.grey),
-                  labelText: 'hasło',
+                  labelText: 'Hasło',
                   helperText: '',
                   errorText: state.password.invalid ? 'Podano złe hasło' : null,
                 ),
