@@ -21,7 +21,20 @@ class ProfilePictureSuccess extends ProfilePictureState {
   List<Object> get props => [image];
 
   @override
-  String toString() => 'ProfilePictureSuccess(image: $image)';
+  String toString() => 'ProfilePictureSuccess(image: ${image.path})';
+}
+
+class ProfilePictureCropped extends ProfilePictureState {
+  final File croppedImage;
+  ProfilePictureCropped({
+    this.croppedImage,
+  });
+
+  @override
+  List<Object> get props => [croppedImage];
+
+  @override
+  String toString() => 'ProfilePictureCropped (image: $croppedImage)';
 }
 
 class ProfilePictureSent extends ProfilePictureState {

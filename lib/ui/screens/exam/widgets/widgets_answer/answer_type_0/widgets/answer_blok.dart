@@ -37,7 +37,7 @@ Widget answerElement(String answerText) {
           answerText,
           style: kCaptionTextStyle.copyWith(
             color: answerPicked
-                ? Colors.white
+                ? Colors.black
                 : Theme.of(context).textTheme.bodyText1.color,
             fontSize: ScreenUtil().setSp(kSpacingUnit.w * 2.5),
             fontWeight: answerPicked ? FontWeight.w600 : FontWeight.w100,

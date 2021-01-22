@@ -36,7 +36,7 @@ Widget answerType2Element(String answerText) {
           answerText[0].toUpperCase() + answerText.substring(1),
           style: kCaptionTextStyle.copyWith(
             color: answerPicked
-                ? Colors.white
+                ? Colors.black
                 : Theme.of(context).textTheme.bodyText1.color,
             fontSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
             fontWeight: answerPicked ? FontWeight.w600 : FontWeight.w100,

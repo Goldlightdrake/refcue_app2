@@ -30,58 +30,18 @@ questionAnswerLegend(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    height: kSpacingUnit.w * 20,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text('G - grać dalej',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('P - rzut wolny pośredni',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('J - jeszcze raz',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('Br - bramka',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('R - rzut rożny',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('Rb - rzut od bramki',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                      ],
-                    ),
+                  Text(
+                    'G - grać dalej\n\nP - rzut wolny pośredni\n\nJ - jeszcze raz\n\nBr - bramka\n\nR - rzut rożny\n\nRb - rzut od bramki',
+                    style: kTitleTextStyle.copyWith(
+                        fontSize: kSpacingUnit.w * 1.7),
+                    textAlign: TextAlign.justify,
                   ),
-                  Container(
-                    height: kSpacingUnit.w * 20,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text('B - rzut wolny bezpośredni',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('K - rzut karny',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('S - rzut sędziowski',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('W - wrzut',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        Text('Z - zakończenie',
-                            style: kTitleTextStyle.copyWith(
-                                fontSize: kSpacingUnit.w * 1.7)),
-                        SizedBox(height: kSpacingUnit.w * 1.7),
-                      ],
-                    ),
-                  )
+                  Text(
+                    'B - rzut wolny bezpośredni\n\nK - rzut karny\n\nS - rzut sędziowski\n\nW - wrzut\n\nZ - zakończenie\n\n',
+                    style: kTitleTextStyle.copyWith(
+                        fontSize: kSpacingUnit.w * 1.7),
+                    textAlign: TextAlign.justify,
+                  ),
                 ],
               ),
             ],

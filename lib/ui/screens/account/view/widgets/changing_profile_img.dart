@@ -1,10 +1,14 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/firebase_login/authentication/bloc/authentication_bloc.dart';
-import 'package:flutter_firebase_login/logic/account_logic/cubit/profile_picture_cubit.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/logic/account_logic/profile_picture_cubit/profile_picture_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
+import 'package:flutter_firebase_login/firebase_login/authentication/bloc/authentication_bloc.dart';
+
+import 'package:flutter_firebase_login/shared/const.dart';
 
 class ChangingProfileImage extends StatelessWidget {
   const ChangingProfileImage({
@@ -43,21 +47,38 @@ class ChangingProfileImage extends StatelessWidget {
                   header,
                 ],
               ),
-              BlocBuilder<ProfilePictureCubit, ProfilePictureState>(
+              BlocConsumer<ProfilePictureCubit, ProfilePictureState>(
+                listener: (context, state) {
+                  if (state is ProfilePictureSuccess) {
+                    context.read<ProfilePictureCubit>().cropImage(context);
+                  }
+                },
                 builder: (context, state) {
                   if (state is ProfilePictureSentError) {
                     return Text(
                         'Coś poszło nie tak, spróbuj zresetować aplikacje',
                         style: kTitleTextStyle);
                   }
-                  if (state is ProfilePictureSuccess) {
+                  if (state is ProfilePictureSent) {
+                    return Container(
+                      width: kSpacingUnit.w * 15,
+                      height: kSpacingUnit.w * 15,
+                      child: FlareActor(
+                        doneAnimation,
+                        animation: 'done',
+                      ),
+                    );
+                  }
+
+                  if (state is ProfilePictureCropped) {
                     return CircleAvatar(
-                        radius: kSpacingUnit.w * 10,
-                        backgroundImage: AssetImage(state.image.path));
+                        radius: kSpacingUnit.w * 8,
+                        backgroundImage: AssetImage(state.croppedImage.path));
                   }
                   if (state is ProfilePictureLoading) {
                     return CircularProgressIndicator();
                   }
+
                   return CircleAvatar(
                       radius: kSpacingUnit.w * 8,
                       backgroundImage: NetworkImage(user.photo));
@@ -70,9 +91,71 @@ class ChangingProfileImage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FlatButton(
-                          onPressed: () => context
-                              .read<ProfilePictureCubit>()
-                              .getImageFromUser(),
+                          onPressed: () => showDialog(
+                                context: context,
+                                builder: (_) => SimpleDialog(
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  title: Text("Wybierz źródło zdjęcia",
+                                      style: kCaptionTextStyle.copyWith(
+                                          fontSize: kSpacingUnit.w * 2,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              .color)),
+                                  elevation: 24.0,
+                                  children: [
+                                    SimpleDialogOption(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 10,
+                                      ),
+                                      onPressed: () => context
+                                          .read<ProfilePictureCubit>()
+                                          .getImageFromUser(ImageSource.camera),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.camera_alt,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color),
+                                          SizedBox(width: kSpacingUnit.w * 1.5),
+                                          Text('Zrób zdjęcie',
+                                              style: kTitleTextStyle.copyWith(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .color))
+                                        ],
+                                      ),
+                                    ),
+                                    SimpleDialogOption(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 10,
+                                      ),
+                                      onPressed: () => context
+                                          .read<ProfilePictureCubit>()
+                                          .getImageFromUser(
+                                              ImageSource.gallery),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.photo,
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color),
+                                          SizedBox(width: kSpacingUnit.w * 1.5),
+                                          Text('Wybierz z galerii',
+                                              style: kTitleTextStyle.copyWith(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .color))
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                           textColor: Colors.black,
                           child: Icon(Icons.edit),
                           color: Theme.of(context).accentColor),
@@ -80,8 +163,9 @@ class ChangingProfileImage extends StatelessWidget {
                         width: kSpacingUnit.w * 2,
                       ),
                       FlatButton(
-                          onPressed: () =>
-                              context.read<ProfilePictureCubit>().uploadFile(),
+                          onPressed: () {
+                            context.read<ProfilePictureCubit>().uploadFile();
+                          },
                           textColor: Colors.black,
                           child: Icon(Icons.check),
                           color: Theme.of(context).accentColor),

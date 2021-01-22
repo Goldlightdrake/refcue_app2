@@ -4,6 +4,7 @@ class ExamScoreCubit extends Cubit<double> {
   ExamScoreCubit() : super(0);
 
   int checkAnswer(String userAnswer, String questionAnswer, int type) {
+    print(userAnswer);
     if (type == 0) {
       if (userAnswer[0] == questionAnswer[0]) {
         if (userAnswer[2] == questionAnswer[2]) {

@@ -137,3 +137,17 @@ class _NewpasswordButton extends StatelessWidget {
     );
   }
 }
+
+class _DeleteAccountButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      key: const Key('deleteAccount_button'),
+      child: Text(
+        'Usuń konto',
+      ),
+      onPressed: () =>
+          Navigator.of(context).push<void>(NewPasswordScreen.route()),
+    );
+  }
+}

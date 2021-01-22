@@ -9,6 +9,7 @@ import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_firebase_login/ui/screens/account/account.dart';
 import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class HomePage extends StatelessWidget {
   static Route route() {
@@ -21,6 +22,8 @@ class HomePage extends StatelessWidget {
         designSize: Size(414, 896), allowFontScaling: true);
 
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
+    auth.User authUser = auth.FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -44,12 +47,17 @@ class HomePage extends StatelessWidget {
                             pageBuilder: (_, __, ___) => ProfileScreen())),
                     child: Hero(
                       tag: 'avatar',
-                      child: CircleAvatar(
-                        radius: kSpacingUnit.w * 3,
-                        backgroundImage: user.photo == null
-                            ? AssetImage(basicAvatarImage)
-                            : NetworkImage(user.photo),
-                      ),
+                      child: Builder(builder: (context) {
+                        if (authUser != null) {
+                          authUser.reload();
+                        }
+                        return CircleAvatar(
+                          radius: kSpacingUnit.w * 3,
+                          backgroundImage: user.photo == null
+                              ? AssetImage(basicAvatarImage)
+                              : NetworkImage(user.photo),
+                        );
+                      }),
                     ),
                   ),
                 ],

@@ -58,10 +58,11 @@ class QuestionLayout extends StatelessWidget {
 
                 final String secondsStr =
                     (state.duration % 60).floor().toString().padLeft(2, '0');
-                Color colorOfTimer = Colors.white;
-                if (state.duration < 60) {
+                Color colorOfTimer =
+                    Theme.of(context).textTheme.bodyText1.color;
+                if (state.duration <= 60 && state.duration > 15) {
                   colorOfTimer = kAccentColor;
-                } else if (state.duration < 10) {
+                } else if (state.duration <= 15) {
                   colorOfTimer = Colors.redAccent;
                 }
                 return Text(
@@ -91,7 +92,7 @@ class QuestionLayout extends StatelessWidget {
               width: kSpacingUnit.w * 20,
               height: kSpacingUnit.w * 3,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Stack(children: [
@@ -192,7 +193,7 @@ class QuestionLayout extends StatelessWidget {
                 onPressed: () {
                   submitButtonAction(context, question);
                 },
-                child: Icon(Icons.arrow_forward, color: Colors.white)),
+                child: Icon(Icons.arrow_forward, color: Colors.black)),
           )
         ],
       )),
