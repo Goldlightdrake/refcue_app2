@@ -160,8 +160,8 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ForUCard(
-                      image: pilatesPath,
-                      color: Color(0xfffff98c),
+                      image: choosePath,
+                      color: kAccentColor,
                       nav: QuestionCategoriesView.route()),
                   ForUCard(image: fitnessPath, color: Color(0xffcaffa6)),
                   ForUCard(image: healthyPath, color: Color(0xff90f0e9)),

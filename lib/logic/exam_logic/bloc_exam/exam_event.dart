@@ -9,4 +9,6 @@ abstract class ExamEvent extends Equatable {
 
 class ExamFetched extends ExamEvent {}
 
+class ExamCustomFetched extends ExamEvent {}
+
 class ExamFinishedEvent extends ExamEvent {}

@@ -237,7 +237,7 @@ class ExamFinishedExtended extends StatelessWidget {
             height: kSpacingUnit.w * 14,
             child: SingleChildScrollView(
               child: Text(
-                question.questionText,
+                question.substantiation,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),

@@ -30,9 +30,21 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
     ExamEvent event,
   ) async* {
     if (event is ExamFetched) {
+      yield ExamLoading();
       try {
         if (state is ExamLoading) {
           final questions = await _getQuestions();
+          yield ExamReady(questionList: questions);
+          return;
+        }
+      } catch (_) {
+        yield ExamError();
+      }
+    }
+    if (event is ExamCustomFetched) {
+      try {
+        if (state is ExamLoading) {
+          final questions = await _getCustomQuestions();
           yield ExamReady(questionList: questions);
           return;
         }
@@ -50,6 +62,16 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
   }
 
   Future<List<Question>> _getQuestions() async {
+    try {
+      final List<Question> questionsList =
+          await testRepository.listOfQuestions();
+      return questionsList;
+    } catch (_) {
+      throw Exception('error getting questions from repo');
+    }
+  }
+
+  Future<List<Question>> _getCustomQuestions() async {
     try {
       final List<Question> questionsList =
           await testRepository.listOfQuestions();

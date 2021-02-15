@@ -6,16 +6,33 @@ class ExamScoreCubit extends Cubit<double> {
   int checkAnswer(String userAnswer, String questionAnswer, int type) {
     print(userAnswer);
     if (type == 0) {
-      if (userAnswer[0] == questionAnswer[0]) {
-        if (userAnswer[2] == questionAnswer[2]) {
-          if (userAnswer[1] == questionAnswer[1]) {
-            emit(state + 1);
-            return 2;
-          } else if (int.parse(userAnswer[1]) + 1 ==
-                  int.parse(questionAnswer[1]) ||
-              int.parse(userAnswer[1]) - 1 == int.parse(questionAnswer[1])) {
-            emit(state + 0.5);
-            return 1;
+      if (userAnswer.length > 3) {
+        if (userAnswer[0] == questionAnswer[0] &&
+            userAnswer[1] == questionAnswer[1]) {
+          if (userAnswer[3] == questionAnswer[3]) {
+            if (userAnswer[2] == questionAnswer[2]) {
+              emit(state + 1);
+              return 2;
+            } else if (int.parse(userAnswer[2]) + 1 ==
+                    int.parse(questionAnswer[2]) ||
+                int.parse(userAnswer[2]) - 1 == int.parse(questionAnswer[2])) {
+              emit(state + 0.5);
+              return 1;
+            }
+          }
+        }
+      } else {
+        if (userAnswer[0] == questionAnswer[0]) {
+          if (userAnswer[2] == questionAnswer[2]) {
+            if (userAnswer[1] == questionAnswer[1]) {
+              emit(state + 1);
+              return 2;
+            } else if (int.parse(userAnswer[1]) + 1 ==
+                    int.parse(questionAnswer[1]) ||
+                int.parse(userAnswer[1]) - 1 == int.parse(questionAnswer[1])) {
+              emit(state + 0.5);
+              return 1;
+            }
           }
         }
       }
