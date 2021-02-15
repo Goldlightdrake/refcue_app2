@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_login/ui/screens/home/view/question_categories_view/question_categories_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
@@ -6,12 +7,15 @@ import 'package:flutter_firebase_login/shared/const.dart';
 class ForUCard extends StatelessWidget {
   final String image;
   final Color color;
+  final Route nav;
 
-  ForUCard({this.image, this.color});
+  ForUCard({this.image, this.color, this.nav});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push<void>(nav);
+      },
       child: Container(
         height: kSpacingUnit.w * 18,
         decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 const logoPath = 'assets/images/logo.png';
 const logoDarkPath = 'assets/images/logo_dark.png';
@@ -11,7 +12,7 @@ const elipsPath = 'assets/images/elips.svg';
 const examGreenPath = 'assets/images/exam_green.svg';
 const examYellowPath = 'assets/images/exam_yellow.svg';
 const examBluePath = 'assets/images/exam_blue.svg';
-const pilatesPath = 'assets/images/pilates.svg';
+const choosePath = 'assets/images/choose.svg';
 const fitnessPath = 'assets/images/fitness.svg';
 const healthyPath = 'assets/images/healthy.svg';
 const loadingAnimation = 'assets/flare/loading_screen.flr';
@@ -34,6 +35,7 @@ const article9IconPath = 'assets/icons/article_icons/article9.svg';
 const article10IconPath = 'assets/icons/article_icons/article10.svg';
 const article11IconPath = 'assets/icons/article_icons/article11.svg';
 const article12IconPath = 'assets/icons/article_icons/article12.svg';
+
 final textStyleClassic = TextStyle(
     color: Colors.black,
     fontSize: 40.0,

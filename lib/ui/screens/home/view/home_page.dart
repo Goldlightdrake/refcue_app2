@@ -2,10 +2,11 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:flutter_firebase_login/ui/screens/home/view/question_categories_view/question_categories_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
 import 'package:flutter_firebase_login/shared/functions.dart';
 import 'package:flutter_firebase_login/ui/screens/account/account.dart';
 import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
@@ -158,7 +159,10 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ForUCard(image: pilatesPath, color: Color(0xfffff98c)),
+                  ForUCard(
+                      image: choosePath,
+                      color: kAccentColor,
+                      nav: QuestionCategoriesView.route()),
                   ForUCard(image: fitnessPath, color: Color(0xffcaffa6)),
                   ForUCard(image: healthyPath, color: Color(0xff90f0e9)),
                 ],
