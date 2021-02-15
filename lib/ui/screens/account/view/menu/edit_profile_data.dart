@@ -196,7 +196,7 @@ class _PasswordInput extends StatelessWidget {
                     labelText: 'Hasło',
                     helperText: '',
                     errorText: state.password.invalid
-                        ? 'Podano zły format hasła'
+                        ? 'Hasło musi posiadać co najmniej 8 znaków, w tym 1 wielką\n literę i 1 cyfre oraz 1 znak specjalny!'
                         : null,
                   ),
                 ),

@@ -115,7 +115,9 @@ class _PasswordInput extends StatelessWidget {
                       color: myFocusNode.hasFocus ? kAccentColor : Colors.grey),
                   labelText: 'Hasło',
                   helperText: '',
-                  errorText: state.password.invalid ? 'Podano złe hasło' : null,
+                  errorText: state.password.invalid
+                      ? 'Hasło musi posiadać co najmniej 8 znaków, w tym 1 wielką\n literę i 1 cyfre oraz 1 znak specjalny!'
+                      : null,
                 ),
               );
             });

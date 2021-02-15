@@ -152,12 +152,9 @@ class FinishedExamScreen extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: kSpacingUnit.w * 5,
+            height: kSpacingUnit.w * 7,
           ),
           header,
-          SizedBox(
-            height: kSpacingUnit.w * 3,
-          ),
           answerList
         ],
       ),

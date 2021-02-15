@@ -58,7 +58,7 @@ class _EmailInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'E-mail',
             helperText: '',
-            errorText: state.email.invalid ? 'Niepoprawny email' : null,
+            errorText: state.email.invalid ? 'Błędny format email' : null,
           ),
         );
       },
@@ -99,8 +99,9 @@ class _PasswordInput extends StatelessWidget {
                   ),
                   labelText: 'Hasło',
                   helperText: '',
-                  errorText:
-                      state.password.invalid ? 'Niepoprawne hasło' : null,
+                  errorText: state.password.invalid
+                      ? 'Hasło musi posiadać co najmniej 8 znaków, w tym 1 wielką\n literę i 1 cyfre oraz 1 znak specjalny!'
+                      : null,
                 ),
               );
             },

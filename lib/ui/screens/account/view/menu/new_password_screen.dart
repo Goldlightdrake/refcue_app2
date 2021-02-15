@@ -127,7 +127,7 @@ class _OldPasswordInput extends StatelessWidget {
                     labelText: 'Stare hasło',
                     helperText: '',
                     errorText: state.oldPassword.invalid
-                        ? 'Podano zły format hasła'
+                        ? 'Hasło musi posiadać co najmniej 8 znaków, w tym 1 wielką\n literę i 1 cyfre oraz 1 znak specjalny!'
                         : null,
                   ),
                 ),
