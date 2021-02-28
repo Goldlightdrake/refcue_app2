@@ -7,14 +7,24 @@ import 'package:flutter_firebase_login/shared/const.dart';
 class ForUCard extends StatelessWidget {
   final String image;
   final Color color;
-  final Route nav;
+  final String path;
 
-  ForUCard({this.image, this.color, this.nav});
+  ForUCard({this.image, this.color, this.path});
+
+  Route<dynamic> navigationNames(String where) {
+    switch (path) {
+      case 'customtest':
+        return QuestionCategoriesView.route();
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push<void>(nav);
+        Navigator.of(context).push<void>(navigationNames(path));
       },
       child: Container(
         height: kSpacingUnit.w * 18,

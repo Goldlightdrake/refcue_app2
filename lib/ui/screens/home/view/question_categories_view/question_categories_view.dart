@@ -33,7 +33,7 @@ class QuestionCategoriesView extends StatelessWidget {
     );
     var listOfCategories = Expanded(
         child: ListView.builder(
-      itemCount: 12,
+      itemCount: 17,
       itemBuilder: (BuildContext context, int index) {
         return Container(
             decoration: BoxDecoration(
@@ -41,7 +41,7 @@ class QuestionCategoriesView extends StatelessWidget {
               color: Theme.of(context).backgroundColor,
             ),
             margin: EdgeInsets.symmetric(vertical: 6),
-            child: CategorieListTile(
+            child: _CategorieListTile(
               index + 1,
             ));
       },
@@ -59,9 +59,9 @@ class QuestionCategoriesView extends StatelessWidget {
   }
 }
 
-class CategorieListTile extends StatelessWidget {
+class _CategorieListTile extends StatelessWidget {
   final int index;
-  const CategorieListTile(this.index, {Key key}) : super(key: key);
+  const _CategorieListTile(this.index, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

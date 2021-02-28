@@ -35,7 +35,8 @@ class EditProfileScreen extends StatelessWidget {
         ]);
 
     return BlocProvider(
-      create: (context) => EditProfileDataCubit(user),
+      create: (context) =>
+          EditProfileDataCubit(user)..initialData(user.displayName, user.email),
       child: Scaffold(
         body: BlocListener<EditProfileDataCubit, EditProfileDataState>(
           listener: (context, state) async {

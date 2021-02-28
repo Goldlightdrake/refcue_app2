@@ -11,6 +11,52 @@ class AnswerType0View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var goToCardsWidget = GestureDetector(
+      onTap: () => context.read<AnswerType0Cubit>().goToCards(),
+      child: Container(
+          alignment: Alignment.center,
+          width: kSpacingUnit.w * 6.5,
+          height: kSpacingUnit.w * 5.5,
+          margin: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 0.5),
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: Offset(0, 5),
+                  blurRadius: 3.0,
+                )
+              ],
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          child: Stack(
+            alignment: Alignment.center,
+            fit: StackFit.loose,
+            overflow: Overflow.visible,
+            children: [
+              Positioned(
+                  child: Container(
+                height: 20,
+                width: 20,
+              )),
+              Positioned(
+                left: -7,
+                child: RotationTransition(
+                    turns: AlwaysStoppedAnimation(-20 / 360),
+                    child: Container(height: 20, width: 15, color: Colors.red)),
+              ),
+              Positioned(
+                  left: 7,
+                  child: RotationTransition(
+                      turns: AlwaysStoppedAnimation(20 / 360),
+                      child: Container(
+                          alignment: Alignment.center,
+                          height: 20,
+                          width: 15,
+                          color: Colors.yellow))),
+            ],
+          )),
+    );
+
     var answerPicked = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -90,6 +136,7 @@ class AnswerType0View extends StatelessWidget {
             answerElement('R'),
             answerElement('Z'),
             answerElement('Rb'),
+            goToCardsWidget,
           ],
         ),
       ],

@@ -144,10 +144,18 @@ class ExamFinishedExtended extends StatelessWidget {
                 SizedBox(height: kSpacingUnit.w * 1.5),
                 Builder(builder: (context) {
                   if (question.type == 0) {
-                    final String resumption = question.answer[0];
-                    final String yellowCards = question.answer[1];
-                    final String redCards = question.answer[2];
-                    return AnswerCardsView(resumption, yellowCards, redCards);
+                    if (question.answer.length > 3) {
+                      String resumption =
+                          question.answer[0] + question.answer[1];
+                      String yellowCards = question.answer[2];
+                      String redCards = question.answer[3];
+                      return AnswerCardsView(resumption, yellowCards, redCards);
+                    } else {
+                      String resumption = question.answer[0];
+                      String yellowCards = question.answer[1];
+                      String redCards = question.answer[2];
+                      return AnswerCardsView(resumption, yellowCards, redCards);
+                    }
                   }
                   return Text(
                       question.answer[0].toUpperCase() +
@@ -164,16 +172,17 @@ class ExamFinishedExtended extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 6.0,
-                      offset: Offset(0, 0),
-                      color: colorOfAnswer)
+                    blurRadius: 6.0,
+                    color: colorOfAnswer,
+                  )
                 ]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    Text('Twoja odpowiedź'),
+                    Text('Twoja odpowiedź',
+                        style: TextStyle(fontSize: kSpacingUnit.w * 1.4)),
                     SizedBox(width: 7),
                     Icon(
                       Icons.person,
@@ -182,7 +191,7 @@ class ExamFinishedExtended extends StatelessWidget {
                 ),
                 SizedBox(height: kSpacingUnit.w * 0.5),
                 Container(
-                  width: 120,
+                  width: 150,
                   height: 3,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(26),
@@ -192,10 +201,27 @@ class ExamFinishedExtended extends StatelessWidget {
                 SizedBox(height: kSpacingUnit.w * 1.5),
                 Builder(builder: (context) {
                   if (question.type == 0) {
-                    final String resumption = userAnswer[0];
-                    final String yellowCards = userAnswer[1];
-                    final String redCards = userAnswer[2];
-                    return AnswerCardsView(resumption, yellowCards, redCards);
+                    if (userAnswer[0] != '-') {
+                      if (userAnswer.length > 3) {
+                        String resumption = userAnswer[0] + userAnswer[1];
+                        String yellowCards = userAnswer[2];
+                        String redCards = userAnswer[3];
+                        return AnswerCardsView(
+                            resumption, yellowCards, redCards);
+                      } else {
+                        String resumption = userAnswer[0];
+                        String yellowCards = userAnswer[1];
+                        String redCards = userAnswer[2];
+                        return AnswerCardsView(
+                            resumption, yellowCards, redCards);
+                      }
+                    } else {
+                      return Container(
+                        height: kSpacingUnit.w * 5,
+                        child: Text('-',
+                            style: TextStyle(fontSize: kSpacingUnit.w * 3.5)),
+                      );
+                    }
                   }
                   return Text(
                       userAnswer[0].toUpperCase() + userAnswer.substring(1),

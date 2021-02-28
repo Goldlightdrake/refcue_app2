@@ -35,6 +35,10 @@ class AnswerCubit extends Cubit<AnswerState> {
       String userAnswer =
           (state as AnswerPicked).answer + yellowCards + redCards;
       userAnswersList[questionIndex] = userAnswer;
+      emit(AnswerInitial());
+    } else {
+      String userAnswer = '-' + yellowCards + redCards;
+      userAnswersList[questionIndex] = userAnswer;
     }
     emit(AnswerInitial());
   }

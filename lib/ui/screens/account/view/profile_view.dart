@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
@@ -60,11 +61,15 @@ class _ProfileScreenState extends State<ProfileScreen>
               children: <Widget>[
                 Hero(
                   tag: 'avatar',
-                  child: CircleAvatar(
-                    radius: kSpacingUnit.w * 5,
-                    backgroundImage: user.photo == null
-                        ? AssetImage(basicAvatarImage)
-                        : NetworkImage(user.photo),
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    imageUrl: user.photo,
+                    imageBuilder: (context, imageProvider) {
+                      return CircleAvatar(
+                        radius: kSpacingUnit.w * 5,
+                        backgroundImage: imageProvider,
+                      );
+                    },
                   ),
                 ),
                 FadeTransition(

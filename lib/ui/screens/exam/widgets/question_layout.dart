@@ -50,7 +50,7 @@ class QuestionLayout extends StatelessWidget {
                 ThemeProvider.of(context).brightness == Brightness.dark
                     ? logoDarkPath
                     : logoPath,
-                width: ScreenUtil().setSp(kSpacingUnit.w * 14)),
+                width: ScreenUtil().setSp(kSpacingUnit.w * 11)),
             BlocBuilder<TimerBloc, TimerState>(
               builder: (context, state) {
                 final String minutesStr =
@@ -165,16 +165,32 @@ class QuestionLayout extends StatelessWidget {
                   userAnswer = "nie";
                   context.read<AnswerCubit>().pickAnswer(userAnswer);
                 } else {
-                  context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
-                  if (userAnswer[1] != '0') {
+                  if (userAnswer.length > 3) {
                     context
-                        .read<CardsCubit>()
-                        .setYellowCards(int.parse(userAnswer[1]));
-                  }
-                  if (userAnswer[2] != '0') {
-                    context
-                        .read<CardsCubit>()
-                        .setRedCards(int.parse(userAnswer[2]));
+                        .read<AnswerCubit>()
+                        .pickAnswer(userAnswer[0] + userAnswer[1]);
+                    if (userAnswer[2] != '0') {
+                      context
+                          .read<CardsCubit>()
+                          .setYellowCards(int.parse(userAnswer[2]));
+                    }
+                    if (userAnswer[3] != '0') {
+                      context
+                          .read<CardsCubit>()
+                          .setRedCards(int.parse(userAnswer[3]));
+                    }
+                  } else {
+                    context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
+                    if (userAnswer[1] != '0') {
+                      context
+                          .read<CardsCubit>()
+                          .setYellowCards(int.parse(userAnswer[1]));
+                    }
+                    if (userAnswer[2] != '0') {
+                      context
+                          .read<CardsCubit>()
+                          .setRedCards(int.parse(userAnswer[2]));
+                    }
                   }
                 }
               }

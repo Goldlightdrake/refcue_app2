@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 const logoPath = 'assets/images/logo.png';
 const logoDarkPath = 'assets/images/logo_dark.png';

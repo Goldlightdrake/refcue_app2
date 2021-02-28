@@ -15,6 +15,20 @@ class EditProfileDataCubit extends Cubit<EditProfileDataState> {
 
   final auth.User user;
 
+  void initialData(String name, String email) {
+    final initName = NameInput.dirty(name);
+    final initEmail = Email.dirty(email);
+    emit(
+      state.copyWith(
+        newName: initName,
+        newEmail: initEmail,
+        status: Formz.validate(
+          [initName, initEmail, state.password],
+        ),
+      ),
+    );
+  }
+
   void newNameChanged(String value) {
     final newName = NameInput.dirty(value);
     emit(state.copyWith(

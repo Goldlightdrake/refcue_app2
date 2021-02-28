@@ -1,9 +1,9 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_firebase_login/ui/screens/home/view/question_categories_view/question_categories_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                       ThemeProvider.of(context).brightness == Brightness.dark
                           ? logoDarkPath
                           : logoPath,
-                      width: kSpacingUnit.w * 12),
+                      width: kSpacingUnit.w * 10),
                   GestureDetector(
                     onTap: () => Navigator.push(
                         context,
@@ -52,11 +52,16 @@ class HomePage extends StatelessWidget {
                         if (authUser != null) {
                           authUser.reload();
                         }
-                        return CircleAvatar(
-                          radius: kSpacingUnit.w * 3,
-                          backgroundImage: user.photo == null
-                              ? AssetImage(basicAvatarImage)
-                              : NetworkImage(user.photo),
+                        return CachedNetworkImage(
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          imageUrl: user.photo,
+                          imageBuilder: (context, imageProvider) {
+                            return CircleAvatar(
+                              radius: kSpacingUnit.w * 3,
+                              backgroundImage: imageProvider,
+                            );
+                          },
                         );
                       }),
                     ),
@@ -102,13 +107,6 @@ class HomePage extends StatelessWidget {
                             alignment: Alignment.topLeft,
                           ),
                         ),
-                        // RotationTransition(
-                        //   turns: AlwaysStoppedAnimation(10 / 360),
-                        //   child: SvgPicture.asset(
-                        //     helloIconPath,
-                        //     width: kSpacingUnit.w * 2.5,
-                        //   ),
-                        // ),
                       ],
                     )
                   ],
@@ -160,9 +158,10 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ForUCard(
-                      image: choosePath,
-                      color: kAccentColor,
-                      nav: QuestionCategoriesView.route()),
+                    image: choosePath,
+                    color: kAccentColor,
+                    path: 'customtest',
+                  ),
                   ForUCard(image: fitnessPath, color: Color(0xffcaffa6)),
                   ForUCard(image: healthyPath, color: Color(0xff90f0e9)),
                 ],

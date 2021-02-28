@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,9 +80,16 @@ class ChangingProfileImage extends StatelessWidget {
                     return CircularProgressIndicator();
                   }
 
-                  return CircleAvatar(
-                      radius: kSpacingUnit.w * 8,
-                      backgroundImage: NetworkImage(user.photo));
+                  return CachedNetworkImage(
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    imageUrl: user.photo,
+                    imageBuilder: (context, imageProvider) {
+                      return CircleAvatar(
+                        radius: kSpacingUnit.w * 8,
+                        backgroundImage: imageProvider,
+                      );
+                    },
+                  );
                 },
               ),
               SizedBox(height: kSpacingUnit.w * 4),
