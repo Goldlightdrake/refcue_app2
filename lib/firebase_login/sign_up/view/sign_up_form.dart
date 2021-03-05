@@ -1,10 +1,10 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_firebase_login/firebase_login/sign_up/sign_up.dart';
+import 'package:refcue_app/firebase_login/sign_up/sign_up.dart';
 
 class SignUpForm extends StatelessWidget {
   @override

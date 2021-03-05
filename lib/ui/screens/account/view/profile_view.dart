@@ -1,11 +1,11 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
-import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
+import 'package:refcue_app/data/shared_preference/user_preference.dart';
+import 'package:refcue_app/firebase_login/authentication/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_firebase_login/ui/screens/account/view/widgets/profile_list.dart';
+import 'package:refcue_app/shared/const.dart';
+import 'package:refcue_app/ui/screens/account/view/widgets/profile_list.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -60,18 +60,23 @@ class _ProfileScreenState extends State<ProfileScreen>
             child: Stack(
               children: <Widget>[
                 Hero(
-                  tag: 'avatar',
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    imageUrl: user.photo,
-                    imageBuilder: (context, imageProvider) {
-                      return CircleAvatar(
-                        radius: kSpacingUnit.w * 5,
-                        backgroundImage: imageProvider,
-                      );
-                    },
-                  ),
-                ),
+                    tag: 'avatar',
+                    child: user.photo != null
+                        ? CachedNetworkImage(
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            imageUrl: user.photo,
+                            imageBuilder: (context, imageProvider) {
+                              return CircleAvatar(
+                                radius: kSpacingUnit.w * 5,
+                                backgroundImage: imageProvider,
+                              );
+                            },
+                          )
+                        : CircleAvatar(
+                            radius: kSpacingUnit.w * 5,
+                            backgroundImage: AssetImage(basicAvatarImage),
+                          )),
                 FadeTransition(
                   opacity: _animation,
                   child: Align(

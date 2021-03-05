@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:formz/formz.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import 'package:flutter_firebase_login/firebase_login/authentication/bloc/authentication_bloc.dart';
-import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
-import 'package:flutter_firebase_login/logic/account_logic/edit_profile_data/edit_profile_data_cubit.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/firebase_login/authentication/bloc/authentication_bloc.dart';
+import 'package:refcue_app/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
+import 'package:refcue_app/logic/account_logic/edit_profile_data/edit_profile_data_cubit.dart';
+import 'package:refcue_app/shared/const.dart';
 
 class EditProfileScreen extends StatelessWidget {
   static Route route() {
@@ -35,8 +35,10 @@ class EditProfileScreen extends StatelessWidget {
         ]);
 
     return BlocProvider(
-      create: (context) =>
-          EditProfileDataCubit(user)..initialData(user.displayName, user.email),
+      create: (context) => EditProfileDataCubit(user)
+        ..initialData(
+            user.displayName != null ? user.displayName : 'Imię Nazwisko',
+            user.email),
       child: Scaffold(
         body: BlocListener<EditProfileDataCubit, EditProfileDataState>(
           listener: (context, state) async {
@@ -111,7 +113,7 @@ class _NameInput extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: user.name,
+            initialValue: user.name != null ? user.name : 'Imię Nazwisko',
             key: const Key('nameForm_nameInput_textField'),
             onChanged: (newName) =>
                 context.read<EditProfileDataCubit>().newNameChanged(newName),

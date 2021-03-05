@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/bloc_timer/ticker.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
-import 'package:flutter_firebase_login/ui/screens/exam/view/exam_finished.dart';
+import 'package:refcue_app/data/repositories/test_repo.dart';
+import 'package:refcue_app/firebase_login/authentication/bloc/authentication_bloc.dart';
+import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
+import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
+import 'package:refcue_app/shared/error_screen.dart';
+import 'package:refcue_app/ui/screens/exam/view/exam_finished.dart';
 
 import 'exam_view.dart';
 
@@ -21,6 +23,8 @@ class ExamScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> userAnswersList = [for (var i = 0; i < amount; i++) '-'];
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -43,6 +47,7 @@ class ExamScreen extends StatelessWidget {
           indexCubit: context.read<ExamQuestionIndexCubit>(),
           answerCubit: context.read<AnswerCubit>(),
           maxIndex: amount,
+          userId: user.id,
         )..add(ExamFetched()),
         child: BlocProvider(
           create: (context) => TimerBloc(ticker: Ticker()),
@@ -61,14 +66,7 @@ class ExamScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 if (state is ExamError) {
-                  return Center(
-                      child: Column(
-                    children: [
-                      Icon(Icons.error),
-                      Text(
-                          'Coś poszło nie tak :/ Spróbuj zrestarować aplikacje')
-                    ],
-                  ));
+                  return ErrorScreen();
                 }
                 if (state is ExamReady) {
                   return ExamViewScreen(

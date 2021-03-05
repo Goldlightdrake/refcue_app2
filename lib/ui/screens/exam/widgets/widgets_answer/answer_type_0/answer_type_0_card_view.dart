@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

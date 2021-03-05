@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:formz/formz.dart';
 
-import 'package:flutter_firebase_login/firebase_login/authentication/models/models.dart';
+import 'package:refcue_app/firebase_login/authentication/models/models.dart';
 
 part 'new_password_state.dart';
 

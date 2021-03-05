@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter_firebase_login/logic/exam_logic/bloc_timer/ticker.dart';
+import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';

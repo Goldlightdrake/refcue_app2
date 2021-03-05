@@ -2,14 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/logic/account_logic/profile_picture_cubit/profile_picture_cubit.dart';
+import 'package:refcue_app/logic/account_logic/profile_picture_cubit/profile_picture_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import 'package:flutter_firebase_login/firebase_login/authentication/bloc/authentication_bloc.dart';
+import 'package:refcue_app/firebase_login/authentication/bloc/authentication_bloc.dart';
 
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/shared/const.dart';
 
 class ChangingProfileImage extends StatelessWidget {
   const ChangingProfileImage({
@@ -80,16 +80,22 @@ class ChangingProfileImage extends StatelessWidget {
                     return CircularProgressIndicator();
                   }
 
-                  return CachedNetworkImage(
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    imageUrl: user.photo,
-                    imageBuilder: (context, imageProvider) {
-                      return CircleAvatar(
-                        radius: kSpacingUnit.w * 8,
-                        backgroundImage: imageProvider,
-                      );
-                    },
-                  );
+                  return user.photo != null
+                      ? CachedNetworkImage(
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          imageUrl: user.photo,
+                          imageBuilder: (context, imageProvider) {
+                            return CircleAvatar(
+                              radius: kSpacingUnit.w * 8,
+                              backgroundImage: imageProvider,
+                            );
+                          },
+                        )
+                      : CircleAvatar(
+                          radius: kSpacingUnit.w * 8,
+                          backgroundImage: AssetImage(basicAvatarImage),
+                        );
                 },
               ),
               SizedBox(height: kSpacingUnit.w * 4),
@@ -117,9 +123,13 @@ class ChangingProfileImage extends StatelessWidget {
                                         horizontal: 20,
                                         vertical: 10,
                                       ),
-                                      onPressed: () => context
-                                          .read<ProfilePictureCubit>()
-                                          .getImageFromUser(ImageSource.camera),
+                                      onPressed: () {
+                                        context
+                                            .read<ProfilePictureCubit>()
+                                            .getImageFromUser(
+                                                ImageSource.camera);
+                                        Navigator.pop(_);
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(Icons.camera_alt,
@@ -141,10 +151,13 @@ class ChangingProfileImage extends StatelessWidget {
                                         horizontal: 20,
                                         vertical: 10,
                                       ),
-                                      onPressed: () => context
-                                          .read<ProfilePictureCubit>()
-                                          .getImageFromUser(
-                                              ImageSource.gallery),
+                                      onPressed: () {
+                                        context
+                                            .read<ProfilePictureCubit>()
+                                            .getImageFromUser(
+                                                ImageSource.gallery);
+                                        Navigator.pop(_);
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(Icons.photo,

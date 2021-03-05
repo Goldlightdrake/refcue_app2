@@ -2,7 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_firebase_login/firebase_login/authentication/models/models.dart';
+import 'package:refcue_app/firebase_login/authentication/models/models.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

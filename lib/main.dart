@@ -7,10 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_firebase_login/data/shared_preference/user_preference.dart';
+import 'package:refcue_app/data/shared_preference/user_preference.dart';
 
-import 'package:flutter_firebase_login/shared/const.dart';
-import 'package:flutter_firebase_login/ui/screens/splash/view/init_screen.dart';
+import 'package:refcue_app/shared/const.dart';
+import 'package:refcue_app/ui/screens/splash/view/init_screen.dart';
 
 import 'firebase_login/simple_bloc_observer.dart';
 

@@ -3,13 +3,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_firebase_login/firebase_login/authentication/authentication.dart';
-import 'package:flutter_firebase_login/shared/functions.dart';
-import 'package:flutter_firebase_login/ui/screens/account/account.dart';
-import 'package:flutter_firebase_login/ui/screens/home/widgets/widgets.dart';
+import 'package:refcue_app/firebase_login/authentication/authentication.dart';
+import 'package:refcue_app/shared/functions.dart';
+import 'package:refcue_app/ui/screens/account/account.dart';
+import 'package:refcue_app/ui/screens/home/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class HomePage extends StatelessWidget {
@@ -49,19 +49,24 @@ class HomePage extends StatelessWidget {
                     child: Hero(
                       tag: 'avatar',
                       child: Builder(builder: (context) {
-                        if (authUser != null) {
-                          authUser.reload();
+                        authUser.reload();
+
+                        if (user.photo != null) {
+                          return CachedNetworkImage(
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            imageUrl: user.photo,
+                            imageBuilder: (context, imageProvider) {
+                              return CircleAvatar(
+                                radius: kSpacingUnit.w * 3.5,
+                                backgroundImage: imageProvider,
+                              );
+                            },
+                          );
                         }
-                        return CachedNetworkImage(
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          imageUrl: user.photo,
-                          imageBuilder: (context, imageProvider) {
-                            return CircleAvatar(
-                              radius: kSpacingUnit.w * 3,
-                              backgroundImage: imageProvider,
-                            );
-                          },
+                        return CircleAvatar(
+                          radius: kSpacingUnit.w * 3.5,
+                          backgroundImage: AssetImage(basicAvatarImage),
                         );
                       }),
                     ),
@@ -88,10 +93,11 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text(
                           user.name == '' || user.name == null
-                              ? 'Witaj, Panie Bezimienny'
-                              : 'Witaj, ' + user.name,
+                              ? 'Witamy w RefCue'
+                              : 'Witaj, ' + user.name.split(' ')[0],
                           style: TextStyle(
-                            fontSize: kSpacingUnit.w * 2.2,
+                            wordSpacing: 4,
+                            fontSize: kSpacingUnit.w * 2.5,
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                           ),

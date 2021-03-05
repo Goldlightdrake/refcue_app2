@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/data/repositories/test_repo.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/cubit_answer/answer_cubit.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/cubit_var/exam_var_cubit.dart';
+import 'package:refcue_app/data/models/question.dart';
+import 'package:refcue_app/data/repositories/test_repo.dart';
+import 'package:refcue_app/data/repositories/user_stats_repo.dart';
+import 'package:refcue_app/logic/exam_logic/cubit_answer/answer_cubit.dart';
+import 'package:refcue_app/logic/exam_logic/cubit_var/exam_var_cubit.dart';
 
 part 'exam_event.dart';
 part 'exam_state.dart';
@@ -17,12 +18,14 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
   final ExamQuestionIndexCubit indexCubit;
   final AnswerCubit answerCubit;
   final int maxIndex;
+  final String userId;
   ExamBloc({
     this.testRepository,
     this.scoreCubit,
     this.indexCubit,
     this.answerCubit,
     this.maxIndex,
+    this.userId,
   }) : super(ExamLoading());
 
   @override
@@ -53,6 +56,8 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
       }
     }
     if (event is ExamFinishedEvent) {
+      UserStatsRepository(userId: userId)
+          .afterExamIncreament(scoreCubit.state, maxIndex);
       yield ExamFinished(
           userAnswers: answerCubit.userAnswersList,
           userScore: scoreCubit.state,

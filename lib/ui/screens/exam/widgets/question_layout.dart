@@ -1,14 +1,14 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/ui/screens/exam/widgets/question_answer_legend.dart';
-import 'package:flutter_firebase_login/ui/screens/exam/widgets/submit_button.dart';
+import 'package:refcue_app/ui/screens/exam/widgets/question_answer_legend.dart';
+import 'package:refcue_app/ui/screens/exam/widgets/submit_button.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/exam_logic.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/data/models/question.dart';
+import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
+import 'package:refcue_app/shared/const.dart';
 
 import 'answer_layout.dart';
 

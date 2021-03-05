@@ -1,4 +1,4 @@
-import 'package:flutter_firebase_login/shared/functions.dart';
+import 'package:refcue_app/shared/functions.dart';
 import 'package:meta/meta.dart';
 
 import '../data_provider/test_provider.dart';

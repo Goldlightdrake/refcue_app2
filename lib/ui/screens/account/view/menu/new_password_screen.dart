@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
-import 'package:flutter_firebase_login/logic/account_logic/new_password/new_password_cubit.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
+import 'package:refcue_app/logic/account_logic/new_password/new_password_cubit.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;

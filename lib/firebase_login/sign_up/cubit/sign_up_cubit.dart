@@ -1,8 +1,9 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:refcue_app/data/repositories/user_stats_repo.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_firebase_login/firebase_login/authentication/models/models.dart';
+import 'package:refcue_app/firebase_login/authentication/models/models.dart';
 
 part 'sign_up_state.dart';
 
@@ -61,10 +62,14 @@ class SignUpCubit extends Cubit<SignUpState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authenticationRepository.signUp(
+      await _authenticationRepository
+          .signUp(
         email: state.email.value,
         password: state.password.value,
-      );
+      )
+          .then((uid) {
+        UserStatsRepository(userId: uid).addUserToStatsDatabase();
+      });
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

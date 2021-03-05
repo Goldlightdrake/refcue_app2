@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_firebase_login/data/repositories/user_stats_repo.dart';
+import 'package:refcue_app/data/repositories/user_stats_repo.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 

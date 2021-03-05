@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 questionAnswerLegend(BuildContext context) {

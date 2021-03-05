@@ -12,29 +12,49 @@ class UserStatsRepository {
     usersStatsCollection
         .doc(userId)
         .set({
-          'createdOn': Timestamp.now(),
           'questionsPassed': 0,
           'sumScore': {
-            5: 0,
-            10: 0,
-            30: 0,
+            'five': 0,
+            'ten': 0,
+            'thirty': 0,
           },
           'examPassed': {
-            5: 0,
-            10: 0,
-            30: 0,
+            'five': 0,
+            'ten': 0,
+            'thirty': 0,
           },
-          'examTime': {
-            5: 0,
-            10: 0,
-            30: 0,
-          }
-        }) //SetOptions(merge : true)
+        })
         .then((value) => print('User stats created'))
         .catchError((error) => print("Didn't create user's stats"));
   }
 
-  // void afterExamIncreament() {
-  //   usersStatsCollection.doc(userId).set(, SetOptions(merge: true));
-  // }
+  void afterExamIncreament(double score, int typeOfExam) {
+    String keyForExam;
+    switch (typeOfExam) {
+      case 5:
+        keyForExam = 'five';
+        break;
+      case 10:
+        keyForExam = 'ten';
+        break;
+      case 30:
+        keyForExam = 'thirty';
+        break;
+      default:
+    }
+
+    usersStatsCollection
+        .doc(userId)
+        .set({
+          'sumScore': {
+            keyForExam: FieldValue.increment(score),
+          },
+          'examPassed': {
+            keyForExam: FieldValue.increment(1),
+          },
+          'questionsPassed': FieldValue.increment(typeOfExam),
+        }, SetOptions(merge: true))
+        .then((value) => print('User stats updated'))
+        .catchError((error) => throw (error));
+  }
 }

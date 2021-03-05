@@ -45,16 +45,19 @@ class AuthenticationRepository {
   /// Creates a new user with the provided [email] and [password].
   ///
   /// Throws a [SignUpFailure] if an exception occurs.
-  Future<void> signUp({
+  Future<String> signUp({
     @required String email,
     @required String password,
   }) async {
     assert(email != null && password != null);
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      var uid = await _firebaseAuth
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          )
+          .then((value) => value.user.uid);
+      return uid;
     } on Exception {
       throw SignUpFailure();
     }

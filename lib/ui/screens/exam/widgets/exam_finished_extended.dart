@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import 'package:flutter_firebase_login/data/models/question.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/data/models/question.dart';
+import 'package:refcue_app/shared/const.dart';
 
 import 'answer_cards_view.dart';
 
@@ -111,6 +111,7 @@ class ExamFinishedExtended extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          //Widget poprawnej odpowiedzi znajdujący się po lewej stronie
           Container(
             padding: EdgeInsets.all(kSpacingUnit.w * 1),
             decoration: BoxDecoration(
@@ -160,11 +161,12 @@ class ExamFinishedExtended extends StatelessWidget {
                   return Text(
                       question.answer[0].toUpperCase() +
                           question.answer.substring(1),
-                      style: TextStyle(fontSize: kSpacingUnit.w * 2.5));
+                      style: TextStyle(fontSize: kSpacingUnit.w * 2.2));
                 })
               ],
             ),
           ),
+          //Widget odpowiedzi użytkownika znajdujący się po prawej stornie
           Container(
             padding: EdgeInsets.all(kSpacingUnit.w * 1),
             decoration: BoxDecoration(
@@ -183,19 +185,22 @@ class ExamFinishedExtended extends StatelessWidget {
                   children: [
                     Text('Twoja odpowiedź',
                         style: TextStyle(fontSize: kSpacingUnit.w * 1.4)),
-                    SizedBox(width: 7),
+                    SizedBox(width: 5),
                     Icon(
                       Icons.person,
                     )
                   ],
                 ),
                 SizedBox(height: kSpacingUnit.w * 0.5),
-                Container(
-                  width: 150,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(26),
-                    color: Theme.of(context).textTheme.bodyText1.color,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  child: Container(
+                    width: 140,
+                    height: 3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(26),
+                      color: Theme.of(context).textTheme.bodyText1.color,
+                    ),
                   ),
                 ),
                 SizedBox(height: kSpacingUnit.w * 1.5),
@@ -225,7 +230,7 @@ class ExamFinishedExtended extends StatelessWidget {
                   }
                   return Text(
                       userAnswer[0].toUpperCase() + userAnswer.substring(1),
-                      style: TextStyle(fontSize: kSpacingUnit.w * 2.5));
+                      style: TextStyle(fontSize: kSpacingUnit.w * 2.2));
                 })
               ],
             ),

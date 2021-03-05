@@ -2,7 +2,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/ui/screens/home/view/home_page.dart';
+import 'package:refcue_app/ui/screens/home/view/home_page.dart';
 import '../ui/screens/splash/splash.dart';
 import 'authentication/bloc/authentication_bloc.dart';
 import 'login/view/login_page.dart';

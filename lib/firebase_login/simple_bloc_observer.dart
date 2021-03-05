@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_firebase_login/logic/exam_logic/bloc_timer/timer_bloc.dart';
+import 'package:refcue_app/logic/exam_logic/bloc_timer/timer_bloc.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override

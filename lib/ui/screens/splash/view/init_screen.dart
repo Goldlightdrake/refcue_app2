@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/firebase_login/app.dart';
-import 'package:flutter_firebase_login/shared/const.dart';
+import 'package:refcue_app/firebase_login/app.dart';
+import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InitScreenPage extends StatefulWidget {
