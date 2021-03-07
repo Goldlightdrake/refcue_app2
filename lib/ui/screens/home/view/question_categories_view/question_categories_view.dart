@@ -77,8 +77,6 @@ class _CategorieListTile extends StatelessWidget {
         secondary: SvgPicture.asset(getIconForArticle(index),
             width: kSpacingUnit.w * 4,
             color: Theme.of(context).iconTheme.color),
-        onChanged: (bool value) {
-          null;
-        });
+        onChanged: (bool value) {});
   }
 }

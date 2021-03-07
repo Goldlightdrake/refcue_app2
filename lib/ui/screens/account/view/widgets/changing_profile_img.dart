@@ -74,7 +74,7 @@ class ChangingProfileImage extends StatelessWidget {
                   if (state is ProfilePictureCropped) {
                     return CircleAvatar(
                         radius: kSpacingUnit.w * 8,
-                        backgroundImage: AssetImage(state.croppedImage.path));
+                        backgroundImage: FileImage(state.croppedImage));
                   }
                   if (state is ProfilePictureLoading) {
                     return CircularProgressIndicator();
