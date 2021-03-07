@@ -13,13 +13,14 @@ void submitButtonAction(BuildContext context, Question question) {
         builder: (_) => AlertDialog(
               backgroundColor: Theme.of(context).cardColor,
               title: Text("Chcesz zakończyć test?",
-                  style: kCaptionTextStyle.copyWith(
+                  style: kTitleTextStyle.copyWith(
                       fontSize: kSpacingUnit.w * 2,
                       color: Theme.of(context).textTheme.bodyText1.color)),
               elevation: 24.0,
               actions: [
-                FlatButton(
-                    textColor: Theme.of(context).textTheme.bodyText1.color,
+                TextButton(
+                    style: TextButton.styleFrom(
+                        primary: Theme.of(context).textTheme.bodyText1.color),
                     child: Text("Tak"),
                     onPressed: () {
                       if (question.type == 0) {
@@ -53,8 +54,9 @@ void submitButtonAction(BuildContext context, Question question) {
                       context.read<ExamQuestionIndexCubit>().goToNextQuestion();
                       Navigator.of(context, rootNavigator: true).pop();
                     }),
-                FlatButton(
-                  textColor: Theme.of(context).textTheme.bodyText1.color,
+                TextButton(
+                  style: TextButton.styleFrom(
+                      primary: Theme.of(context).textTheme.bodyText1.color),
                   child: Text("Nie"),
                   onPressed: () =>
                       Navigator.of(context, rootNavigator: true).pop(),

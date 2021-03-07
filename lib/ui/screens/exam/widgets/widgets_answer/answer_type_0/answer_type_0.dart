@@ -31,7 +31,7 @@ class AnswerType0View extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             fit: StackFit.loose,
-            overflow: Overflow.visible,
+            clipBehavior: Clip.none,
             children: [
               Positioned(
                   child: Container(

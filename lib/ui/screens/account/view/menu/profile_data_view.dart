@@ -113,10 +113,11 @@ class _EmailInput extends StatelessWidget {
 class _EditDataButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       key: const Key('edit_data_button'),
       child: Text(
         'Edytuj dane',
+        style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color),
       ),
       onPressed: () =>
           Navigator.of(context).push<void>(EditProfileScreen.route()),
@@ -127,11 +128,10 @@ class _EditDataButton extends StatelessWidget {
 class _NewpasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       key: const Key('nameform_newpassword_button'),
-      child: Text(
-        'Zmień hasło',
-      ),
+      child: Text('Zmień hasło',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color)),
       onPressed: () =>
           Navigator.of(context).push<void>(NewPasswordScreen.route()),
     );
@@ -141,10 +141,11 @@ class _NewpasswordButton extends StatelessWidget {
 class _DeleteAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       key: const Key('deleteAccount_button'),
       child: Text(
         'Usuń konto',
+        style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color),
       ),
       onPressed: () =>
           Navigator.of(context).push<void>(NewPasswordScreen.route()),

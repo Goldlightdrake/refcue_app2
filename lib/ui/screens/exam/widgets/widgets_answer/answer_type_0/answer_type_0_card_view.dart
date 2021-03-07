@@ -25,12 +25,14 @@ class AnswerType0CardsView extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    FlatButton(
+                    TextButton(
                       onPressed: () =>
                           context.read<CardsCubit>().addYellowCard(),
-                      child: Icon(Icons.add,
-                          color: Theme.of(context).iconTheme.color),
-                      minWidth: kSpacingUnit.w * 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Icon(Icons.add,
+                            color: Theme.of(context).iconTheme.color),
+                      ),
                     ),
                     Container(
                       width: kSpacingUnit.w * 6,
@@ -60,22 +62,26 @@ class AnswerType0CardsView extends StatelessWidget {
                         );
                       }),
                     ),
-                    FlatButton(
+                    TextButton(
                       onPressed: () =>
                           context.read<CardsCubit>().removeYellowCard(),
-                      child: Icon(Icons.remove,
-                          color: Theme.of(context).iconTheme.color),
-                      minWidth: kSpacingUnit.w * 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Icon(Icons.remove,
+                            color: Theme.of(context).iconTheme.color),
+                      ),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    FlatButton(
+                    TextButton(
                       onPressed: () => context.read<CardsCubit>().addRedCard(),
-                      child: Icon(Icons.add,
-                          color: Theme.of(context).iconTheme.color),
-                      minWidth: kSpacingUnit.w * 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Icon(Icons.add,
+                            color: Theme.of(context).iconTheme.color),
+                      ),
                     ),
                     Container(
                       width: kSpacingUnit.w * 6,
@@ -99,12 +105,14 @@ class AnswerType0CardsView extends StatelessWidget {
                         );
                       }),
                     ),
-                    FlatButton(
+                    TextButton(
                       onPressed: () =>
                           context.read<CardsCubit>().removeRedCard(),
-                      child: Icon(Icons.remove,
-                          color: Theme.of(context).iconTheme.color),
-                      minWidth: kSpacingUnit.w * 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Icon(Icons.remove,
+                            color: Theme.of(context).iconTheme.color),
+                      ),
                     ),
                   ],
                 ),

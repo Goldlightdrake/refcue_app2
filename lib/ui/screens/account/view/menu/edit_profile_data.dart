@@ -43,7 +43,7 @@ class EditProfileScreen extends StatelessWidget {
         body: BlocListener<EditProfileDataCubit, EditProfileDataState>(
           listener: (context, state) async {
             if (state.status.isSubmissionSuccess) {
-              Scaffold.of(context)
+              ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   const SnackBar(
@@ -54,7 +54,7 @@ class EditProfileScreen extends StatelessWidget {
                 );
             }
             if (state.status.isSubmissionFailure) {
-              Scaffold.of(context)
+              ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   const SnackBar(
@@ -85,8 +85,8 @@ class EditProfileScreen extends StatelessWidget {
                 if (state.status.isSubmissionSuccess) {
                   return Icon(Icons.check, color: Colors.green);
                 }
-                return FlatButton(
-                    color: kAccentColor,
+                return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: kAccentColor),
                     onPressed: () async {
                       await context
                           .read<EditProfileDataCubit>()

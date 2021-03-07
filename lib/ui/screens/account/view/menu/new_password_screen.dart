@@ -38,7 +38,7 @@ class NewPasswordScreen extends StatelessWidget {
         body: BlocListener<NewPasswordCubit, NewPasswordState>(
           listener: (context, state) async {
             if (state.status.isSubmissionFailure) {
-              Scaffold.of(context)
+              ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   const SnackBar(
@@ -71,8 +71,10 @@ class NewPasswordScreen extends StatelessWidget {
                 if (state.status.isSubmissionSuccess) {
                   return Icon(Icons.check, color: Colors.green);
                 }
-                return FlatButton(
-                    color: kAccentColor,
+                return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: kAccentColor,
+                    ),
                     onPressed: () {
                       context.read<NewPasswordCubit>().changePassword();
                     },

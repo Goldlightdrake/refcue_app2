@@ -104,92 +104,95 @@ class ChangingProfileImage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FlatButton(
-                          onPressed: () => showDialog(
-                                context: context,
-                                builder: (_) => SimpleDialog(
-                                  backgroundColor: Theme.of(context).cardColor,
-                                  title: Text("Wybierz źródło zdjęcia",
-                                      style: kCaptionTextStyle.copyWith(
-                                          fontSize: kSpacingUnit.w * 2,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .color)),
-                                  elevation: 24.0,
+                      ElevatedButton(
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => SimpleDialog(
+                            backgroundColor: Theme.of(context).cardColor,
+                            title: Text("Wybierz źródło zdjęcia",
+                                style: kTitleTextStyle.copyWith(
+                                    fontSize: kSpacingUnit.w * 2,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .color)),
+                            elevation: 24.0,
+                            children: [
+                              SimpleDialogOption(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<ProfilePictureCubit>()
+                                      .getImageFromUser(ImageSource.camera);
+                                  Navigator.pop(_);
+                                },
+                                child: Row(
                                   children: [
-                                    SimpleDialogOption(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 10,
-                                      ),
-                                      onPressed: () {
-                                        context
-                                            .read<ProfilePictureCubit>()
-                                            .getImageFromUser(
-                                                ImageSource.camera);
-                                        Navigator.pop(_);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.camera_alt,
-                                              color: Theme.of(context)
-                                                  .iconTheme
-                                                  .color),
-                                          SizedBox(width: kSpacingUnit.w * 1.5),
-                                          Text('Zrób zdjęcie',
-                                              style: kTitleTextStyle.copyWith(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      .color))
-                                        ],
-                                      ),
-                                    ),
-                                    SimpleDialogOption(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 10,
-                                      ),
-                                      onPressed: () {
-                                        context
-                                            .read<ProfilePictureCubit>()
-                                            .getImageFromUser(
-                                                ImageSource.gallery);
-                                        Navigator.pop(_);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.photo,
-                                              color: Theme.of(context)
-                                                  .iconTheme
-                                                  .color),
-                                          SizedBox(width: kSpacingUnit.w * 1.5),
-                                          Text('Wybierz z galerii',
-                                              style: kTitleTextStyle.copyWith(
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      .color))
-                                        ],
-                                      ),
-                                    ),
+                                    Icon(Icons.camera_alt,
+                                        color:
+                                            Theme.of(context).iconTheme.color),
+                                    SizedBox(width: kSpacingUnit.w * 1.5),
+                                    Text('Zrób zdjęcie',
+                                        style: kTitleTextStyle.copyWith(
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .color))
                                   ],
                                 ),
                               ),
-                          textColor: Colors.black,
-                          child: Icon(Icons.edit),
-                          color: Theme.of(context).accentColor),
+                              SimpleDialogOption(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .read<ProfilePictureCubit>()
+                                      .getImageFromUser(ImageSource.gallery);
+                                  Navigator.pop(_);
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.photo,
+                                        color:
+                                            Theme.of(context).iconTheme.color),
+                                    SizedBox(width: kSpacingUnit.w * 1.5),
+                                    Text('Wybierz z galerii',
+                                        style: kTitleTextStyle.copyWith(
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .color))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            onPrimary: Colors.black, primary: kAccentColor),
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            child: Icon(Icons.edit)),
+                      ),
                       SizedBox(
                         width: kSpacingUnit.w * 2,
                       ),
-                      FlatButton(
-                          onPressed: () {
-                            context.read<ProfilePictureCubit>().uploadFile();
-                          },
-                          textColor: Colors.black,
-                          child: Icon(Icons.check),
-                          color: Theme.of(context).accentColor),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.read<ProfilePictureCubit>().uploadFile();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            onPrimary: Colors.black, primary: kAccentColor),
+                        child: Padding(
+                          child: Icon(Icons.check, size: kSpacingUnit.w * 3.5),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: kSpacingUnit.w * 6),

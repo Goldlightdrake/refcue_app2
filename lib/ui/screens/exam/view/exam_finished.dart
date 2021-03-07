@@ -29,11 +29,9 @@ class FinishedExamScreen extends StatelessWidget {
     var header = Padding(
         padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 2),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 Text(greatViewOfScore(examFinishedState.userScore),
                     style: TextStyle(
@@ -59,9 +57,12 @@ class FinishedExamScreen extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   width: 60,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).iconTheme.color,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                     ),
                     onPressed: () => null,
                     child: Icon(Icons.share),
@@ -73,9 +74,12 @@ class FinishedExamScreen extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   width: 60,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).iconTheme.color,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
                     ),
                     onPressed: () => Navigator.of(context).pop<void>(),
                     child: Icon(Icons.home),

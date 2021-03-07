@@ -83,7 +83,13 @@ class QuestionLayout extends StatelessWidget {
           children: [
             Container(
               width: kSpacingUnit.w * 6,
-              child: FlatButton(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  primary: Theme.of(context).iconTheme.color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                ),
                 onPressed: () => questionAnswerLegend(context),
                 child: Icon(Icons.info_sharp),
               ),
@@ -204,12 +210,16 @@ class QuestionLayout extends StatelessWidget {
             ),
           ),
           Builder(
-            builder: (context) => RaisedButton(
-                color: Theme.of(context).accentColor,
+            builder: (context) => ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).accentColor,
+                ),
                 onPressed: () {
                   submitButtonAction(context, question);
                 },
-                child: Icon(Icons.arrow_forward, color: Colors.black)),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Icon(Icons.arrow_forward, color: Colors.black))),
           )
         ],
       )),
