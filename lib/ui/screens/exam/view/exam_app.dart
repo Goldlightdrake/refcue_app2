@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:refcue_app/data/repositories/test_repo.dart';
+import 'package:refcue_app/data/repositories/exam_repo.dart';
 import 'package:refcue_app/firebase_login/authentication/bloc/authentication_bloc.dart';
 import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
 import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
@@ -42,7 +42,7 @@ class ExamScreen extends StatelessWidget {
       ],
       child: BlocProvider(
         create: (context) => ExamBloc(
-          testRepository: TestRepository(amountOfQuestions: amount),
+          testRepository: ExamRepository(amountOfQuestions: amount),
           scoreCubit: context.read<ExamScoreCubit>(),
           indexCubit: context.read<ExamQuestionIndexCubit>(),
           answerCubit: context.read<AnswerCubit>(),

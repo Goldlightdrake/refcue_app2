@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:refcue_app/data/models/question.dart';
-import 'package:refcue_app/data/repositories/test_repo.dart';
+import 'package:refcue_app/data/repositories/exam_repo.dart';
 import 'package:refcue_app/data/repositories/user_stats_repo.dart';
 import 'package:refcue_app/logic/exam_logic/cubit_answer/answer_cubit.dart';
 import 'package:refcue_app/logic/exam_logic/cubit_var/exam_var_cubit.dart';
@@ -13,7 +13,7 @@ part 'exam_event.dart';
 part 'exam_state.dart';
 
 class ExamBloc extends Bloc<ExamEvent, ExamState> {
-  final TestRepository testRepository;
+  final ExamRepository testRepository;
   final ExamScoreCubit scoreCubit;
   final ExamQuestionIndexCubit indexCubit;
   final AnswerCubit answerCubit;

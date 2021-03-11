@@ -1,12 +1,12 @@
 import 'package:refcue_app/shared/functions.dart';
 import 'package:meta/meta.dart';
 
-import '../data_provider/test_provider.dart';
+import '../data_provider/exam_provider.dart';
 import '../models/question.dart';
 
-class TestRepository {
+class ExamRepository {
   final int amountOfQuestions;
-  TestRepository({
+  ExamRepository({
     @required this.amountOfQuestions,
   });
 

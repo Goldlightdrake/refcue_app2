@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:refcue_app/ui/screens/account/view/menu/settings_screen.dart';
 
 class ProfileListItem extends StatelessWidget {
   final IconData icon;
@@ -18,9 +19,12 @@ class ProfileListItem extends StatelessWidget {
     switch (where) {
       case 'profileDataView':
         return ProfileDataView.route();
+        break;
       case 'profileStatsView':
         return ProfileStatsView.route();
         break;
+      case 'settingsScreen':
+        return SettingsScreen.route();
       default:
         return null;
     }

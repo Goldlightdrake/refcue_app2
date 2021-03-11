@@ -149,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           firstChild: GestureDetector(
             onTap: () {
               ThemeSwitcher.of(context).changeTheme(theme: kLightTheme);
-              UserSharedPreference.setThemeDataPrefs(false);
+              UserSharedPreference.setThemeDataPrefs(true);
             },
             child: Icon(
               LineAwesomeIcons.sun,
@@ -159,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           secondChild: GestureDetector(
             onTap: () {
               ThemeSwitcher.of(context).changeTheme(theme: kDarkTheme);
-              UserSharedPreference.setThemeDataPrefs(true);
+              UserSharedPreference.setThemeDataPrefs(false);
             },
             child: Icon(
               LineAwesomeIcons.moon,
@@ -213,6 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ProfileListItem(
                         icon: LineAwesomeIcons.cog,
                         text: 'Ustawienia',
+                        where: 'settingsScreen',
                       ),
                       ProfileListItem(
                         icon: LineAwesomeIcons.user_plus,
