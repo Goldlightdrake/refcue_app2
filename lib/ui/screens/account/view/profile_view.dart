@@ -1,5 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:refcue_app/data/shared_preference/user_preference.dart';
 import 'package:refcue_app/firebase_login/authentication/authentication.dart';
@@ -12,40 +13,13 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import 'widgets/changing_profile_img.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => ProfileScreen());
   }
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1500));
-    _animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(_animationController);
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _animationController.forward();
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     ScreenUtil.init(context,
         designSize: Size(414, 896), allowFontScaling: true);
@@ -77,8 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             radius: kSpacingUnit.w * 5,
                             backgroundImage: AssetImage(basicAvatarImage),
                           )),
-                FadeTransition(
-                  opacity: _animation,
+                DelayedDisplay(
+                  delay: Duration(milliseconds: 500),
+                  slidingBeginOffset: Offset(0.35, 0.0),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
@@ -150,6 +125,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             onTap: () {
               ThemeSwitcher.of(context).changeTheme(theme: kLightTheme);
               UserSharedPreference.setThemeDataPrefs(true);
+              UserSharedPreference.getThemeDataPrefs()
+                  .then((value) => print(value));
             },
             child: Icon(
               LineAwesomeIcons.sun,

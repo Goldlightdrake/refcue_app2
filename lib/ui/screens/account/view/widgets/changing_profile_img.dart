@@ -73,29 +73,32 @@ class ChangingProfileImage extends StatelessWidget {
 
                   if (state is ProfilePictureCropped) {
                     return CircleAvatar(
-                        radius: kSpacingUnit.w * 8,
+                        radius: kSpacingUnit.w * 10,
                         backgroundImage: FileImage(state.croppedImage));
                   }
                   if (state is ProfilePictureLoading) {
                     return CircularProgressIndicator();
                   }
 
-                  return user.photo != null
-                      ? CachedNetworkImage(
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          imageUrl: user.photo,
-                          imageBuilder: (context, imageProvider) {
-                            return CircleAvatar(
-                              radius: kSpacingUnit.w * 8,
-                              backgroundImage: imageProvider,
-                            );
-                          },
-                        )
-                      : CircleAvatar(
-                          radius: kSpacingUnit.w * 8,
-                          backgroundImage: AssetImage(basicAvatarImage),
-                        );
+                  return Hero(
+                      tag: 'avatar',
+                      child: Builder(
+                          builder: (context) => user.photo != null
+                              ? CachedNetworkImage(
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  imageUrl: user.photo,
+                                  imageBuilder: (context, imageProvider) {
+                                    return CircleAvatar(
+                                      radius: kSpacingUnit.w * 10,
+                                      backgroundImage: imageProvider,
+                                    );
+                                  },
+                                )
+                              : CircleAvatar(
+                                  radius: kSpacingUnit.w * 10,
+                                  backgroundImage: AssetImage(basicAvatarImage),
+                                )));
                 },
               ),
               SizedBox(height: kSpacingUnit.w * 4),

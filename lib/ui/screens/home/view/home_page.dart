@@ -44,6 +44,8 @@ class HomePage extends StatelessWidget {
                     onTap: () => Navigator.push(
                         context,
                         PageRouteBuilder(
+                            reverseTransitionDuration:
+                                Duration(milliseconds: 500),
                             transitionDuration: Duration(milliseconds: 500),
                             pageBuilder: (_, __, ___) => ProfileScreen())),
                     child: Hero(

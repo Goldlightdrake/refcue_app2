@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
         Text("Ustawienia ogólne"),
         Container(
           child: Column(
-            children: [_SettingListTile(index: 1, "title")],
+            children: [_SettingListTile(index: 1)],
           ),
         ),
       ],

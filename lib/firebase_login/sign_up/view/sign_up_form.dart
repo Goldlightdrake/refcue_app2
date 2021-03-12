@@ -15,7 +15,12 @@ class SignUpForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Rejestracja się nie powiodła')),
+              SnackBar(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  content: Text('Rejestracja się nie powiodła',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1.color))),
             );
         }
       },

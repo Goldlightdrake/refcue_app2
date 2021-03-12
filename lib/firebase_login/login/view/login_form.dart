@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:auth_buttons/res/buttons/google_auth_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:refcue_app/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
@@ -6,7 +7,6 @@ import 'package:refcue_app/shared/const.dart';
 import 'package:formz/formz.dart';
 import '../login.dart';
 import 'package:refcue_app/firebase_login/sign_up/sign_up.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -17,11 +17,12 @@ class LoginForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(
-                  content: Text(
-                'Podano zły e-mail lub hasło',
-                textAlign: TextAlign.center,
-              )),
+              SnackBar(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  content: Text('Podano zły e-mail lub hasło',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1.color))),
             );
         }
       },
@@ -43,7 +44,7 @@ class LoginForm extends StatelessWidget {
               _PasswordInput(),
               const SizedBox(height: 10.0),
               _LoginButton(),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 10.0),
               _GoogleLoginButton(),
               const SizedBox(height: 4.0),
               _SignUpButton(),
@@ -157,12 +158,11 @@ class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GoogleSignInButton(
-      key: const Key('loginForm_googleLogin_raisedButton'),
+    return GoogleAuthButton(
       text: 'Użyj konta google',
-      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
       borderRadius: 12.0,
-      darkMode: theme.brightness == Brightness.dark ? true : false,
+      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
+      darkMode: Theme.of(context).brightness == Brightness.dark ? true : false,
     );
   }
 }
@@ -172,9 +172,8 @@ class _SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       key: const Key('loginForm_createAccount_flatButton'),
-      child: Text(
-        'Nie masz konta?  Zarejestruj się!',
-      ),
+      child: Text('Nie masz konta?  Zarejestruj się!',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color)),
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
     );
   }
