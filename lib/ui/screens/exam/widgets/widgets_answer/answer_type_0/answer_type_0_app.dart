@@ -5,7 +5,7 @@ import './answer_type_0.dart';
 import './answer_type_0_card_view.dart';
 
 class AnswerType0App extends StatelessWidget {
-  const AnswerType0App({Key key}) : super(key: key);
+  const AnswerType0App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

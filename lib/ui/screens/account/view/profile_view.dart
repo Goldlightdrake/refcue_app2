@@ -1,6 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:refcue_app/data/shared_preference/user_preference.dart';
 import 'package:refcue_app/firebase_login/authentication/authentication.dart';
@@ -21,9 +20,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
-
     var profileInfo = Expanded(
       child: Column(
         children: <Widget>[
@@ -39,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                         ? CachedNetworkImage(
                             placeholder: (context, url) =>
                                 CircularProgressIndicator(),
-                            imageUrl: user.photo,
+                            imageUrl: user.photo!,
                             imageBuilder: (context, imageProvider) {
                               return CircleAvatar(
                                 radius: kSpacingUnit.w * 5,
@@ -51,42 +47,45 @@ class ProfileScreen extends StatelessWidget {
                             radius: kSpacingUnit.w * 5,
                             backgroundImage: AssetImage(basicAvatarImage),
                           )),
-                DelayedDisplay(
-                  delay: Duration(milliseconds: 500),
-                  slidingBeginOffset: Offset(0.35, 0.0),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.of(context)
-                            .push<void>(ChangingProfileImage.route());
-                      },
-                      child: Container(
-                        height: kSpacingUnit.w * 3,
-                        width: kSpacingUnit.w * 3,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).accentColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          heightFactor: kSpacingUnit.w * 1.5,
-                          widthFactor: kSpacingUnit.w * 1.5,
-                          child: Icon(
-                            LineAwesomeIcons.pen,
-                            color: kDarkPrimaryColor,
-                            size: ScreenUtil().setSp(kSpacingUnit.w * 1.5),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                FutureBuilder(
+                    future: Future.delayed(Duration(milliseconds: 500)),
+                    builder: (c, s) => s.connectionState == ConnectionState.done
+                        ? Align(
+                            alignment: Alignment.bottomRight,
+                            child: GestureDetector(
+                              onTap: () async {
+                                Navigator.of(context)
+                                    .push<void>(ChangingProfileImage.route());
+                              },
+                              child: Container(
+                                height: kSpacingUnit.w * 3,
+                                width: kSpacingUnit.w * 3,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  heightFactor: kSpacingUnit.w * 1.5,
+                                  widthFactor: kSpacingUnit.w * 1.5,
+                                  child: Icon(
+                                    LineAwesomeIcons.pen,
+                                    color: kDarkPrimaryColor,
+                                    size: ScreenUtil()
+                                        .setSp(kSpacingUnit.w * 1.5),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container()),
               ],
             ),
           ),
           SizedBox(height: kSpacingUnit.w * 2),
           Text(
-            user.name == '' || user.name == null ? 'Pan BezImienny' : user.name,
+            (user.name == '' || user.name == null
+                ? 'Pan BezImienny'
+                : user.name)!,
             style: kTitleTextStyle,
           ),
           SizedBox(height: kSpacingUnit.w * 0.5),
@@ -118,12 +117,12 @@ class ProfileScreen extends StatelessWidget {
         return AnimatedCrossFade(
           duration: Duration(milliseconds: 200),
           crossFadeState:
-              ThemeProvider.of(context).brightness == Brightness.dark
+              ThemeProvider.of(context)!.brightness == Brightness.dark
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
           firstChild: GestureDetector(
             onTap: () {
-              ThemeSwitcher.of(context).changeTheme(theme: kLightTheme);
+              ThemeSwitcher.of(context)!.changeTheme(theme: kLightTheme);
               UserSharedPreference.setThemeDataPrefs(true);
               UserSharedPreference.getThemeDataPrefs()
                   .then((value) => print(value));
@@ -135,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           secondChild: GestureDetector(
             onTap: () {
-              ThemeSwitcher.of(context).changeTheme(theme: kDarkTheme);
+              ThemeSwitcher.of(context)!.changeTheme(theme: kDarkTheme);
               UserSharedPreference.setThemeDataPrefs(false);
             },
             child: Icon(
@@ -166,46 +165,50 @@ class ProfileScreen extends StatelessWidget {
     return ThemeSwitchingArea(
       child: Builder(
         builder: (context) {
-          return Scaffold(
-            body: Column(
-              children: <Widget>[
-                SizedBox(height: kSpacingUnit.w * 5),
-                header,
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      ProfileListItem(
-                          icon: LineAwesomeIcons.user_shield,
-                          text: 'Dane konta',
-                          where: 'profileDataView'),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.history,
-                        text: 'Statystyki',
-                        where: 'profileStatsView',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.question_circle,
-                        text: 'Pomoc',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.cog,
-                        text: 'Ustawienia',
-                        where: 'settingsScreen',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.user_plus,
-                        text: 'Zaproś znajomych!',
-                      ),
-                      ProfileListItem(
-                        icon: LineAwesomeIcons.alternate_sign_out,
-                        text: 'Wyloguj się',
-                        hasNavigation: false,
-                        logOut: true,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+          return ScreenUtilInit(
+            designSize: Size(414, 896),
+            allowFontScaling: true,
+            builder: () => Scaffold(
+              body: Column(
+                children: <Widget>[
+                  SizedBox(height: kSpacingUnit.w * 5),
+                  header,
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        ProfileListItem(
+                            icon: LineAwesomeIcons.user_shield,
+                            text: 'Dane konta',
+                            where: 'profileDataView'),
+                        ProfileListItem(
+                          icon: LineAwesomeIcons.history,
+                          text: 'Statystyki',
+                          where: 'profileStatsView',
+                        ),
+                        ProfileListItem(
+                          icon: LineAwesomeIcons.question_circle,
+                          text: 'Pomoc',
+                        ),
+                        ProfileListItem(
+                          icon: LineAwesomeIcons.cog,
+                          text: 'Ustawienia',
+                          where: 'settingsScreen',
+                        ),
+                        ProfileListItem(
+                          icon: LineAwesomeIcons.user_plus,
+                          text: 'Zaproś znajomych!',
+                        ),
+                        ProfileListItem(
+                          icon: LineAwesomeIcons.alternate_sign_out,
+                          text: 'Wyloguj się',
+                          hasNavigation: false,
+                          logOut: true,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },

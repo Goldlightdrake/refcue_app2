@@ -6,7 +6,7 @@ import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
 
 Widget answerType2Element(String answerText) {
   return Builder(builder: (context) {
-    final answerCubitState = context.watch<AnswerCubit>().state;
+    final AnswerState answerCubitState = context.watch<AnswerCubit>().state;
 
     bool answerPicked = answerCubitState == AnswerPicked(answer: answerText) &&
         (answerCubitState as AnswerPicked).answer == answerText;
@@ -37,7 +37,7 @@ Widget answerType2Element(String answerText) {
           style: kCaptionTextStyle.copyWith(
             color: answerPicked
                 ? Colors.black
-                : Theme.of(context).textTheme.bodyText1.color,
+                : Theme.of(context).textTheme.bodyText1!.color,
             fontSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
             fontWeight: answerPicked ? FontWeight.w600 : FontWeight.w100,
           ),

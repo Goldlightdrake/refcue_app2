@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData) {
             return ThemeProvider(
-                initTheme: snapshot.data ? kLightTheme : kDarkTheme,
+                initTheme: snapshot.data! ? kLightTheme : kDarkTheme,
                 child: Builder(builder: (context) {
                   return MaterialApp(
                     title: 'RefCue',

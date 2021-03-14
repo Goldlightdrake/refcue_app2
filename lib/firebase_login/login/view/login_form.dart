@@ -22,7 +22,7 @@ class LoginForm extends StatelessWidget {
                   content: Text('Podano zły e-mail lub hasło',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1.color))),
+                          color: Theme.of(context).textTheme.bodyText1!.color))),
             );
         }
       },
@@ -33,7 +33,7 @@ class LoginForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                ThemeProvider.of(context).brightness == Brightness.dark
+                ThemeProvider.of(context)!.brightness == Brightness.dark
                     ? logoDarkPath
                     : logoPath,
                 height: 84,
@@ -157,7 +157,6 @@ class _LoginButton extends StatelessWidget {
 class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return GoogleAuthButton(
       text: 'Użyj konta google',
       borderRadius: 12.0,
@@ -173,7 +172,7 @@ class _SignUpButton extends StatelessWidget {
     return TextButton(
       key: const Key('loginForm_createAccount_flatButton'),
       child: Text('Nie masz konta?  Zarejestruj się!',
-          style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color)),
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
     );
   }

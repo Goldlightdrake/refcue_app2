@@ -7,10 +7,10 @@ import 'package:refcue_app/shared/const.dart';
 
 Widget answerElement(String answerText) {
   return Builder(builder: (context) {
-    final answerCubit = context.watch<AnswerCubit>();
-
-    bool answerPicked = answerCubit.state == AnswerPicked(answer: answerText) &&
-        (answerCubit.state as AnswerPicked).answer == answerText;
+    bool answerPicked = context.watch<AnswerCubit>().state ==
+            AnswerPicked(answer: answerText) &&
+        (context.watch<AnswerCubit>().state as AnswerPicked).answer ==
+            answerText;
 
     return GestureDetector(
       onTap: () => context.read<AnswerCubit>().pickAnswer(answerText),
@@ -38,7 +38,7 @@ Widget answerElement(String answerText) {
           style: kCaptionTextStyle.copyWith(
             color: answerPicked
                 ? Colors.black
-                : Theme.of(context).textTheme.bodyText1.color,
+                : Theme.of(context).textTheme.bodyText1!.color,
             fontSize: ScreenUtil().setSp(kSpacingUnit.w * 2.5),
             fontWeight: answerPicked ? FontWeight.w600 : FontWeight.w100,
           ),

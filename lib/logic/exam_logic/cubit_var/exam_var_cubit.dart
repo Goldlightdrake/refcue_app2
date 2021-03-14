@@ -3,10 +3,10 @@ import 'package:bloc/bloc.dart';
 class ExamScoreCubit extends Cubit<double> {
   ExamScoreCubit() : super(0);
 
-  int checkAnswer(String userAnswer, String questionAnswer, int type) {
+  int checkAnswer(String? userAnswer, String questionAnswer, int type) {
     print(userAnswer);
     if (type == 0) {
-      if (userAnswer.length > 3) {
+      if (userAnswer!.length > 3) {
         if (userAnswer[0] == questionAnswer[0] &&
             userAnswer[1] == questionAnswer[1]) {
           if (userAnswer[3] == questionAnswer[3]) {

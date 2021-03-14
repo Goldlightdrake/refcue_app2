@@ -6,7 +6,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AnswerType0CardsView extends StatelessWidget {
-  const AnswerType0CardsView({Key key}) : super(key: key);
+  const AnswerType0CardsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

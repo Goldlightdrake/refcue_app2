@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:meta/meta.dart';
 
 class UserStatsRepository {
-  UserStatsRepository({@required this.userId});
+  UserStatsRepository({required this.userId});
 
-  final String userId;
+  final String? userId;
   CollectionReference usersStatsCollection =
       FirebaseFirestore.instance.collection('users_stats');
 
@@ -28,8 +27,8 @@ class UserStatsRepository {
         .catchError((error) => print("Didn't create user's stats"));
   }
 
-  void afterExamIncreament(double score, int typeOfExam) {
-    String keyForExam;
+  void afterExamIncreament(double score, int? typeOfExam) {
+    String? keyForExam;
     switch (typeOfExam) {
       case 5:
         keyForExam = 'five';
@@ -52,7 +51,7 @@ class UserStatsRepository {
           'examPassed': {
             keyForExam: FieldValue.increment(1),
           },
-          'questionsPassed': FieldValue.increment(typeOfExam),
+          'questionsPassed': FieldValue.increment(typeOfExam!),
         }, SetOptions(merge: true))
         .then((value) => print('User stats updated'))
         .catchError((error) => throw (error));

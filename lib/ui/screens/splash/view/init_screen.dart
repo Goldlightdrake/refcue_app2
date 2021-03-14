@@ -9,10 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InitScreenPage extends StatefulWidget {
   const InitScreenPage({
-    Key key,
-    @required this.authenticationRepository,
-  })  : assert(authenticationRepository != null),
-        super(key: key);
+    Key? key,
+    required this.authenticationRepository,
+  }) : super(key: key);
 
   final AuthenticationRepository authenticationRepository;
   @override
@@ -34,22 +33,23 @@ class _InitScreenPageState extends State<InitScreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
-
-    return Scaffold(
-        backgroundColor: ThemeProvider.of(context).primaryColor,
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Image(
-                width: kSpacingUnit.w * 20,
-                image: AssetImage(
-                  ThemeProvider.of(context).brightness == Brightness.dark
-                      ? logoDarkPath
-                      : logoPath,
-                )),
-          ),
-        ));
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      allowFontScaling: true,
+      builder: () => Scaffold(
+          backgroundColor: ThemeProvider.of(context)!.primaryColor,
+          body: Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Image(
+                  width: kSpacingUnit.w * 20,
+                  image: AssetImage(
+                    ThemeProvider.of(context)!.brightness == Brightness.dark
+                        ? logoDarkPath
+                        : logoPath,
+                  )),
+            ),
+          )),
+    );
   }
 }

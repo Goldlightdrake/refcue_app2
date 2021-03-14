@@ -78,21 +78,24 @@ int colorOfAnswer(answer) {
       {
         return 0xffff073a;
       }
-      break;
+
     case 1:
       {
         return 0xeeF2EA02;
       }
-      break;
+
     case 2:
       {
         return 0xee39FF14;
       }
-      break;
+    default:
+      {
+        return 0xffff073a;
+      }
   }
 }
 
-List numberInRange(int amount, int questionCount) {
+List numberInRange(int? amount, int questionCount) {
   var randomList =
       new List<int>.generate(questionCount, (int index) => index + 1);
   randomList.shuffle();
@@ -100,10 +103,10 @@ List numberInRange(int amount, int questionCount) {
 }
 
 String firstFewWords(String bigSentence) {
-  int startIndex = 0, indexOfSpace;
+  int? startIndex = 0, indexOfSpace;
 
   for (int i = 0; i < 6; i++) {
-    indexOfSpace = bigSentence.indexOf(' ', startIndex);
+    indexOfSpace = bigSentence.indexOf(' ', startIndex!);
     if (indexOfSpace == -1) {
       return bigSentence;
     }
@@ -129,40 +132,39 @@ String getIconForArticle(int index) {
   switch (index) {
     case 1:
       return article1IconPath;
-      break;
+
     case 2:
       return article2IconPath;
-      break;
+
     case 3:
       return article3IconPath;
-      break;
+
     case 4:
       return article4IconPath;
-      break;
+
     case 5:
       return article5IconPath;
-      break;
+
     case 6:
       return article6IconPath;
-      break;
+
     case 7:
       return article7IconPath;
-      break;
+
     case 8:
       return article8IconPath;
-      break;
+
     case 9:
       return article9IconPath;
-      break;
+
     case 10:
       return article10IconPath;
-      break;
+
     case 11:
       return article11IconPath;
-      break;
+
     case 12:
       return article12IconPath;
-      break;
 
     default:
       return article1IconPath;

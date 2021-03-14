@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -11,12 +10,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   final Ticker _ticker;
   static const int _duration = 60;
 
-  StreamSubscription<int> _tickerSubscription;
+  StreamSubscription<int>? _tickerSubscription;
 
   TimerBloc({
-    @required Ticker ticker,
-  })  : assert(ticker != null),
-        _ticker = ticker,
+    required Ticker ticker,
+  })   : _ticker = ticker,
         super(TimerInitial(_duration));
 
   @override

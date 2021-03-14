@@ -15,9 +15,9 @@ class NewPasswordState extends Equatable {
   List<Object> get props => [oldPassword, newPassword, status];
 
   NewPasswordState copyWith({
-    Password oldPassword,
-    Password newPassword,
-    FormzStatus status,
+    Password? oldPassword,
+    Password? newPassword,
+    FormzStatus? status,
   }) {
     return NewPasswordState(
       oldPassword: oldPassword ?? this.oldPassword,

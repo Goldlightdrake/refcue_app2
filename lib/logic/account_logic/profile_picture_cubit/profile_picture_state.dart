@@ -4,7 +4,7 @@ abstract class ProfilePictureState extends Equatable {
   const ProfilePictureState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class ProfilePictureInitial extends ProfilePictureState {}
@@ -12,39 +12,39 @@ class ProfilePictureInitial extends ProfilePictureState {}
 class ProfilePictureLoading extends ProfilePictureState {}
 
 class ProfilePictureSuccess extends ProfilePictureState {
-  final PickedFile image;
+  final PickedFile? image;
   ProfilePictureSuccess({
     this.image,
   });
 
   @override
-  List<Object> get props => [image];
+  List<Object?> get props => [image];
 
   @override
-  String toString() => 'ProfilePictureSuccess(image: ${image.path})';
+  String toString() => 'ProfilePictureSuccess(image: ${image!.path})';
 }
 
 class ProfilePictureCropped extends ProfilePictureState {
-  final File croppedImage;
+  final File? croppedImage;
   ProfilePictureCropped({
     this.croppedImage,
   });
 
   @override
-  List<Object> get props => [croppedImage];
+  List<Object?> get props => [croppedImage];
 
   @override
   String toString() => 'ProfilePictureCropped (image: $croppedImage)';
 }
 
 class ProfilePictureSent extends ProfilePictureState {
-  final String imageURL;
+  final String? imageURL;
   ProfilePictureSent({
     this.imageURL,
   });
 
   @override
-  List<Object> get props => [imageURL];
+  List<Object?> get props => [imageURL];
 
   @override
   String toString() => 'ProfilePictureSent(imageURL: $imageURL)';

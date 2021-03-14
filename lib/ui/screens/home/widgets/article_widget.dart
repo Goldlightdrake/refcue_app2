@@ -6,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleWidget extends StatelessWidget {
-  final int index;
+  final int? index;
   const ArticleWidget({
-    Key key,
+    Key? key,
     this.index,
   }) : super(key: key);
 
@@ -39,12 +39,12 @@ class ArticleWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
-                  getIconForArticle(index + 1),
+                  getIconForArticle(index! + 1),
                   color: Theme.of(context).iconTheme.color,
                 ),
               ),
             ),
-            Text('Arytkuł ' + (index + 1).toString(),
+            Text('Arytkuł ' + (index! + 1).toString(),
                 style: TextStyle(fontSize: kSpacingUnit.w * 2)),
             Icon(Icons.navigate_next)
           ],

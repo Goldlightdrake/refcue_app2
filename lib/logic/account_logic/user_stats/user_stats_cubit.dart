@@ -1,14 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:refcue_app/data/repositories/user_stats_repo.dart';
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_stats_state.dart';
 
 class UserStatsCubit extends Cubit<UserStatsState> {
-  UserStatsCubit({@required UserStatsRepository userStatsRepository})
-      : assert(userStatsRepository != null),
-        _userStatsRepository = userStatsRepository,
+  UserStatsCubit({required UserStatsRepository userStatsRepository})
+      : _userStatsRepository = userStatsRepository,
         super(UserStatsInitial());
 
   final UserStatsRepository _userStatsRepository;

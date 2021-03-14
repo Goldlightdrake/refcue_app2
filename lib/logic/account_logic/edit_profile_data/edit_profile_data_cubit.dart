@@ -10,12 +10,11 @@ part 'edit_profile_data_state.dart';
 class EditProfileDataCubit extends Cubit<EditProfileDataState> {
   EditProfileDataCubit(
     this.user,
-  )   : assert(user != null),
-        super(EditProfileDataState());
+  ) : super(EditProfileDataState());
 
   final auth.User user;
 
-  void initialData(String name, String email) {
+  void initialData(String? name, String? email) {
     final initName = NameInput.dirty(name);
     final initEmail = Email.dirty(email);
     emit(
@@ -61,11 +60,11 @@ class EditProfileDataCubit extends Cubit<EditProfileDataState> {
     try {
       if (user.email != state.newEmail.value) {
         var credential = auth.EmailAuthProvider.credential(
-          email: user.email,
+          email: user.email!,
           password: state.password.value,
         );
         await user.reauthenticateWithCredential(credential).then((value) => user
-                .verifyBeforeUpdateEmail(state.newEmail.value)
+                .verifyBeforeUpdateEmail(state.newEmail.value!)
                 .catchError((error) {
               print(error);
               emit(state.copyWith(status: FormzStatus.submissionFailure));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/shared/const.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:flutter_screenutil/size_extension.dart';
 
@@ -11,8 +11,6 @@ class ProfileStatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
     var header = Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,13 +22,17 @@ class ProfileStatsView extends StatelessWidget {
             iconSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
           ),
         ]);
-    return Scaffold(
-        body: Column(
-      children: [
-        SizedBox(height: kSpacingUnit.w * 5),
-        header,
-        Text('Statystyki')
-      ],
-    ));
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      allowFontScaling: true,
+      builder: () => Scaffold(
+          body: Column(
+        children: [
+          SizedBox(height: kSpacingUnit.w * 5),
+          header,
+          Text('Statystyki')
+        ],
+      )),
+    );
   }
 }

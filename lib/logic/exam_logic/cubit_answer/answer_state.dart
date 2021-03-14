@@ -4,20 +4,20 @@ abstract class AnswerState extends Equatable {
   const AnswerState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class AnswerInitial extends AnswerState {}
 
 class AnswerPicked extends AnswerState {
-  final String answer;
+  final String? answer;
   AnswerPicked({
     this.answer,
   });
   String toString() => '{AnswerPicked: $answer}';
 
   AnswerPicked copyWith({
-    String answer,
+    String? answer,
   }) {
     return AnswerPicked(
       answer: answer ?? this.answer,
@@ -25,5 +25,5 @@ class AnswerPicked extends AnswerState {
   }
 
   @override
-  List<Object> get props => [answer];
+  List<Object?> get props => [answer];
 }

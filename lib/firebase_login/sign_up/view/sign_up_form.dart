@@ -20,7 +20,7 @@ class SignUpForm extends StatelessWidget {
                   content: Text('Rejestracja się nie powiodła',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1.color))),
+                          color: Theme.of(context).textTheme.bodyText1!.color))),
             );
         }
       },
@@ -30,7 +30,7 @@ class SignUpForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              ThemeProvider.of(context).brightness == Brightness.dark
+              ThemeProvider.of(context)!.brightness == Brightness.dark
                   ? logoDarkPath
                   : logoPath,
               height: 84,

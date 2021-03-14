@@ -1,14 +1,13 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/firebase_login/authentication/authentication.dart';
 import 'package:refcue_app/firebase_login/login/login.dart';
 import 'package:refcue_app/shared/const.dart';
 import 'package:refcue_app/ui/screens/account/view/menu/edit_profile_data.dart';
 import 'package:refcue_app/ui/screens/account/view/menu/new_password_screen.dart';
-import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:flutter_screenutil/size_extension.dart';
 
 class ProfileDataView extends StatelessWidget {
   static Route route() {
@@ -17,8 +16,6 @@ class ProfileDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
     var header = Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,22 +30,26 @@ class ProfileDataView extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
-      child: Scaffold(
-          body: Column(
-        children: [
-          SizedBox(height: kSpacingUnit.w * 5),
-          header,
-          Text(
-            'Dane konta',
-            style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2),
-          ),
-          SizedBox(height: kSpacingUnit.w * 7),
-          _NameInput(),
-          _EmailInput(),
-          _EditDataButton(),
-          _NewpasswordButton(),
-        ],
-      )),
+      child: ScreenUtilInit(
+        designSize: Size(414, 896),
+        allowFontScaling: true,
+        builder: () => Scaffold(
+            body: Column(
+          children: [
+            SizedBox(height: kSpacingUnit.w * 5),
+            header,
+            Text(
+              'Dane konta',
+              style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2),
+            ),
+            SizedBox(height: kSpacingUnit.w * 7),
+            _NameInput(),
+            _EmailInput(),
+            _EditDataButton(),
+            _NewpasswordButton(),
+          ],
+        )),
+      ),
     );
   }
 }
@@ -117,7 +118,7 @@ class _EditDataButton extends StatelessWidget {
       key: const Key('edit_data_button'),
       child: Text(
         'Edytuj dane',
-        style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color),
+        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
       ),
       onPressed: () =>
           Navigator.of(context).push<void>(EditProfileScreen.route()),
@@ -131,7 +132,7 @@ class _NewpasswordButton extends StatelessWidget {
     return TextButton(
       key: const Key('nameform_newpassword_button'),
       child: Text('Zmień hasło',
-          style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color)),
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
       onPressed: () =>
           Navigator.of(context).push<void>(NewPasswordScreen.route()),
     );
@@ -145,7 +146,7 @@ class _DeleteAccountButton extends StatelessWidget {
       key: const Key('deleteAccount_button'),
       child: Text(
         'Usuń konto',
-        style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color),
+        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
       ),
       onPressed: () =>
           Navigator.of(context).push<void>(NewPasswordScreen.route()),

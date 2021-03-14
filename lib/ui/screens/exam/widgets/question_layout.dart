@@ -13,17 +13,14 @@ import 'package:refcue_app/shared/const.dart';
 import 'answer_layout.dart';
 
 class QuestionLayout extends StatelessWidget {
-  final Question question;
+  final Question? question;
   const QuestionLayout({
-    Key key,
-    @required this.question,
+    Key? key,
+    required this.question,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
-
     var backgroundForHeader = CustomPaint(
       size: Size(
           800, 150), //You can Replace this with your desired WIDTH and HEIGHT
@@ -47,7 +44,7 @@ class QuestionLayout extends StatelessWidget {
               iconSize: ScreenUtil().setSp(kSpacingUnit.w * 4),
             ),
             Image.asset(
-                ThemeProvider.of(context).brightness == Brightness.dark
+                ThemeProvider.of(context)!.brightness == Brightness.dark
                     ? logoDarkPath
                     : logoPath,
                 width: ScreenUtil().setSp(kSpacingUnit.w * 11)),
@@ -58,8 +55,8 @@ class QuestionLayout extends StatelessWidget {
 
                 final String secondsStr =
                     (state.duration % 60).floor().toString().padLeft(2, '0');
-                Color colorOfTimer =
-                    Theme.of(context).textTheme.bodyText1.color;
+                Color? colorOfTimer =
+                    Theme.of(context).textTheme.bodyText1!.color;
                 if (state.duration <= 60 && state.duration > 15) {
                   colorOfTimer = kAccentColor;
                 } else if (state.duration <= 15) {
@@ -105,7 +102,7 @@ class QuestionLayout extends StatelessWidget {
                 Container(
                   width: (kSpacingUnit.w *
                           20 /
-                          context.watch<ExamBloc>().maxIndex) *
+                          context.watch<ExamBloc>().maxIndex!) *
                       (context.watch<ExamQuestionIndexCubit>().state + 1),
                   decoration: BoxDecoration(
                     color: Theme.of(context).accentColor,
@@ -132,7 +129,7 @@ class QuestionLayout extends StatelessWidget {
       height: kSpacingUnit.w * 25,
       child: SingleChildScrollView(
         child: Text(
-          question.questionText,
+          question!.questionText,
           textAlign: TextAlign.justify,
           style: TextStyle(
               fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),
@@ -145,90 +142,94 @@ class QuestionLayout extends StatelessWidget {
     //Building widget
     return BlocProvider(
       create: (context) => CardsCubit(),
-      child: Scaffold(
-          body: Column(
-        children: [
-          Stack(
-            children: [
-              backgroundForHeader,
-              header,
-            ],
-            alignment: Alignment.center,
-          ),
-          SizedBox(height: kSpacingUnit.w * 9),
-          questionText,
-          SizedBox(height: kSpacingUnit.w * 1),
-          BlocListener<BuildingQuestionLayoutCubit,
-              BuildingQuestionLayoutState>(
-            listener: (context, state) {
-              var userAnswer = context.read<AnswerCubit>().userAnswersList[
-                  context.read<ExamQuestionIndexCubit>().state];
-              if (userAnswer != "-") {
-                if (userAnswer[0] == "t") {
-                  userAnswer = "tak";
-                  context.read<AnswerCubit>().pickAnswer(userAnswer);
-                } else if (userAnswer[0] == "n") {
-                  userAnswer = "nie";
-                  context.read<AnswerCubit>().pickAnswer(userAnswer);
-                } else {
-                  if (userAnswer.length > 3) {
-                    context
-                        .read<AnswerCubit>()
-                        .pickAnswer(userAnswer[0] + userAnswer[1]);
-                    if (userAnswer[2] != '0') {
-                      context
-                          .read<CardsCubit>()
-                          .setYellowCards(int.parse(userAnswer[2]));
-                    }
-                    if (userAnswer[3] != '0') {
-                      context
-                          .read<CardsCubit>()
-                          .setRedCards(int.parse(userAnswer[3]));
-                    }
+      child: ScreenUtilInit(
+        designSize: Size(414, 896),
+        allowFontScaling: true,
+        builder: () => Scaffold(
+            body: Column(
+          children: [
+            Stack(
+              children: [
+                backgroundForHeader,
+                header,
+              ],
+              alignment: Alignment.center,
+            ),
+            SizedBox(height: kSpacingUnit.w * 9),
+            questionText,
+            SizedBox(height: kSpacingUnit.w * 1),
+            BlocListener<BuildingQuestionLayoutCubit,
+                BuildingQuestionLayoutState>(
+              listener: (context, state) {
+                var userAnswer = context.read<AnswerCubit>().userAnswersList![
+                    context.read<ExamQuestionIndexCubit>().state];
+                if (userAnswer != "-") {
+                  if (userAnswer![0] == "t") {
+                    userAnswer = "tak";
+                    context.read<AnswerCubit>().pickAnswer(userAnswer);
+                  } else if (userAnswer[0] == "n") {
+                    userAnswer = "nie";
+                    context.read<AnswerCubit>().pickAnswer(userAnswer);
                   } else {
-                    context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
-                    if (userAnswer[1] != '0') {
+                    if (userAnswer.length > 3) {
                       context
-                          .read<CardsCubit>()
-                          .setYellowCards(int.parse(userAnswer[1]));
-                    }
-                    if (userAnswer[2] != '0') {
-                      context
-                          .read<CardsCubit>()
-                          .setRedCards(int.parse(userAnswer[2]));
+                          .read<AnswerCubit>()
+                          .pickAnswer(userAnswer[0] + userAnswer[1]);
+                      if (userAnswer[2] != '0') {
+                        context
+                            .read<CardsCubit>()
+                            .setYellowCards(int.parse(userAnswer[2]));
+                      }
+                      if (userAnswer[3] != '0') {
+                        context
+                            .read<CardsCubit>()
+                            .setRedCards(int.parse(userAnswer[3]));
+                      }
+                    } else {
+                      context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
+                      if (userAnswer[1] != '0') {
+                        context
+                            .read<CardsCubit>()
+                            .setYellowCards(int.parse(userAnswer[1]));
+                      }
+                      if (userAnswer[2] != '0') {
+                        context
+                            .read<CardsCubit>()
+                            .setRedCards(int.parse(userAnswer[2]));
+                      }
                     }
                   }
                 }
-              }
-            },
-            child: Container(
-              height: kSpacingUnit.w * 22,
-              child: AnswerLayout(
-                key: UniqueKey(),
-                typeOfAnswer: question.type,
+              },
+              child: Container(
+                height: kSpacingUnit.w * 22,
+                child: AnswerLayout(
+                  key: UniqueKey(),
+                  typeOfAnswer: question!.type,
+                ),
               ),
             ),
-          ),
-          Builder(
-            builder: (context) => ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).accentColor,
-                ),
-                onPressed: () {
-                  submitButtonAction(context, question);
-                },
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Icon(Icons.arrow_forward, color: Colors.black))),
-          )
-        ],
-      )),
+            Builder(
+              builder: (context) => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () {
+                    submitButtonAction(context, question);
+                  },
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Icon(Icons.arrow_forward, color: Colors.black))),
+            )
+          ],
+        )),
+      ),
     );
   }
 }
 
 class RPSCustomPainter extends CustomPainter {
-  final BuildContext context;
+  final BuildContext? context;
   RPSCustomPainter({
     this.context,
   });
@@ -236,7 +237,7 @@ class RPSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint_0 = new Paint()
-      ..color = Theme.of(context).backgroundColor
+      ..color = Theme.of(context!).backgroundColor
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
@@ -253,7 +254,7 @@ class RPSCustomPainter extends CustomPainter {
 
     canvas.drawPath(path_0, paint_0);
     canvas.drawShadow(path_0.shift(Offset(0, 5)),
-        Theme.of(context).shadowColor.withAlpha(50), 1.0, true);
+        Theme.of(context!).shadowColor.withAlpha(50), 1.0, true);
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 class Question extends Equatable {
   final String answer;
@@ -10,11 +9,11 @@ class Question extends Equatable {
   final String substantiation;
   final int type;
   Question({
-    @required this.answer,
-    @required this.article,
-    @required this.questionText,
-    @required this.substantiation,
-    @required this.type,
+    required this.answer,
+    required this.article,
+    required this.questionText,
+    required this.substantiation,
+    required this.type,
   });
 
   @override
@@ -34,20 +33,18 @@ class Question extends Equatable {
     };
   }
 
-  factory Question.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return Question(
-      answer: map['answer'] ?? '',
-      article: map['article'] ?? '',
-      questionText: map['questionText'] ?? '',
-      substantiation: map['substantiation'] ?? '',
-      type: map['type'] ?? 0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
 
   factory Question.fromJson(String source) =>
       Question.fromMap(json.decode(source));
+
+  factory Question.fromMap(Map map) {
+    return Question(
+      answer: map['answer'],
+      article: map['article'],
+      questionText: map['questionText'],
+      substantiation: map['substantiation'],
+      type: map['type'],
+    );
+  }
 }

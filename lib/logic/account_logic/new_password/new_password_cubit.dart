@@ -10,8 +10,7 @@ part 'new_password_state.dart';
 class NewPasswordCubit extends Cubit<NewPasswordState> {
   NewPasswordCubit(
     this.user,
-  )   : assert(user != null),
-        super(NewPasswordState());
+  ) : super(NewPasswordState());
 
   final auth.User user;
 
@@ -37,7 +36,7 @@ class NewPasswordCubit extends Cubit<NewPasswordState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       var credential = auth.EmailAuthProvider.credential(
-        email: user.email,
+        email: user.email!,
         password: state.oldPassword.value,
       );
       await user.reauthenticateWithCredential(credential).then((_) {

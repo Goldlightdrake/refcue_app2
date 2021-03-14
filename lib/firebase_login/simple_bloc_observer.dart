@@ -3,7 +3,7 @@ import 'package:refcue_app/logic/exam_logic/bloc_timer/timer_bloc.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Bloc bloc, Object? event) {
     if (bloc is! TimerBloc) {
       print(event);
     }
@@ -11,17 +11,9 @@ class SimpleBlocObserver extends BlocObserver {
   }
 
   @override
-  void onError(Cubit cubit, Object error, StackTrace stackTrace) {
+  void onError(Bloc cubit, Object error, StackTrace stackTrace) {
     print(error);
     super.onError(cubit, error, stackTrace);
-  }
-
-  @override
-  void onChange(Cubit cubit, Change change) {
-    if (cubit is! TimerBloc) {
-      print(change);
-    }
-    super.onChange(cubit, change);
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnswerCardsView extends StatelessWidget {
   const AnswerCardsView(this.resumption, this.yellowCards, this.redCards,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   final String resumption;
