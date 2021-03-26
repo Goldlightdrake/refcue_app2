@@ -2,17 +2,22 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TestProvider {
+class ExamProvider {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<Map?> getQuestionFromFirebase(String documentId) async {
+  Future<Map?> getQuestionFromFirebase(
+      String articleIndex, int questionIndex) async {
     Map? mappedQuestion;
+
     await _firestore
         .collection('questions')
-        .doc(documentId)
+        .doc(articleIndex)
+        .collection('questions_' + articleIndex)
+        .where('id', isLessThan: questionIndex)
+        .limit(1)
         .get()
-        .then((DocumentSnapshot snapshot) => mappedQuestion = snapshot.data());
-    print(mappedQuestion!['answer']);
+        .then((questionData) => print(questionData.docs[0].data()));
+    // print(mappedQuestion!['answer']);
     return mappedQuestion;
   }
 

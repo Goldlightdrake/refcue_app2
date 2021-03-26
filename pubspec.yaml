@@ -1,6 +1,8 @@
 name: refcue_app
 description: RefCue's app mainly made for referees to help them prepare for their exams, later on it will help them with all of their carrier of the football referee
 
+publish_to: 'none'
+
 version: 1.0.0+1
 
 environment:
