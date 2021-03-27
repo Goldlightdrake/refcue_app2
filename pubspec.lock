@@ -359,8 +359,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-=======
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -368,7 +366,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.0-nullsafety"
->>>>>>> 4ce715fdb0b421b78e44186433f6c5cc46e3fe48
   formz:
     dependency: "direct main"
     description:
@@ -382,11 +379,7 @@ packages:
       name: glob
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-    version: "1.2.0"
-=======
     version: "2.0.0"
->>>>>>> 4ce715fdb0b421b78e44186433f6c5cc46e3fe48
   google_sign_in:
     dependency: transitive
     description:
@@ -783,7 +776,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   sqflite:
     dependency: transitive
     description:
