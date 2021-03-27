@@ -26,10 +26,23 @@ class SettingsScreen extends StatelessWidget {
 
     var generalSettings = Column(
       children: [
-        Text("Ustawienia ogólne"),
+        Text("Ustawienia ogólne",
+            style: TextStyle(fontSize: kSpacingUnit.w * 2)),
+        SizedBox(height: kSpacingUnit.w * 3),
         Container(
           child: Column(
-            children: [_SettingListTile(index: 1)],
+            children: [
+              _SettingListTile(
+                index: 0,
+                title: "Dzwięki",
+                icon: Icon(Icons.volume_up),
+              ),
+              _SettingListTile(
+                index: 1,
+                title: "Powiadomienia",
+                icon: Icon(Icons.notifications_active),
+              )
+            ],
           ),
         ),
       ],
@@ -40,6 +53,8 @@ class SettingsScreen extends StatelessWidget {
       children: [
         SizedBox(height: kSpacingUnit.w * 5),
         header,
+        SizedBox(height: kSpacingUnit.w * 5),
+        generalSettings
       ],
     ));
   }
@@ -47,20 +62,27 @@ class SettingsScreen extends StatelessWidget {
 
 class _SettingListTile extends StatelessWidget {
   final int index;
+  final Icon icon;
   final String title;
-  const _SettingListTile({this.index, this.title, Key key}) : super(key: key);
+  const _SettingListTile({this.index, this.title, this.icon, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(
-        activeTrackColor: Theme.of(context).primaryColor,
-        activeColor: kAccentColor,
-        title: Text(
-          'Article ' + index.toString(),
-          textAlign: TextAlign.center,
-          style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2),
-        ),
-        value: true,
-        onChanged: (bool value) {});
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: SwitchListTile(
+          secondary: icon,
+          activeTrackColor: Theme.of(context).primaryColor,
+          tileColor: Theme.of(context).cardColor,
+          activeColor: kAccentColor,
+          title: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 1.8),
+          ),
+          value: true,
+          onChanged: (bool value) {}),
+    );
   }
 }
