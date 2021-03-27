@@ -13,12 +13,12 @@ part 'exam_event.dart';
 part 'exam_state.dart';
 
 class ExamBloc extends Bloc<ExamEvent, ExamState> {
-  final ExamRepository testRepository;
-  final ExamScoreCubit scoreCubit;
-  final ExamQuestionIndexCubit indexCubit;
-  final AnswerCubit answerCubit;
-  final int maxIndex;
-  final String userId;
+  final ExamRepository? testRepository;
+  final ExamScoreCubit? scoreCubit;
+  final ExamQuestionIndexCubit? indexCubit;
+  final AnswerCubit? answerCubit;
+  final int? maxIndex;
+  final String? userId;
   ExamBloc({
     this.testRepository,
     this.scoreCubit,
@@ -37,6 +37,7 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
       try {
         if (state is ExamLoading) {
           final questions = await _getQuestions();
+
           yield ExamReady(questionList: questions);
           return;
         }
@@ -57,10 +58,10 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
     }
     if (event is ExamFinishedEvent) {
       UserStatsRepository(userId: userId)
-          .afterExamIncreament(scoreCubit.state, maxIndex);
+          .afterExamIncreament(scoreCubit!.state, maxIndex);
       yield ExamFinished(
-          userAnswers: answerCubit.userAnswersList,
-          userScore: scoreCubit.state,
+          userAnswers: answerCubit!.userAnswersList,
+          userScore: scoreCubit!.state,
           examMaxScore: maxIndex,
           questionsList: (state as ExamReady).questionList);
     }
@@ -69,7 +70,8 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
   Future<List<Question>> _getQuestions() async {
     try {
       final List<Question> questionsList =
-          await testRepository.listOfQuestions();
+          await testRepository!.listOfQuestions();
+
       return questionsList;
     } catch (_) {
       throw Exception('error getting questions from repo');
@@ -79,7 +81,7 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
   Future<List<Question>> _getCustomQuestions() async {
     try {
       final List<Question> questionsList =
-          await testRepository.listOfQuestions();
+          await (testRepository!.listOfQuestions() as FutureOr<List<Question>>);
       return questionsList;
     } catch (_) {
       throw Exception('error getting questions from repo');

@@ -15,13 +15,11 @@ class EditProfileScreen extends StatelessWidget {
     return MaterialPageRoute<void>(builder: (_) => EditProfileScreen());
   }
 
-  const EditProfileScreen({Key key}) : super(key: key);
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final auth.User user = auth.FirebaseAuth.instance.currentUser;
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
+    final auth.User? user = auth.FirebaseAuth.instance.currentUser;
     var header = Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,71 +33,74 @@ class EditProfileScreen extends StatelessWidget {
         ]);
 
     return BlocProvider(
-      create: (context) => EditProfileDataCubit(user)
-        ..initialData(
-            user.displayName != null ? user.displayName : 'Imię Nazwisko',
-            user.email),
-      child: Scaffold(
-        body: BlocListener<EditProfileDataCubit, EditProfileDataState>(
-          listener: (context, state) async {
-            if (state.status.isSubmissionSuccess) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  const SnackBar(
-                      content: Text(
-                    'Zweryfikuj nowego maila, wchodząc na poczte',
-                    textAlign: TextAlign.center,
-                  )),
-                );
-            }
-            if (state.status.isSubmissionFailure) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  const SnackBar(
-                      content: Text(
-                    'Coś poszło nie tak :( Spróbuj zrestartować aplikacje!',
-                    textAlign: TextAlign.center,
-                  )),
-                );
-            }
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: kSpacingUnit.w * 5),
-              header,
-              Text('Zmień dane',
-                  style:
-                      kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2)),
-              SizedBox(height: kSpacingUnit.w * 7),
-              _NameInput(),
-              _EmailInput(),
-              _PasswordInput(),
-              BlocBuilder<EditProfileDataCubit, EditProfileDataState>(
-                  builder: (context, state) {
-                if (state.status.isSubmissionInProgress) {
-                  return CircularProgressIndicator();
-                }
+        create: (context) => EditProfileDataCubit(user!)
+          ..initialData(
+              user.displayName != null ? user.displayName : 'Imię Nazwisko',
+              user.email),
+        child: ScreenUtilInit(
+          designSize: Size(414, 896),
+          allowFontScaling: true,
+          builder: () => Scaffold(
+            body: BlocListener<EditProfileDataCubit, EditProfileDataState>(
+              listener: (context, state) async {
                 if (state.status.isSubmissionSuccess) {
-                  return Icon(Icons.check, color: Colors.green);
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(
+                          content: Text(
+                        'Zweryfikuj nowego maila, wchodząc na poczte',
+                        textAlign: TextAlign.center,
+                      )),
+                    );
                 }
-                return ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: kAccentColor),
-                    onPressed: () async {
-                      await context
-                          .read<EditProfileDataCubit>()
-                          .changeUsersData();
-                    },
-                    child: Text('Potwierdź',
-                        style: TextStyle(color: Colors.black)));
-              }),
-            ],
+                if (state.status.isSubmissionFailure) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(
+                          content: Text(
+                        'Coś poszło nie tak :( Spróbuj zrestartować aplikacje!',
+                        textAlign: TextAlign.center,
+                      )),
+                    );
+                }
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: kSpacingUnit.w * 5),
+                  header,
+                  Text('Zmień dane',
+                      style: kTitleTextStyle.copyWith(
+                          fontSize: kSpacingUnit.w * 2)),
+                  SizedBox(height: kSpacingUnit.w * 7),
+                  _NameInput(),
+                  _EmailInput(),
+                  _PasswordInput(),
+                  BlocBuilder<EditProfileDataCubit, EditProfileDataState>(
+                      builder: (context, state) {
+                    if (state.status.isSubmissionInProgress) {
+                      return CircularProgressIndicator();
+                    }
+                    if (state.status.isSubmissionSuccess) {
+                      return Icon(Icons.check, color: Colors.green);
+                    }
+                    return ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: kAccentColor),
+                        onPressed: () async {
+                          await context
+                              .read<EditProfileDataCubit>()
+                              .changeUsersData();
+                        },
+                        child: Text('Potwierdź',
+                            style: TextStyle(color: Colors.black)));
+                  }),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 

@@ -7,7 +7,7 @@ import 'package:refcue_app/shared/const.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/widgets_answer/answer_type_0/widgets/answer_blok.dart';
 
 class AnswerType0View extends StatelessWidget {
-  const AnswerType0View({Key key}) : super(key: key);
+  const AnswerType0View({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

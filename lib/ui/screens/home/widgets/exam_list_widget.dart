@@ -5,11 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamCard extends StatelessWidget {
-  final String examPath;
-  final int color2;
-  final int color1;
-  final int quantity;
-  final int time;
+  final String? examPath;
+  final int? color2;
+  final int? color1;
+  final int? quantity;
+  final int? time;
 
   ExamCard({this.time, this.quantity, this.color1, this.color2, this.examPath});
   @override
@@ -26,8 +26,8 @@ class ExamCard extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 colors: [
-                  Color(color1),
-                  Color(color2),
+                  Color(color1!),
+                  Color(color2!),
                 ],
               ),
               boxShadow: [
@@ -94,7 +94,7 @@ class ExamCard extends StatelessWidget {
                         right: kSpacingUnit.w * 1,
                       ),
                       child: SvgPicture.asset(
-                        examPath,
+                        examPath!,
                         width: kSpacingUnit.w * 15,
                       ),
                     ),

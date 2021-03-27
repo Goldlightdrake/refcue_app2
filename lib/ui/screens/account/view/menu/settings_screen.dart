@@ -4,7 +4,7 @@ import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key key}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => SettingsScreen());
@@ -61,11 +61,17 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class _SettingListTile extends StatelessWidget {
+<<<<<<< HEAD
   final int index;
   final Icon icon;
   final String title;
   const _SettingListTile({this.index, this.title, this.icon, Key key})
       : super(key: key);
+=======
+  final int? index;
+  final String? title;
+  const _SettingListTile({this.index, this.title, Key? key}) : super(key: key);
+>>>>>>> 4ce715fdb0b421b78e44186433f6c5cc46e3fe48
 
   @override
   Widget build(BuildContext context) {

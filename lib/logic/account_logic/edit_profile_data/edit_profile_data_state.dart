@@ -17,10 +17,10 @@ class EditProfileDataState extends Equatable {
   List<Object> get props => [newName, newEmail, status, password];
 
   EditProfileDataState copyWith({
-    NameInput newName,
-    Email newEmail,
-    FormzStatus status,
-    Password password,
+    NameInput? newName,
+    Email? newEmail,
+    FormzStatus? status,
+    Password? password,
   }) {
     return EditProfileDataState(
       newName: newName ?? this.newName,

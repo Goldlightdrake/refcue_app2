@@ -8,9 +8,7 @@ import 'package:refcue_app/firebase_login/authentication/models/models.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._authenticationRepository)
-      : assert(_authenticationRepository != null),
-        super(const SignUpState());
+  SignUpCubit(this._authenticationRepository) : super(const SignUpState());
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -64,7 +62,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     try {
       await _authenticationRepository
           .signUp(
-        email: state.email.value,
+        email: (state.email.value)!,
         password: state.password.value,
       )
           .then((uid) {

@@ -1,16 +1,16 @@
 part of 'cards_cubit_cubit.dart';
 
 class CardsState extends Equatable {
-  final int yellowCards;
-  final int redCards;
+  final int? yellowCards;
+  final int? redCards;
   CardsState({
     this.yellowCards,
     this.redCards,
   });
 
   CardsState copyWith({
-    int yellowCards,
-    int redCards,
+    int? yellowCards,
+    int? redCards,
   }) {
     return CardsState(
       yellowCards: yellowCards ?? this.yellowCards,
@@ -19,5 +19,5 @@ class CardsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [yellowCards, redCards];
+  List<Object?> get props => [yellowCards, redCards];
 }

@@ -9,20 +9,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:refcue_app/ui/screens/account/view/menu/settings_screen.dart';
 
 class ProfileListItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
+  final IconData? icon;
+  final String? text;
   final bool hasNavigation;
   final bool logOut;
-  final String where;
+  final String? where;
 
-  Route<dynamic> navigationNames(String where) {
+  Route<dynamic>? navigationNames(String? where) {
     switch (where) {
       case 'profileDataView':
         return ProfileDataView.route();
-        break;
       case 'profileStatsView':
         return ProfileStatsView.route();
-        break;
       case 'settingsScreen':
         return SettingsScreen.route();
       default:
@@ -31,7 +29,7 @@ class ProfileListItem extends StatelessWidget {
   }
 
   const ProfileListItem({
-    Key key,
+    Key? key,
     this.logOut = false,
     this.icon,
     this.text,
@@ -47,7 +45,7 @@ class ProfileListItem extends StatelessWidget {
               .read<AuthenticationBloc>()
               .add(AuthenticationLogoutRequested())
           : () => Navigator.of(context).push<void>(
-                navigationNames(where),
+                navigationNames(where)!,
               ),
       child: Container(
         height: kSpacingUnit.w * 5.5,
@@ -71,7 +69,7 @@ class ProfileListItem extends StatelessWidget {
             ),
             SizedBox(width: kSpacingUnit.w * 1.5),
             Text(
-              this.text,
+              this.text!,
               style: kTitleTextStyle.copyWith(
                 fontWeight: FontWeight.w500,
               ),

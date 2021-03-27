@@ -20,13 +20,13 @@ class ProfilePictureCubit extends Cubit<ProfilePictureState> {
 
   //Take image from user's camera
   Future getImageFromUser(ImageSource userChoiceSource) async {
-    PickedFile imagePickedBefore;
+    PickedFile? imagePickedBefore;
     if (state is ProfilePictureSuccess) {
       imagePickedBefore = (state as ProfilePictureSuccess).image;
     }
     emit(ProfilePictureLoading());
     try {
-      PickedFile image = await _picker.getImage(source: userChoiceSource);
+      PickedFile? image = await _picker.getImage(source: userChoiceSource);
       if (image != null) {
         emit(ProfilePictureSuccess(image: image));
       } else {
@@ -44,9 +44,9 @@ class ProfilePictureCubit extends Cubit<ProfilePictureState> {
 
   Future cropImage(context) async {
     if (state is ProfilePictureSuccess) {
-      var image = (state as ProfilePictureSuccess).image;
+      var image = (state as ProfilePictureSuccess).image!;
       emit(ProfilePictureLoading());
-      File cropped = await ImageCropper.cropImage(
+      File? cropped = await ImageCropper.cropImage(
           sourcePath: image.path,
           cropStyle: CropStyle.circle,
           androidUiSettings: AndroidUiSettings(
@@ -73,12 +73,12 @@ class ProfilePictureCubit extends Cubit<ProfilePictureState> {
   //Upload file to firebase and then swap with acount's profile picture
   Future uploadFile() async {
     if (state is ProfilePictureSuccess || state is ProfilePictureCropped) {
-      File image;
+      File? image;
       if (state is ProfilePictureCropped) {
         image = (state as ProfilePictureCropped).croppedImage;
       }
       if (state is ProfilePictureSuccess) {
-        image = File((state as ProfilePictureSuccess).image.path);
+        image = File((state as ProfilePictureSuccess).image!.path);
       }
       Reference storageReference = FirebaseStorage.instance
           .ref()
@@ -86,14 +86,14 @@ class ProfilePictureCubit extends Cubit<ProfilePictureState> {
           .child('/${user.id}');
       try {
         emit(ProfilePictureLoading());
-        await storageReference.putFile(image).then((snapshot) =>
+        await storageReference.putFile(image!).then((snapshot) =>
             storageReference.getDownloadURL().then((fileURL) async {
               emit(ProfilePictureSent(imageURL: fileURL));
               print('File Uploaded');
               await Future.delayed(Duration(seconds: 1));
               print(fileURL.toString());
               try {
-                authUser.updateProfile(photoURL: fileURL);
+                authUser!.updateProfile(photoURL: fileURL);
               } catch (error) {
                 emit(ProfilePictureSentError());
                 throw (error);

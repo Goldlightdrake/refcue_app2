@@ -5,8 +5,8 @@ import 'package:refcue_app/ui/screens/exam/widgets/widgets_answer/answer_type_2/
 class AnswerLayout extends StatelessWidget {
   final int typeOfAnswer;
   const AnswerLayout({
-    Key key,
-    @required this.typeOfAnswer,
+    Key? key,
+    required this.typeOfAnswer,
   }) : super(key: key);
 
   @override

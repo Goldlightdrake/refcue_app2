@@ -8,9 +8,9 @@ import 'package:refcue_app/shared/error_screen.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/question_layout.dart';
 
 class ExamViewScreen extends StatelessWidget {
-  final List<Question> listOfQuestions;
+  final List<Question>? listOfQuestions;
   const ExamViewScreen({
-    Key key,
+    Key? key,
     this.listOfQuestions,
   }) : super(key: key);
 
@@ -18,7 +18,7 @@ class ExamViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => BuildingQuestionLayoutCubit()
-          ..buildQuestionLayout(listOfQuestions[0]),
+          ..buildQuestionLayout(listOfQuestions![0]),
         child: BlocListener<TimerBloc, TimerState>(
           listener: (context, state) {
             if (state == TimerRunComplete()) {
@@ -37,7 +37,7 @@ class ExamViewScreen extends StatelessWidget {
             listener: (context, state) {
               context
                   .read<BuildingQuestionLayoutCubit>()
-                  .buildQuestionLayout(listOfQuestions[state]);
+                  .buildQuestionLayout(listOfQuestions![state]);
             },
             child: BlocBuilder<BuildingQuestionLayoutCubit,
                 BuildingQuestionLayoutState>(

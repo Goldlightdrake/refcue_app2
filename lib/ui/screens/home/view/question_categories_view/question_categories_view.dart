@@ -6,7 +6,7 @@ import 'package:refcue_app/shared/functions.dart';
 import 'package:flutter_svg/svg.dart';
 
 class QuestionCategoriesView extends StatelessWidget {
-  const QuestionCategoriesView({Key key}) : super(key: key);
+  const QuestionCategoriesView({Key? key}) : super(key: key);
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => QuestionCategoriesView());
   }
@@ -61,7 +61,7 @@ class QuestionCategoriesView extends StatelessWidget {
 
 class _CategorieListTile extends StatelessWidget {
   final int index;
-  const _CategorieListTile(this.index, {Key key}) : super(key: key);
+  const _CategorieListTile(this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

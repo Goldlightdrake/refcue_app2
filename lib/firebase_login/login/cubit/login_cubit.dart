@@ -6,9 +6,7 @@ import 'package:refcue_app/firebase_login/authentication/models/models.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._authenticationRepository)
-      : assert(_authenticationRepository != null),
-        super(const LoginState());
+  LoginCubit(this._authenticationRepository) : super(const LoginState());
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -33,7 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authenticationRepository.logInWithEmailAndPassword(
-        email: state.email.value,
+        email: (state.email.value)!,
         password: state.password.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));

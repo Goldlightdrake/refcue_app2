@@ -9,14 +9,11 @@ class BuildingQuestionLayoutCubit extends Cubit<BuildingQuestionLayoutState> {
   BuildingQuestionLayoutCubit() : super(BuildingQuestionLayoutLoading());
 
   void buildQuestionLayout(Question question) {
-    if (question == null) {
+    emit(QuestionLayoutError());
+    try {
+      emit(QuestionLayoutBuilt(question: question));
+    } catch (_) {
       emit(QuestionLayoutError());
-    } else {
-      try {
-        emit(QuestionLayoutBuilt(question: question));
-      } catch (_) {
-        emit(QuestionLayoutError());
-      }
     }
   }
 }

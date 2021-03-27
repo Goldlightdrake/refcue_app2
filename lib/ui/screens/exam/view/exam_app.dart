@@ -10,19 +10,19 @@ import 'package:refcue_app/ui/screens/exam/view/exam_finished.dart';
 import 'exam_view.dart';
 
 class ExamScreen extends StatelessWidget {
-  static Route route({int amountQuestions}) {
+  static Route route({int? amountQuestions}) {
     return MaterialPageRoute<void>(
         builder: (_) => ExamScreen(
               amount: amountQuestions,
             ));
   }
 
-  final int amount;
-  ExamScreen({Key key, this.amount}) : super(key: key);
+  final int? amount;
+  ExamScreen({Key? key, this.amount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<String> userAnswersList = [for (var i = 0; i < amount; i++) '-'];
+    List<String> userAnswersList = [for (var i = 0; i < amount!; i++) '-'];
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
 
     return MultiBlocProvider(
@@ -53,7 +53,7 @@ class ExamScreen extends StatelessWidget {
           create: (context) => TimerBloc(ticker: Ticker()),
           child: BlocListener<ExamQuestionIndexCubit, int>(
             listener: (context, state) {
-              if (state > amount - 1) {
+              if (state > amount! - 1) {
                 context.read<ExamBloc>().add(ExamFinishedEvent());
               }
             },
@@ -61,7 +61,7 @@ class ExamScreen extends StatelessWidget {
               listener: (context, state) {
                 if (state is ExamReady) {
                   context.read<TimerBloc>().add(
-                      TimerStarted(duration: state.questionList.length * 60));
+                      TimerStarted(duration: state.questionList!.length * 60));
                 }
               },
               builder: (context, state) {

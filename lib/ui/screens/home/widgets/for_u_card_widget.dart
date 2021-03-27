@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:refcue_app/data/data_provider/exam_provider.dart';
 import 'package:refcue_app/ui/screens/home/view/question_categories_view/question_categories_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/shared/const.dart';
 
 class ForUCard extends StatelessWidget {
-  final String image;
-  final Color color;
-  final String path;
+  final String? image;
+  final Color? color;
+  final String? path;
 
   ForUCard({this.image, this.color, this.path});
 
-  Route<dynamic> navigationNames(String where) {
+  Route<dynamic>? navigationNames(String? where) {
     switch (path) {
       case 'customtest':
         return QuestionCategoriesView.route();
@@ -24,7 +25,8 @@ class ForUCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push<void>(navigationNames(path));
+        ExamProvider().getQuestionFromFirebase('1', 3);
+        // Navigator.of(context).push<void>(navigationNames(path)!);
       },
       child: Container(
         height: kSpacingUnit.w * 18,
@@ -40,7 +42,7 @@ class ForUCard extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0),
             child: SvgPicture.asset(
-              image,
+              image!,
               width: kSpacingUnit.w * 11,
             )),
       ),

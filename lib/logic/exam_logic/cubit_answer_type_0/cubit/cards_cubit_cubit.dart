@@ -15,22 +15,22 @@ class CardsCubit extends Cubit<CardsState> {
   }
 
   void addYellowCard() {
-    emit(state.copyWith(yellowCards: state.yellowCards + 1));
+    emit(state.copyWith(yellowCards: state.yellowCards! + 1));
   }
 
   void addRedCard() {
-    emit(state.copyWith(redCards: state.redCards + 1));
+    emit(state.copyWith(redCards: state.redCards! + 1));
   }
 
   void removeYellowCard() {
-    if (state.yellowCards > 0) {
-      emit(state.copyWith(yellowCards: state.yellowCards - 1));
+    if (state.yellowCards! > 0) {
+      emit(state.copyWith(yellowCards: state.yellowCards! - 1));
     }
   }
 
   void removeRedCard() {
-    if (state.redCards > 0) {
-      emit(state.copyWith(redCards: state.redCards - 1));
+    if (state.redCards! > 0) {
+      emit(state.copyWith(redCards: state.redCards! - 1));
     }
   }
 

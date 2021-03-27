@@ -8,17 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FinishedExamScreen extends StatelessWidget {
-  const FinishedExamScreen({Key key}) : super(key: key);
+  const FinishedExamScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(414, 896), allowFontScaling: true);
-
     final examFinishedState = context.watch<ExamBloc>().state as ExamFinished;
 
     final userAnswerList = examFinishedState.userAnswers;
-    final questionsList = examFinishedState.questionsList;
+    final questionsList = examFinishedState.questionsList!;
     final timerTime = context.watch<TimerBloc>().state.duration;
 
     final String minutesStr = ((timerTime / 60) % 60).floor().toString();
@@ -33,7 +30,7 @@ class FinishedExamScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(greatViewOfScore(examFinishedState.userScore),
+                Text(greatViewOfScore(examFinishedState.userScore!),
                     style: TextStyle(
                         fontSize: kSpacingUnit.w * 7.5, fontFamily: 'Roboto')),
                 Text("/" + examFinishedState.examMaxScore.toString(),
@@ -98,7 +95,7 @@ class FinishedExamScreen extends StatelessWidget {
             onTap: () => Navigator.of(context).push<void>(
               ExamFinishedExtended.route(
                   questionsList[index],
-                  userAnswerList[index],
+                  userAnswerList![index],
                   Color(colorOfAnswer(
                       context.read<AnswerCubit>().pointsForQuestions[index]))),
             ),
@@ -152,15 +149,19 @@ class FinishedExamScreen extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: kSpacingUnit.w * 7,
-          ),
-          header,
-          answerList
-        ],
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      allowFontScaling: true,
+      builder: () => Scaffold(
+        body: Column(
+          children: [
+            SizedBox(
+              height: kSpacingUnit.w * 7,
+            ),
+            header,
+            answerList
+          ],
+        ),
       ),
     );
   }

@@ -10,15 +10,15 @@ import 'answer_cards_view.dart';
 
 class ExamFinishedExtended extends StatelessWidget {
   const ExamFinishedExtended(
-      {Key key, this.question, this.userAnswer, this.colorOfAnswer})
+      {Key? key, this.question, this.userAnswer, this.colorOfAnswer})
       : super(key: key);
 
-  final Question question;
-  final String userAnswer;
-  final Color colorOfAnswer;
+  final Question? question;
+  final String? userAnswer;
+  final Color? colorOfAnswer;
 
   static Route route(
-      Question question, String userAnswer, Color colorOfAnswer) {
+      Question question, String? userAnswer, Color colorOfAnswer) {
     return MaterialPageRoute<void>(
         builder: (_) => ExamFinishedExtended(
               question: question,
@@ -41,7 +41,7 @@ class ExamFinishedExtended extends StatelessWidget {
                 iconSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
               ),
               Image.asset(
-                  ThemeProvider.of(context).brightness == Brightness.dark
+                  ThemeProvider.of(context)!.brightness == Brightness.dark
                       ? logoDarkPath
                       : logoPath,
                   width: kSpacingUnit.w * 12),
@@ -68,7 +68,7 @@ class ExamFinishedExtended extends StatelessWidget {
             height: 3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(26),
-              color: Theme.of(context).textTheme.bodyText1.color,
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           SizedBox(height: kSpacingUnit.w * 1.8),
@@ -76,7 +76,7 @@ class ExamFinishedExtended extends StatelessWidget {
             height: kSpacingUnit.w * 17,
             child: SingleChildScrollView(
               child: Text(
-                question.questionText,
+                question!.questionText,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),
@@ -96,7 +96,7 @@ class ExamFinishedExtended extends StatelessWidget {
                       Text('Artkuły',
                           style: TextStyle(fontSize: kSpacingUnit.w * 1.5)),
                       Icon(Icons.bookmark_rounded),
-                      Text(question.article,
+                      Text(question!.article,
                           style: TextStyle(fontSize: kSpacingUnit.w * 2))
                     ],
                   )),
@@ -139,28 +139,28 @@ class ExamFinishedExtended extends StatelessWidget {
                   height: 3,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(26),
-                    color: Theme.of(context).textTheme.bodyText1.color,
+                    color: Theme.of(context).textTheme.bodyText1!.color,
                   ),
                 ),
                 SizedBox(height: kSpacingUnit.w * 1.5),
                 Builder(builder: (context) {
-                  if (question.type == 0) {
-                    if (question.answer.length > 3) {
+                  if (question!.type == 0) {
+                    if (question!.answer.length > 3) {
                       String resumption =
-                          question.answer[0] + question.answer[1];
-                      String yellowCards = question.answer[2];
-                      String redCards = question.answer[3];
+                          question!.answer[0] + question!.answer[1];
+                      String yellowCards = question!.answer[2];
+                      String redCards = question!.answer[3];
                       return AnswerCardsView(resumption, yellowCards, redCards);
                     } else {
-                      String resumption = question.answer[0];
-                      String yellowCards = question.answer[1];
-                      String redCards = question.answer[2];
+                      String resumption = question!.answer[0];
+                      String yellowCards = question!.answer[1];
+                      String redCards = question!.answer[2];
                       return AnswerCardsView(resumption, yellowCards, redCards);
                     }
                   }
                   return Text(
-                      question.answer[0].toUpperCase() +
-                          question.answer.substring(1),
+                      question!.answer[0].toUpperCase() +
+                          question!.answer.substring(1),
                       style: TextStyle(fontSize: kSpacingUnit.w * 2.2));
                 })
               ],
@@ -175,7 +175,7 @@ class ExamFinishedExtended extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 6.0,
-                    color: colorOfAnswer,
+                    color: colorOfAnswer!,
                   )
                 ]),
             child: Column(
@@ -199,24 +199,24 @@ class ExamFinishedExtended extends StatelessWidget {
                     height: 3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(26),
-                      color: Theme.of(context).textTheme.bodyText1.color,
+                      color: Theme.of(context).textTheme.bodyText1!.color,
                     ),
                   ),
                 ),
                 SizedBox(height: kSpacingUnit.w * 1.5),
                 Builder(builder: (context) {
-                  if (question.type == 0) {
-                    if (userAnswer[0] != '-') {
-                      if (userAnswer.length > 3) {
-                        String resumption = userAnswer[0] + userAnswer[1];
-                        String yellowCards = userAnswer[2];
-                        String redCards = userAnswer[3];
+                  if (question!.type == 0) {
+                    if (userAnswer![0] != '-') {
+                      if (userAnswer!.length > 3) {
+                        String resumption = userAnswer![0] + userAnswer![1];
+                        String yellowCards = userAnswer![2];
+                        String redCards = userAnswer![3];
                         return AnswerCardsView(
                             resumption, yellowCards, redCards);
                       } else {
-                        String resumption = userAnswer[0];
-                        String yellowCards = userAnswer[1];
-                        String redCards = userAnswer[2];
+                        String resumption = userAnswer![0];
+                        String yellowCards = userAnswer![1];
+                        String redCards = userAnswer![2];
                         return AnswerCardsView(
                             resumption, yellowCards, redCards);
                       }
@@ -229,7 +229,7 @@ class ExamFinishedExtended extends StatelessWidget {
                     }
                   }
                   return Text(
-                      userAnswer[0].toUpperCase() + userAnswer.substring(1),
+                      userAnswer![0].toUpperCase() + userAnswer!.substring(1),
                       style: TextStyle(fontSize: kSpacingUnit.w * 2.2));
                 })
               ],
@@ -260,7 +260,7 @@ class ExamFinishedExtended extends StatelessWidget {
             height: 3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(26),
-              color: Theme.of(context).textTheme.bodyText1.color,
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           SizedBox(height: kSpacingUnit.w * 1.8),
@@ -268,7 +268,7 @@ class ExamFinishedExtended extends StatelessWidget {
             height: kSpacingUnit.w * 14,
             child: SingleChildScrollView(
               child: Text(
-                question.substantiation,
+                question!.substantiation,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(kSpacingUnit.w * 1.7),
@@ -279,18 +279,22 @@ class ExamFinishedExtended extends StatelessWidget {
           ),
         ]));
 
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: kSpacingUnit.w * 5),
-          header,
-          SizedBox(height: kSpacingUnit.w * 5),
-          questionText,
-          SizedBox(height: kSpacingUnit.w * 4),
-          answer,
-          SizedBox(height: kSpacingUnit.w * 4),
-          substantiation
-        ],
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      allowFontScaling: true,
+      builder: () => Scaffold(
+        body: Column(
+          children: [
+            SizedBox(height: kSpacingUnit.w * 5),
+            header,
+            SizedBox(height: kSpacingUnit.w * 5),
+            questionText,
+            SizedBox(height: kSpacingUnit.w * 4),
+            answer,
+            SizedBox(height: kSpacingUnit.w * 4),
+            substantiation
+          ],
+        ),
       ),
     );
   }

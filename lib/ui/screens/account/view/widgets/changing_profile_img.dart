@@ -13,7 +13,7 @@ import 'package:refcue_app/shared/const.dart';
 
 class ChangingProfileImage extends StatelessWidget {
   const ChangingProfileImage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static Route route() {
@@ -74,7 +74,7 @@ class ChangingProfileImage extends StatelessWidget {
                   if (state is ProfilePictureCropped) {
                     return CircleAvatar(
                         radius: kSpacingUnit.w * 10,
-                        backgroundImage: FileImage(state.croppedImage));
+                        backgroundImage: FileImage(state.croppedImage!));
                   }
                   if (state is ProfilePictureLoading) {
                     return CircularProgressIndicator();
@@ -87,7 +87,7 @@ class ChangingProfileImage extends StatelessWidget {
                               ? CachedNetworkImage(
                                   placeholder: (context, url) =>
                                       CircularProgressIndicator(),
-                                  imageUrl: user.photo,
+                                  imageUrl: (user.photo)!,
                                   imageBuilder: (context, imageProvider) {
                                     return CircleAvatar(
                                       radius: kSpacingUnit.w * 10,
@@ -117,7 +117,7 @@ class ChangingProfileImage extends StatelessWidget {
                                     fontSize: kSpacingUnit.w * 2,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyText1!
                                         .color)),
                             elevation: 24.0,
                             children: [
@@ -142,7 +142,7 @@ class ChangingProfileImage extends StatelessWidget {
                                         style: kTitleTextStyle.copyWith(
                                             color: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyText1!
                                                 .color))
                                   ],
                                 ),
@@ -168,7 +168,7 @@ class ChangingProfileImage extends StatelessWidget {
                                         style: kTitleTextStyle.copyWith(
                                             color: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1
+                                                .bodyText1!
                                                 .color))
                                   ],
                                 ),
