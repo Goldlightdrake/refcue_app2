@@ -8,20 +8,22 @@ class Question extends Equatable {
   final String questionText;
   final String substantiation;
   final int type;
+  final int id;
   Question({
     required this.answer,
     required this.article,
     required this.questionText,
     required this.substantiation,
     required this.type,
+    required this.id,
   });
 
   @override
   List<Object> get props =>
-      [answer, article, questionText, substantiation, type];
+      [answer, article, questionText, substantiation, type, id];
 
   String toString() =>
-      'Question ## type: {$type}, article: {$article}, questionText: {$questionText}, answer: {$answer}, substantiation: {$substantiation}';
+      'Question ## type: {$type}, article: {$article}, id: {$id}, questionText: {$questionText}, answer: {$answer}, substantiation: {$substantiation}';
 
   Map<String, dynamic> toMap() {
     return {
@@ -30,6 +32,7 @@ class Question extends Equatable {
       'questionText': questionText,
       'substantiation': substantiation,
       'type': type,
+      'id': id,
     };
   }
 
@@ -40,6 +43,7 @@ class Question extends Equatable {
 
   factory Question.fromMap(Map map) {
     return Question(
+      id: map['id'],
       answer: map['answer'],
       article: map['article'],
       questionText: map['questionText'],

@@ -95,7 +95,7 @@ int colorOfAnswer(answer) {
   }
 }
 
-List numberInRange(int? amount, int questionCount) {
+List<int> numberInRange(int? amount, int questionCount) {
   var randomList =
       new List<int>.generate(questionCount, (int index) => index + 1);
   randomList.shuffle();
