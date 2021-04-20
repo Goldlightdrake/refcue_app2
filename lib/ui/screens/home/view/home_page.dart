@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget {
 
     return ScreenUtilInit(
       designSize: Size(414, 896),
-      allowFontScaling: true,
       builder: () => Scaffold(
         body: SingleChildScrollView(
           child: Column(

@@ -32,58 +32,54 @@ class NewPasswordScreen extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => NewPasswordCubit(user!),
-      child: ScreenUtilInit(
-        designSize: Size(414, 896),
-        allowFontScaling: true,
-        builder: () => Scaffold(
-          body: BlocListener<NewPasswordCubit, NewPasswordState>(
-            listener: (context, state) async {
-              if (state.status.isSubmissionFailure) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    const SnackBar(
-                        content: Text(
-                      'Podano złe hasło do konta',
-                      textAlign: TextAlign.center,
-                    )),
-                  );
-              }
-              if (state.status.isSubmissionSuccess) {
-                await Future.delayed(Duration(seconds: 1));
-                Navigator.of(context).pop<void>();
-              }
-            },
-            child: Column(
-              children: [
-                SizedBox(height: kSpacingUnit.w * 5),
-                header,
-                Text('Zmień hasło',
-                    style:
-                        kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2)),
-                SizedBox(height: kSpacingUnit.w * 7),
-                _OldPasswordInput(),
-                _NewPasswordInput(),
-                BlocBuilder<NewPasswordCubit, NewPasswordState>(
-                    builder: (context, state) {
-                  if (state.status.isSubmissionInProgress) {
-                    return CircularProgressIndicator();
-                  }
-                  if (state.status.isSubmissionSuccess) {
-                    return Icon(Icons.check, color: Colors.green);
-                  }
-                  return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: kAccentColor,
-                      ),
-                      onPressed: () {
-                        context.read<NewPasswordCubit>().changePassword();
-                      },
-                      child: Text('Potwierdź',
-                          style: TextStyle(color: Colors.black)));
-                }),
-              ],
-            ),
+      child: Scaffold(
+        body: BlocListener<NewPasswordCubit, NewPasswordState>(
+          listener: (context, state) async {
+            if (state.status.isSubmissionFailure) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(
+                      content: Text(
+                    'Podano złe hasło do konta',
+                    textAlign: TextAlign.center,
+                  )),
+                );
+            }
+            if (state.status.isSubmissionSuccess) {
+              await Future.delayed(Duration(seconds: 1));
+              Navigator.of(context).pop<void>();
+            }
+          },
+          child: Column(
+            children: [
+              SizedBox(height: kSpacingUnit.w * 5),
+              header,
+              Text('Zmień hasło',
+                  style:
+                      kTitleTextStyle.copyWith(fontSize: kSpacingUnit.w * 2)),
+              SizedBox(height: kSpacingUnit.w * 7),
+              _OldPasswordInput(),
+              _NewPasswordInput(),
+              BlocBuilder<NewPasswordCubit, NewPasswordState>(
+                  builder: (context, state) {
+                if (state.status.isSubmissionInProgress) {
+                  return CircularProgressIndicator();
+                }
+                if (state.status.isSubmissionSuccess) {
+                  return Icon(Icons.check, color: Colors.green);
+                }
+                return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: kAccentColor,
+                    ),
+                    onPressed: () {
+                      context.read<NewPasswordCubit>().changePassword();
+                    },
+                    child: Text('Potwierdź',
+                        style: TextStyle(color: Colors.black)));
+              }),
+            ],
           ),
         ),
       ),

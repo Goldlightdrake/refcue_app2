@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/shared/const.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:flutter_screenutil/size_extension.dart';
 
 class ProfileStatsView extends StatelessWidget {
   static Route route() {
@@ -22,17 +21,14 @@ class ProfileStatsView extends StatelessWidget {
             iconSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
           ),
         ]);
-    return ScreenUtilInit(
-      designSize: Size(414, 896),
-      allowFontScaling: true,
-      builder: () => Scaffold(
-          body: Column(
+    return Scaffold(
+      body: Column(
         children: [
           SizedBox(height: kSpacingUnit.w * 5),
           header,
           Text('Statystyki')
         ],
-      )),
+      ),
     );
   }
 }

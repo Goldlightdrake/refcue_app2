@@ -173,7 +173,6 @@ class QuestionLayout extends StatelessWidget {
       create: (context) => CardsCubit(),
       child: ScreenUtilInit(
         designSize: Size(414, 896),
-        allowFontScaling: true,
         builder: () => WillPopScope(
           onWillPop: exitFromExamRequest,
           child: Scaffold(

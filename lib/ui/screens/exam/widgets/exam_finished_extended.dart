@@ -281,7 +281,6 @@ class ExamFinishedExtended extends StatelessWidget {
 
     return ScreenUtilInit(
       designSize: Size(414, 896),
-      allowFontScaling: true,
       builder: () => Scaffold(
         body: Column(
           children: [

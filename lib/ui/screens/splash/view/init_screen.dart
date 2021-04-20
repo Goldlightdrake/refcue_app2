@@ -35,7 +35,6 @@ class _InitScreenPageState extends State<InitScreenPage> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(414, 896),
-      allowFontScaling: true,
       builder: () => Scaffold(
           backgroundColor: ThemeProvider.of(context)!.primaryColor,
           body: Center(
