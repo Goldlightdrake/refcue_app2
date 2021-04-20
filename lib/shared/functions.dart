@@ -169,3 +169,4 @@ String getIconForArticle(int index) {
       return article1IconPath;
   }
 }
+

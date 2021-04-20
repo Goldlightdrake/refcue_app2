@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/question_answer_legend.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/submit_button.dart';
+import './parsing_answer.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,10 +23,38 @@ class QuestionLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var backgroundForHeader = CustomPaint(
-      size: Size(
-          800, 150), //You can Replace this with your desired WIDTH and HEIGHT
+      size: Size(800, 150),
       painter: RPSCustomPainter(context: context),
     );
+
+    Future<bool> exitFromExamRequest() async {
+      return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text(
+                  'Czy napewno chcesz opuścić test? Twoje odpowiedzi nie zostaną zapisane!',
+                  style: kTitleTextStyle.copyWith(
+                    fontSize: kSpacingUnit.w * 1.8,
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('Tak',
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyText1!.color)),
+                    onPressed: () => Navigator.pop(context, true),
+                  ),
+                  TextButton(
+                    child: Text('Nie',
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyText1!.color)),
+                    onPressed: () => Navigator.pop(context, false),
+                  ),
+                ],
+              ));
+    }
 
     var header = Column(
       children: [
@@ -36,7 +65,7 @@ class QuestionLayout extends StatelessWidget {
             SizedBox(width: kSpacingUnit.w * 1),
             IconButton(
               onPressed: () => context.read<ExamQuestionIndexCubit>().state == 0
-                  ? Navigator.of(context).pop<void>()
+                  ? exitFromExamRequest()
                   : context.read<ExamQuestionIndexCubit>().goToPrevQuestion(),
               icon: context.watch<ExamQuestionIndexCubit>().state == 0
                   ? Icon(Icons.home)
@@ -145,84 +174,54 @@ class QuestionLayout extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: Size(414, 896),
         allowFontScaling: true,
-        builder: () => Scaffold(
+        builder: () => WillPopScope(
+          onWillPop: exitFromExamRequest,
+          child: Scaffold(
             body: Column(
-          children: [
-            Stack(
               children: [
-                backgroundForHeader,
-                header,
-              ],
-              alignment: Alignment.center,
-            ),
-            SizedBox(height: kSpacingUnit.w * 9),
-            questionText,
-            SizedBox(height: kSpacingUnit.w * 1),
-            BlocListener<BuildingQuestionLayoutCubit,
-                BuildingQuestionLayoutState>(
-              listener: (context, state) {
-                var userAnswer = context.read<AnswerCubit>().userAnswersList![
-                    context.read<ExamQuestionIndexCubit>().state];
-                if (userAnswer != "-") {
-                  if (userAnswer![0] == "t") {
-                    userAnswer = "tak";
-                    context.read<AnswerCubit>().pickAnswer(userAnswer);
-                  } else if (userAnswer[0] == "n") {
-                    userAnswer = "nie";
-                    context.read<AnswerCubit>().pickAnswer(userAnswer);
-                  } else {
-                    if (userAnswer.length > 3) {
-                      context
-                          .read<AnswerCubit>()
-                          .pickAnswer(userAnswer[0] + userAnswer[1]);
-                      if (userAnswer[2] != '0') {
-                        context
-                            .read<CardsCubit>()
-                            .setYellowCards(int.parse(userAnswer[2]));
-                      }
-                      if (userAnswer[3] != '0') {
-                        context
-                            .read<CardsCubit>()
-                            .setRedCards(int.parse(userAnswer[3]));
-                      }
-                    } else {
-                      context.read<AnswerCubit>().pickAnswer(userAnswer[0]);
-                      if (userAnswer[1] != '0') {
-                        context
-                            .read<CardsCubit>()
-                            .setYellowCards(int.parse(userAnswer[1]));
-                      }
-                      if (userAnswer[2] != '0') {
-                        context
-                            .read<CardsCubit>()
-                            .setRedCards(int.parse(userAnswer[2]));
-                      }
-                    }
-                  }
-                }
-              },
-              child: Container(
-                height: kSpacingUnit.w * 22,
-                child: AnswerLayout(
-                  key: UniqueKey(),
-                  typeOfAnswer: question!.type,
+                Stack(
+                  children: [
+                    backgroundForHeader,
+                    header,
+                  ],
+                  alignment: Alignment.center,
                 ),
-              ),
-            ),
-            Builder(
-              builder: (context) => ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).accentColor,
-                  ),
-                  onPressed: () {
-                    submitButtonAction(context, question);
+                SizedBox(height: kSpacingUnit.w * 9),
+                questionText,
+                SizedBox(height: kSpacingUnit.w * 1),
+                BlocListener<BuildingQuestionLayoutCubit,
+                    BuildingQuestionLayoutState>(
+                  listener: (context, state) {
+                    var userAnswer =
+                        context.read<AnswerCubit>().userAnswersList![
+                            context.read<ExamQuestionIndexCubit>().state];
+                    parsingUserAnswer(context, userAnswer);
                   },
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Icon(Icons.arrow_forward, color: Colors.black))),
-            )
-          ],
-        )),
+                  child: Container(
+                    height: kSpacingUnit.w * 22,
+                    child: AnswerLayout(
+                      key: UniqueKey(),
+                      typeOfAnswer: question!.type,
+                    ),
+                  ),
+                ),
+                Builder(
+                  builder: (context) => ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).accentColor,
+                      ),
+                      onPressed: () {
+                        submitButtonAction(context, question);
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child:
+                              Icon(Icons.arrow_forward, color: Colors.black))),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

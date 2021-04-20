@@ -81,3 +81,33 @@ void submitButtonAction(BuildContext context, Question? question) {
     context.read<ExamQuestionIndexCubit>().goToNextQuestion();
   }
 }
+
+Future<bool> exitFromExamRequest(BuildContext context) async {
+  if (context.read<ExamQuestionIndexCubit>().state == 0) {
+    return await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(
+                'Czy napewno chcesz opuścić test? Twoje odpowiedzi nie zostaną zapisane!',
+                style: kTitleTextStyle.copyWith(
+                  fontSize: kSpacingUnit.w * 1.8,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: Text('Tak',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1!.color)),
+                  onPressed: () => Navigator.pop(context, true),
+                ),
+                TextButton(
+                  child: Text('Nie',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1!.color)),
+                  onPressed: () => Navigator.pop(context, false),
+                ),
+              ],
+            ));
+  }
+  return await Future.value(false);
+}

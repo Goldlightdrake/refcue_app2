@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:refcue_app/ui/screens/home/view/question_categories_view/question_categories_view.dart';
+import 'package:refcue_app/ui/screens/home/view/custom_exam/custom_exam_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/shared/const.dart';
@@ -13,8 +13,8 @@ class ForUCard extends StatelessWidget {
 
   Route<dynamic>? navigationNames(String? where) {
     switch (path) {
-      case 'customtest':
-        return QuestionCategoriesView.route();
+      case 'customexam':
+        return CustomExamView.route();
       default:
         return null;
     }
