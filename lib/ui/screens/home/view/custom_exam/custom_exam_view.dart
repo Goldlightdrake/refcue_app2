@@ -1,10 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:refcue_app/shared/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:refcue_app/shared/functions.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CustomExamView extends StatelessWidget {
   const CustomExamView({Key? key}) : super(key: key);
@@ -14,23 +11,15 @@ class CustomExamView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var header = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(width: kSpacingUnit.w * 3),
-            IconButton(
-              onPressed: () => Navigator.of(context).pop<void>(),
-              icon: Icon(LineAwesomeIcons.arrow_left),
-              iconSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: kSpacingUnit.w * 4,
+    var header = Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(width: kSpacingUnit.w * 1),
+        IconButton(
+          onPressed: () => Navigator.of(context).pop<void>(),
+          icon: Icon(LineAwesomeIcons.arrow_left),
+          iconSize: ScreenUtil().setSp(kSpacingUnit.w * 3),
         ),
         Padding(
           padding: EdgeInsets.only(left: kSpacingUnit.w * 5),
@@ -39,10 +28,38 @@ class CustomExamView extends StatelessWidget {
         )
       ],
     );
+
+    Widget _headerForSection({required String sectionName}) {
+      final _orangeColor = Color(0xffFFC107);
+
+      return Container(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Text(sectionName,
+                    style: TextStyle(fontSize: kSpacingUnit.w * 1.6)),
+              ],
+            ),
+            SizedBox(height: 5),
+            Container(
+              width: 300,
+              height: 3,
+              decoration: BoxDecoration(
+                  color: _orangeColor, borderRadius: BorderRadius.circular(28)),
+            ),
+          ],
+        ),
+      );
+    }
+
     var listOfCategories = Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      height: kSpacingUnit.w * 30,
-      width: double.infinity,
+      height: kSpacingUnit.w * 25,
       child: GridView.builder(
         physics: NeverScrollableScrollPhysics(),
         itemCount: 17,
@@ -57,12 +74,17 @@ class CustomExamView extends StatelessWidget {
     );
 
     return Scaffold(
-        body: Column(
-      children: [
-        SizedBox(height: kSpacingUnit.w * 5),
-        header,
-        listOfCategories,
-      ],
+        body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: [
+          SizedBox(height: kSpacingUnit.w * 5),
+          header,
+          SizedBox(height: kSpacingUnit.w * 4),
+          _headerForSection(sectionName: 'Wybierz artykuły'),
+          listOfCategories,
+        ],
+      ),
     ));
   }
 }

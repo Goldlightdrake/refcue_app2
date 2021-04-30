@@ -6,8 +6,6 @@ import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
 import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
 import 'package:refcue_app/shared/error_screen.dart';
 import 'package:refcue_app/ui/screens/exam/view/exam_finished.dart';
-import 'package:refcue_app/ui/screens/exam/widgets/submit_button.dart';
-
 import 'exam_view.dart';
 
 class ExamScreen extends StatelessWidget {

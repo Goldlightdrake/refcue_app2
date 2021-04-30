@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/question_answer_legend.dart';
 import 'package:refcue_app/ui/screens/exam/widgets/submit_button.dart';
 import './parsing_answer.dart';
+import 'exit_from_exam_request.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,35 +28,6 @@ class QuestionLayout extends StatelessWidget {
       painter: RPSCustomPainter(context: context),
     );
 
-    Future<bool> exitFromExamRequest() async {
-      return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text(
-                  'Czy napewno chcesz opuścić test? Twoje odpowiedzi nie zostaną zapisane!',
-                  style: kTitleTextStyle.copyWith(
-                    fontSize: kSpacingUnit.w * 1.8,
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    child: Text('Tak',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.bodyText1!.color)),
-                    onPressed: () => Navigator.pop(context, true),
-                  ),
-                  TextButton(
-                    child: Text('Nie',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.bodyText1!.color)),
-                    onPressed: () => Navigator.pop(context, false),
-                  ),
-                ],
-              ));
-    }
-
     var header = Column(
       children: [
         Row(
@@ -65,7 +37,7 @@ class QuestionLayout extends StatelessWidget {
             SizedBox(width: kSpacingUnit.w * 1),
             IconButton(
               onPressed: () => context.read<ExamQuestionIndexCubit>().state == 0
-                  ? exitFromExamRequest()
+                  ? exitFromExamRequest(context)
                   : context.read<ExamQuestionIndexCubit>().goToPrevQuestion(),
               icon: context.watch<ExamQuestionIndexCubit>().state == 0
                   ? Icon(Icons.home)
@@ -171,54 +143,49 @@ class QuestionLayout extends StatelessWidget {
     //Building widget
     return BlocProvider(
       create: (context) => CardsCubit(),
-      child: ScreenUtilInit(
-        designSize: Size(414, 896),
-        builder: () => WillPopScope(
-          onWillPop: exitFromExamRequest,
-          child: Scaffold(
-            body: Column(
-              children: [
-                Stack(
-                  children: [
-                    backgroundForHeader,
-                    header,
-                  ],
-                  alignment: Alignment.center,
-                ),
-                SizedBox(height: kSpacingUnit.w * 9),
-                questionText,
-                SizedBox(height: kSpacingUnit.w * 1),
-                BlocListener<BuildingQuestionLayoutCubit,
-                    BuildingQuestionLayoutState>(
-                  listener: (context, state) {
-                    var userAnswer =
-                        context.read<AnswerCubit>().userAnswersList![
-                            context.read<ExamQuestionIndexCubit>().state];
-                    parsingUserAnswer(context, userAnswer);
-                  },
-                  child: Container(
-                    height: kSpacingUnit.w * 22,
-                    child: AnswerLayout(
-                      key: UniqueKey(),
-                      typeOfAnswer: question!.type,
-                    ),
+      child: WillPopScope(
+        onWillPop: () => exitFromExamRequest(context),
+        child: Scaffold(
+          body: Column(
+            children: [
+              Stack(
+                children: [
+                  backgroundForHeader,
+                  header,
+                ],
+                alignment: Alignment.center,
+              ),
+              SizedBox(height: kSpacingUnit.w * 9),
+              questionText,
+              SizedBox(height: kSpacingUnit.w * 1),
+              BlocListener<BuildingQuestionLayoutCubit,
+                  BuildingQuestionLayoutState>(
+                listener: (context, state) {
+                  var userAnswer = context.read<AnswerCubit>().userAnswersList![
+                      context.read<ExamQuestionIndexCubit>().state];
+                  parsingUserAnswer(context, userAnswer);
+                },
+                child: Container(
+                  height: kSpacingUnit.w * 22,
+                  child: AnswerLayout(
+                    key: UniqueKey(),
+                    typeOfAnswer: question!.type,
                   ),
                 ),
-                Builder(
-                  builder: (context) => ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).accentColor,
-                      ),
-                      onPressed: () {
-                        submitButtonAction(context, question);
-                      },
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child:
-                              Icon(Icons.arrow_forward, color: Colors.black))),
-                )
-              ],
-            ),
+              ),
+              Builder(
+                builder: (context) => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).accentColor,
+                    ),
+                    onPressed: () {
+                      submitButtonAction(context, question);
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Icon(Icons.arrow_forward, color: Colors.black))),
+              )
+            ],
           ),
         ),
       ),
