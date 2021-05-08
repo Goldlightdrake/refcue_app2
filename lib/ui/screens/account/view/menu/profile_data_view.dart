@@ -30,11 +30,8 @@ class ProfileDataView extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
-      child: ScreenUtilInit(
-        designSize: Size(414, 896),
-        allowFontScaling: true,
-        builder: () => Scaffold(
-            body: Column(
+      child: Scaffold(
+        body: Column(
           children: [
             SizedBox(height: kSpacingUnit.w * 5),
             header,
@@ -48,7 +45,7 @@ class ProfileDataView extends StatelessWidget {
             _EditDataButton(),
             _NewpasswordButton(),
           ],
-        )),
+        ),
       ),
     );
   }
@@ -132,7 +129,8 @@ class _NewpasswordButton extends StatelessWidget {
     return TextButton(
       key: const Key('nameform_newpassword_button'),
       child: Text('Zmień hasło',
-          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
+          style:
+              TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
       onPressed: () =>
           Navigator.of(context).push<void>(NewPasswordScreen.route()),
     );

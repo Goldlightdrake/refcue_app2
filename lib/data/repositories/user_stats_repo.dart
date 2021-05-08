@@ -45,6 +45,7 @@ class UserStatsRepository {
     usersStatsCollection
         .doc(userId)
         .set({
+          'lastExam': FieldValue.serverTimestamp(),
           'sumScore': {
             keyForExam: FieldValue.increment(score),
           },

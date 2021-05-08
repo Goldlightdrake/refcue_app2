@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class Question extends Equatable {
   final String answer;
-  final String article;
+  final List article;
   final String questionText;
   final String substantiation;
   final int type;
@@ -41,14 +41,14 @@ class Question extends Equatable {
   factory Question.fromJson(String source) =>
       Question.fromMap(json.decode(source));
 
-  factory Question.fromMap(Map map) {
+  factory Question.fromMap(Map<dynamic, dynamic> map) {
     return Question(
-      id: map['id'],
       answer: map['answer'],
-      article: map['article'],
+      article: List.from(map['article']),
       questionText: map['questionText'],
       substantiation: map['substantiation'],
       type: map['type'],
+      id: map['id'],
     );
   }
 }

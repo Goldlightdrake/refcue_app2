@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:refcue_app/data/data_provider/exam_provider.dart';
-import 'package:refcue_app/data/repositories/exam_repo.dart';
-import 'package:refcue_app/ui/screens/home/view/question_categories_view/question_categories_view.dart';
+import 'package:refcue_app/ui/screens/home/view/custom_exam/custom_exam_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:refcue_app/shared/const.dart';
@@ -15,8 +13,8 @@ class ForUCard extends StatelessWidget {
 
   Route<dynamic>? navigationNames(String? where) {
     switch (path) {
-      case 'customtest':
-        return QuestionCategoriesView.route();
+      case 'customexam':
+        return CustomExamView.route();
       default:
         return null;
     }
@@ -26,8 +24,7 @@ class ForUCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ExamRepository(amountOfQuestions: 5).listOfQuestions();
-        // Navigator.of(context).push<void>(navigationNames(path)!);
+        Navigator.of(context).push<void>(navigationNames(path)!);
       },
       child: Container(
         height: kSpacingUnit.w * 18,

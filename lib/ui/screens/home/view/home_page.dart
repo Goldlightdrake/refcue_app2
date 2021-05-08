@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget {
 
     return ScreenUtilInit(
       designSize: Size(414, 896),
-      allowFontScaling: true,
       builder: () => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -169,7 +168,7 @@ class HomePage extends StatelessWidget {
                     ForUCard(
                       image: choosePath,
                       color: kAccentColor,
-                      path: 'customtest',
+                      path: 'customexam',
                     ),
                     ForUCard(image: fitnessPath, color: Color(0xffcaffa6)),
                     ForUCard(image: healthyPath, color: Color(0xff90f0e9)),

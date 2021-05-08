@@ -75,7 +75,7 @@ class _SettingListTile extends StatelessWidget {
       child: SwitchListTile(
           secondary: icon,
           activeTrackColor: Theme.of(context).primaryColor,
-          tileColor: Theme.of(context).cardColor,
+          tileColor: Theme.of(context).backgroundColor,
           activeColor: kAccentColor,
           title: Text(
             title,

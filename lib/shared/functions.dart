@@ -95,9 +95,8 @@ int colorOfAnswer(answer) {
   }
 }
 
-List<int> numberInRange(int? amount, int questionCount) {
-  var randomList =
-      new List<int>.generate(questionCount, (int index) => index + 1);
+List<int> numberInRange(int? amount, int count) {
+  var randomList = new List<int>.generate(count, (int index) => index);
   randomList.shuffle();
   return randomList.sublist(0, amount);
 }
@@ -170,3 +169,4 @@ String getIconForArticle(int index) {
       return article1IconPath;
   }
 }
+
