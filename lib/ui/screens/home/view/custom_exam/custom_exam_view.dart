@@ -73,6 +73,17 @@ class CustomExamView extends StatelessWidget {
       ),
     );
 
+    var timeOfExamSelection = Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _TimeSelection(),
+            _TimeSelection(),
+            _TimeSelection(),
+          ],
+        ));
+
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -83,6 +94,11 @@ class CustomExamView extends StatelessWidget {
           SizedBox(height: kSpacingUnit.w * 4),
           _headerForSection(sectionName: 'Wybierz artykuły'),
           listOfCategories,
+          _headerForSection(sectionName: 'Wybierz czas'),
+          SizedBox(
+            height: kSpacingUnit.w * 4,
+          ),
+          timeOfExamSelection,
         ],
       ),
     ));
@@ -102,5 +118,18 @@ class _ArticleChip extends StatelessWidget {
         avatar: Icon(Icons.close),
         label: Text(index.toString()),
         onSelected: (bool) => null);
+  }
+}
+
+class _TimeSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: kSpacingUnit.w * 10,
+      height: kSpacingUnit.w * 12,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          color: Theme.of(context).cardColor),
+    );
   }
 }
