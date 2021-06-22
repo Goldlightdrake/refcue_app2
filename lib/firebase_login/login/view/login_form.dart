@@ -1,5 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:auth_buttons/res/buttons/google_auth_button.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:refcue_app/firebase_login/cubit_show_password/show_password_dart_cubit.dart';
@@ -22,7 +22,8 @@ class LoginForm extends StatelessWidget {
                   content: Text('Podano zły e-mail lub hasło',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1!.color))),
+                          color:
+                              Theme.of(context).textTheme.bodyText1!.color))),
             );
         }
       },
@@ -159,7 +160,9 @@ class _GoogleLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GoogleAuthButton(
       text: 'Użyj konta google',
-      borderRadius: 12.0,
+      style: AuthButtonStyle(
+        borderRadius: 12.0,
+      ),
       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
       darkMode: Theme.of(context).brightness == Brightness.dark ? true : false,
     );
@@ -172,7 +175,8 @@ class _SignUpButton extends StatelessWidget {
     return TextButton(
       key: const Key('loginForm_createAccount_flatButton'),
       child: Text('Nie masz konta?  Zarejestruj się!',
-          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
+          style:
+              TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
     );
   }

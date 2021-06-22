@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'const.dart';
 
 String takeDate() {
@@ -95,10 +97,23 @@ int colorOfAnswer(answer) {
   }
 }
 
-List<int> numberInRange(int? amount, int count) {
-  var randomList = new List<int>.generate(count, (int index) => index);
-  randomList.shuffle();
-  return randomList.sublist(0, amount);
+List<int> randNumbersInRange(int amount, int count) {
+  Set<int> randomIdsSet = Set();
+  while (randomIdsSet.length < amount) {
+    int randomIndex = Random().nextInt(count);
+    randomIdsSet.add(randomIndex);
+  }
+  return List.from(randomIdsSet);
+}
+
+int randNumberInRange(int count, List<int>? withOut) {
+  int randomIndex = Random().nextInt(count);
+  if (withOut != null) {
+    while (withOut.any((e) => e == randomIndex)) {
+      randomIndex = Random().nextInt(count);
+    }
+  }
+  return randomIndex;
 }
 
 String firstFewWords(String bigSentence) {
@@ -169,4 +184,3 @@ String getIconForArticle(int index) {
       return article1IconPath;
   }
 }
-

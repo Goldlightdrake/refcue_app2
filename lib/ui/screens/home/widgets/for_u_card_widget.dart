@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:refcue_app/data/repositories/exam_repo.dart';
 import 'package:refcue_app/ui/screens/home/view/custom_exam/custom_exam_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ class ForUCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        ExamRepository(amountOfQuestions: 5).customListOfQuestion(['12']);
         Navigator.of(context).push<void>(navigationNames(path)!);
       },
       child: Container(

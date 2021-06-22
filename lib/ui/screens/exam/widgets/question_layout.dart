@@ -24,7 +24,7 @@ class QuestionLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var backgroundForHeader = CustomPaint(
-      size: Size(800, 150),
+      size: Size(800, 160),
       painter: RPSCustomPainter(context: context),
     );
 
@@ -39,16 +39,19 @@ class QuestionLayout extends StatelessWidget {
               onPressed: () => context.read<ExamQuestionIndexCubit>().state == 0
                   ? exitFromExamRequest(context)
                   : context.read<ExamQuestionIndexCubit>().goToPrevQuestion(),
-              icon: context.watch<ExamQuestionIndexCubit>().state == 0
+              icon: context.read<ExamQuestionIndexCubit>().state == 0
                   ? Icon(Icons.home)
                   : Icon(Icons.arrow_back),
               iconSize: ScreenUtil().setSp(kSpacingUnit.w * 4),
             ),
-            Image.asset(
-                ThemeProvider.of(context)!.brightness == Brightness.dark
-                    ? logoDarkPath
-                    : logoPath,
-                width: ScreenUtil().setSp(kSpacingUnit.w * 11)),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Image.asset(
+                  ThemeProvider.of(context)!.brightness == Brightness.dark
+                      ? logoDarkPath
+                      : logoPath,
+                  width: ScreenUtil().setSp(kSpacingUnit.w * 12)),
+            ),
             BlocBuilder<TimerBloc, TimerState>(
               builder: (context, state) {
                 final String minutesStr =
@@ -127,7 +130,7 @@ class QuestionLayout extends StatelessWidget {
       alignment: Alignment.topCenter,
       margin: EdgeInsets.symmetric(
           horizontal: ScreenUtil().setSp(kSpacingUnit.w * 4)),
-      height: kSpacingUnit.w * 25,
+      height: kSpacingUnit.w * 22,
       child: SingleChildScrollView(
         child: Text(
           question!.questionText,
@@ -146,46 +149,52 @@ class QuestionLayout extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => exitFromExamRequest(context),
         child: Scaffold(
-          body: Column(
-            children: [
-              Stack(
-                children: [
-                  backgroundForHeader,
-                  header,
-                ],
-                alignment: Alignment.center,
-              ),
-              SizedBox(height: kSpacingUnit.w * 9),
-              questionText,
-              SizedBox(height: kSpacingUnit.w * 1),
-              BlocListener<BuildingQuestionLayoutCubit,
-                  BuildingQuestionLayoutState>(
-                listener: (context, state) {
-                  var userAnswer = context.read<AnswerCubit>().userAnswersList![
-                      context.read<ExamQuestionIndexCubit>().state];
-                  parsingUserAnswer(context, userAnswer);
-                },
-                child: Container(
-                  height: kSpacingUnit.w * 22,
-                  child: AnswerLayout(
-                    key: UniqueKey(),
-                    typeOfAnswer: question!.type,
+          body: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  children: [
+                    backgroundForHeader,
+                    header,
+                  ],
+                  alignment: Alignment.center,
+                ),
+                SizedBox(height: kSpacingUnit.w * 7),
+                questionText,
+                SizedBox(height: kSpacingUnit.w * 1),
+                BlocListener<BuildingQuestionLayoutCubit,
+                    BuildingQuestionLayoutState>(
+                  listener: (context, state) {
+                    var userAnswer =
+                        context.read<AnswerCubit>().userAnswersList![
+                            context.read<ExamQuestionIndexCubit>().state];
+                    parsingUserAnswer(context, userAnswer);
+                  },
+                  child: Container(
+                    height: kSpacingUnit.w * 22,
+                    child: AnswerLayout(
+                      key: UniqueKey(),
+                      typeOfAnswer: question!.type,
+                    ),
                   ),
                 ),
-              ),
-              Builder(
-                builder: (context) => ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).accentColor,
-                    ),
-                    onPressed: () {
-                      submitButtonAction(context, question);
-                    },
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Icon(Icons.arrow_forward, color: Colors.black))),
-              )
-            ],
+                Builder(
+                  builder: (context) => ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).accentColor,
+                      ),
+                      onPressed: () {
+                        submitButtonAction(context, question);
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child:
+                              Icon(Icons.arrow_forward, color: Colors.black))),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -209,7 +218,7 @@ class RPSCustomPainter extends CustomPainter {
     Path path_0 = Path();
     path_0.moveTo(0, 0);
     path_0.quadraticBezierTo(
-        size.width * 0.01, size.height * 0.99, size.width * 0.13, size.height);
+        size.width * 0.01, size.height * 1.00, size.width * 0.13, size.height);
     path_0.cubicTo(size.width * 0.13, size.height * 1.00, size.width * 0.87,
         size.height * 1.01, size.width * 0.88, size.height);
     path_0.quadraticBezierTo(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:refcue_app/data/repositories/exam_repo.dart';
 import 'package:refcue_app/firebase_login/authentication/bloc/authentication_bloc.dart';
+import 'package:refcue_app/logic/custom_exam_logic/cubit/user_choice_cubit.dart';
 import 'package:refcue_app/logic/exam_logic/bloc_timer/ticker.dart';
 import 'package:refcue_app/logic/exam_logic/exam_logic.dart';
 import 'package:refcue_app/shared/error_screen.dart';
@@ -9,15 +10,19 @@ import 'package:refcue_app/ui/screens/exam/view/exam_finished.dart';
 import 'exam_view.dart';
 
 class ExamScreen extends StatelessWidget {
-  static Route route({required int amountQuestions}) {
+  static Route route(
+      {required int amountQuestions, required bool isCustomExam}) {
     return MaterialPageRoute<void>(
         builder: (_) => ExamScreen(
               amount: amountQuestions,
+              isCustomExam: isCustomExam,
             ));
   }
 
   final int amount;
-  ExamScreen({Key? key, required this.amount}) : super(key: key);
+  final bool isCustomExam;
+  ExamScreen({Key? key, required this.amount, required this.isCustomExam})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +46,12 @@ class ExamScreen extends StatelessWidget {
       ],
       child: BlocProvider(
         create: (context) => ExamBloc(
-          testRepository: ExamRepository(amountOfQuestions: amount),
+          examRepository: ExamRepository(amountOfQuestions: amount),
           scoreCubit: context.read<ExamScoreCubit>(),
           indexCubit: context.read<ExamQuestionIndexCubit>(),
           answerCubit: context.read<AnswerCubit>(),
+          userChoiceCubit:
+              isCustomExam ? context.read<UserChoiceCubit>() : null,
           maxIndex: amount,
           userId: user.id,
         )..add(ExamFetched()),

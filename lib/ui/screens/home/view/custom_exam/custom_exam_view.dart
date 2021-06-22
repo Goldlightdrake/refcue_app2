@@ -1,7 +1,11 @@
+import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
-import 'package:refcue_app/shared/const.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:refcue_app/logic/custom_exam_logic/cubit/user_choice_cubit.dart';
+
+import 'package:refcue_app/shared/const.dart';
 
 class CustomExamView extends StatelessWidget {
   const CustomExamView({Key? key}) : super(key: key);
@@ -60,48 +64,53 @@ class CustomExamView extends StatelessWidget {
 
     var listOfCategories = Container(
       height: kSpacingUnit.w * 25,
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: 17,
-        itemBuilder: (context, index) => _ArticleChip(index + 1),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 2,
-          crossAxisSpacing: 2,
-          childAspectRatio: 2,
-          crossAxisCount: 5,
-        ),
-      ),
+      child: Builder(builder: (context) {
+        context.watch<UserChoiceCubit>();
+        return GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: 17,
+          itemBuilder: (context, index) =>
+              _ArticleChip(index, key: UniqueKey()),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 2,
+            crossAxisSpacing: 2,
+            childAspectRatio: 2,
+            crossAxisCount: 5,
+          ),
+        );
+      }),
     );
 
     var timeOfExamSelection = Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _TimeSelection(),
-            _TimeSelection(),
-            _TimeSelection(),
-          ],
-        ));
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          _TimeSelection(time: 5),
+          _TimeSelection(time: 10),
+          _TimeSelection(time: 30),
+        ]));
 
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        children: [
-          SizedBox(height: kSpacingUnit.w * 5),
-          header,
-          SizedBox(height: kSpacingUnit.w * 4),
-          _headerForSection(sectionName: 'Wybierz artykuły'),
-          listOfCategories,
-          _headerForSection(sectionName: 'Wybierz czas'),
-          SizedBox(
-            height: kSpacingUnit.w * 4,
-          ),
-          timeOfExamSelection,
-        ],
-      ),
-    ));
+    return BlocProvider(
+      create: (context) => UserChoiceCubit(),
+      child: Scaffold(
+          body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            SizedBox(height: kSpacingUnit.w * 5),
+            header,
+            SizedBox(height: kSpacingUnit.w * 4),
+            _headerForSection(sectionName: 'Wybierz artykuły'),
+            listOfCategories,
+            _headerForSection(sectionName: 'Wybierz czas'),
+            SizedBox(
+              height: kSpacingUnit.w * 4,
+            ),
+            timeOfExamSelection,
+          ],
+        ),
+      )),
+    );
   }
 }
 
@@ -111,25 +120,60 @@ class _ArticleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilterChip(
-        selected: false,
-        showCheckmark: false,
-        padding: EdgeInsets.symmetric(horizontal: 3),
-        avatar: Icon(Icons.close),
-        label: Text(index.toString()),
-        onSelected: (bool) => null);
+    return Builder(builder: (BuildContext context) {
+      final userChoiceCubit = context.watch<UserChoiceCubit>();
+      final isSelected = userChoiceCubit.state.articles[index];
+      return FilterChip(
+          showCheckmark: false,
+          backgroundColor: isSelected
+              ? Theme.of(context).cardColor
+              : Theme.of(context).backgroundColor,
+          padding: EdgeInsets.symmetric(horizontal: 3),
+          avatar: Icon(isSelected ? Icons.check : Icons.close,
+              color: isSelected
+                  ? Colors.green
+                  : Theme.of(context).iconTheme.color),
+          label: Text((index + 1).toString()),
+          onSelected: (bool) => userChoiceCubit.chooseArticle(index));
+    });
   }
 }
 
 class _TimeSelection extends StatelessWidget {
+  final int time;
+  const _TimeSelection({
+    Key? key,
+    required this.time,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: kSpacingUnit.w * 10,
-      height: kSpacingUnit.w * 12,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          color: Theme.of(context).cardColor),
+    final userChoiceCubit = context.watch<UserChoiceCubit>();
+    final isSelected = userChoiceCubit.state.time == time ? true : false;
+    EdgeInsets padding = EdgeInsets.symmetric(horizontal: 25, vertical: 15);
+    if (time >= 10) {
+      padding = EdgeInsets.symmetric(horizontal: 15, vertical: 15);
+    }
+    return GestureDetector(
+      onTap: () => userChoiceCubit.chooseTime(time),
+      child: Container(
+          alignment: Alignment.center,
+          width: kSpacingUnit.w * 10,
+          height: kSpacingUnit.w * 13,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: isSelected
+                  ? Theme.of(context).cardColor
+                  : Theme.of(context).backgroundColor),
+          child: DashedCircle(
+            color: isSelected ? kAccentColor : Colors.grey,
+            dashes: 3,
+            gapSize: 10,
+            child: Padding(
+              padding: padding,
+              child: Text(time.toString(),
+                  style: TextStyle(fontSize: kSpacingUnit.w * 3.5)),
+            ),
+          )),
     );
   }
 }

@@ -13,8 +13,8 @@ class ExamRepository {
 
   ExamProvider _examProvider = ExamProvider();
 
-  Future listOfQuestions() async {
-    List questionsIdList = numberInRange(
+  Future<List<Question>> listOfQuestions() async {
+    List questionsIdList = randNumbersInRange(
         amountOfQuestions, (await _examProvider.getAmountOfQuestions())!);
 
     List<Question> listOfQuestions = [];
@@ -23,5 +23,20 @@ class ExamRepository {
           (await _examProvider.getQuestionFromFirebase(questionsIdList[i]))));
     }
     return listOfQuestions;
+  }
+
+  Future customListOfQuestion(List<String> articles) async {
+    List<Question> listOfQuestions = [];
+    List<int> listOfIndexesInUse = [];
+
+    for (int i = 0; i < amountOfQuestions; i++) {
+      int questionId = randNumberInRange(
+          (await _examProvider.getAmountOfQuestions())!, listOfIndexesInUse);
+      Map<dynamic, dynamic> questionMap = await _examProvider
+          .getCustomQuestionFromFirebase(questionId, articles);
+      Question question = Question.fromMap(questionMap);
+      listOfQuestions.add(question);
+      listOfIndexesInUse.add(question.id);
+    }
   }
 }

@@ -28,54 +28,58 @@ class HomePage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                height: kSpacingUnit.w * 15,
-                padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Image.asset(
-                        ThemeProvider.of(context)!.brightness == Brightness.dark
-                            ? logoDarkPath
-                            : logoPath,
-                        width: kSpacingUnit.w * 10),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                              reverseTransitionDuration:
-                                  Duration(milliseconds: 500),
-                              transitionDuration: Duration(milliseconds: 500),
-                              pageBuilder: (_, __, ___) => ProfileScreen())),
-                      child: Hero(
-                        tag: 'avatar',
-                        child: Builder(builder: (context) {
-                          if (authUser != null) {
-                            authUser.reload();
-                          }
-                          if (user.photo != null) {
-                            return CachedNetworkImage(
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              imageUrl: user.photo!,
-                              imageBuilder: (context, imageProvider) {
-                                return CircleAvatar(
-                                  radius: kSpacingUnit.w * 3.5,
-                                  backgroundImage: imageProvider,
-                                );
-                              },
+              SafeArea(
+                child: Container(
+                  height: kSpacingUnit.w * 10,
+                  padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Image.asset(
+                          ThemeProvider.of(context)!.brightness ==
+                                  Brightness.dark
+                              ? logoDarkPath
+                              : logoPath,
+                          width: kSpacingUnit.w * 10),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                reverseTransitionDuration:
+                                    Duration(milliseconds: 500),
+                                transitionDuration: Duration(milliseconds: 500),
+                                pageBuilder: (_, __, ___) => ProfileScreen())),
+                        child: Hero(
+                          tag: 'avatar',
+                          child: Builder(builder: (context) {
+                            if (authUser != null) {
+                              authUser.reload();
+                            }
+                            if (user.photo != null) {
+                              return CachedNetworkImage(
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                imageUrl: user.photo!,
+                                imageBuilder: (context, imageProvider) {
+                                  return CircleAvatar(
+                                    radius: kSpacingUnit.w * 3.5,
+                                    backgroundImage: imageProvider,
+                                  );
+                                },
+                              );
+                            }
+                            return CircleAvatar(
+                              radius: kSpacingUnit.w * 3.5,
+                              backgroundImage: AssetImage(basicAvatarImage),
                             );
-                          }
-                          return CircleAvatar(
-                            radius: kSpacingUnit.w * 3.5,
-                            backgroundImage: AssetImage(basicAvatarImage),
-                          );
-                        }),
+                          }),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              SizedBox(height: kSpacingUnit.w * 2),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: kSpacingUnit.w * 2),
                   alignment: Alignment.centerLeft,

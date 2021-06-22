@@ -20,8 +20,8 @@ class ExamCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => Navigator.of(context)
-            .push<void>(ExamScreen.route(amountQuestions: quantity)),
+        onTap: () => Navigator.of(context).push<void>(
+            ExamScreen.route(amountQuestions: quantity, isCustomExam: false)),
         child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: kSpacingUnit.w * 1.5, vertical: kSpacingUnit.w * 1),
