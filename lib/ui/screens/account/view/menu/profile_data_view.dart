@@ -43,6 +43,7 @@ class ProfileDataView extends StatelessWidget {
             _NameInput(),
             _EmailInput(),
             _EditDataButton(),
+            SizedBox(height: 15),
             _NewpasswordButton(),
           ],
         ),
@@ -111,14 +112,18 @@ class _EmailInput extends StatelessWidget {
 class _EditDataButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      key: const Key('edit_data_button'),
-      child: Text(
-        'Edytuj dane',
-        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push<void>(EditProfileScreen.route()),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
+        decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(14)),
+        child: Text(
+          'Edytuj dane',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
       ),
-      onPressed: () =>
-          Navigator.of(context).push<void>(EditProfileScreen.route()),
     );
   }
 }
@@ -126,13 +131,18 @@ class _EditDataButton extends StatelessWidget {
 class _NewpasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      key: const Key('nameform_newpassword_button'),
-      child: Text('Zmień hasło',
-          style:
-              TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)),
-      onPressed: () =>
-          Navigator.of(context).push<void>(NewPasswordScreen.route()),
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push<void>(NewPasswordScreen.route()),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
+        decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: BorderRadius.circular(14)),
+        child: Text(
+          'Zmień hasło',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
+      ),
     );
   }
 }
@@ -141,13 +151,11 @@ class _DeleteAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      key: const Key('deleteAccount_button'),
-      child: Text(
-        'Usuń konto',
-        style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
-      ),
-      onPressed: () =>
-          Navigator.of(context).push<void>(NewPasswordScreen.route()),
-    );
+        key: const Key('deleteAccount_button'),
+        child: Text(
+          'Usuń konto',
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color),
+        ),
+        onPressed: () => Navigator.pop(context));
   }
 }

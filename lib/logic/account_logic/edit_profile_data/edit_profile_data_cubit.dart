@@ -71,7 +71,7 @@ class EditProfileDataCubit extends Cubit<EditProfileDataState> {
             }));
       }
       if (user.displayName != state.newName.value) {
-        await user.updateProfile(displayName: state.newName.value);
+        await user.updateDisplayName(state.newName.value);
       }
       await user.reload();
       emit(state.copyWith(status: FormzStatus.submissionSuccess));

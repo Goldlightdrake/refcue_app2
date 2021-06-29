@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:refcue_app/data/models/question.dart';
 
 class ExamProvider {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

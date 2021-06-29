@@ -93,7 +93,7 @@ class ProfilePictureCubit extends Cubit<ProfilePictureState> {
               await Future.delayed(Duration(seconds: 1));
               print(fileURL.toString());
               try {
-                authUser!.updateProfile(photoURL: fileURL);
+                authUser!.updatePhotoURL(fileURL);
               } catch (error) {
                 emit(ProfilePictureSentError());
                 throw (error);

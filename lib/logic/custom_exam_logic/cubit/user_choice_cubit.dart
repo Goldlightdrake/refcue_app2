@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/foundation.dart';
 
 part 'user_choice_state.dart';
 
